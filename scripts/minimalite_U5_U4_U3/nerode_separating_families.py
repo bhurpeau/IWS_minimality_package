@@ -16,10 +16,7 @@ DIFFERENT (At de forme (G,N,N)), ce qui permet de traiter TOUT un batch
 meme apres que certaines branches aient diverge structurellement.
 """
 import sys, numpy as np, time
-import pathlib as _pathlib
-_SCRIPTS = _pathlib.Path(__file__).resolve().parents[1]
-for _sub in ('core', 'utils', 'axiomes_crash_tests', 'partitions_Fy', 'genealogie_n9', 'minimalite_U5_U4_U3', 'R0_reachability', 'construction_temoin_Q'):
-    sys.path.insert(0, str(_SCRIPTS / _sub))
+sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
 from iws_kairos_core_gen import (automorphisms, jump_batch, build_A_from_label,
                                   d, Theta, rP, rV, zeta, alpha, beta, gamma0, k1c, k2c, k3c)
 
@@ -100,10 +97,20 @@ def run_pair_family(A1, N, tau_x, tau_xp, protocols, K=K_MAX, dt=2e-3, Tmax=15.0
         active = np.flatnonzero(alive)
         if len(active) == 0:
             break
-        # saut : jump_batch suppose un seul graphe -> on groupe par graphe identique
-        for key_bytes in {A_cur[g].tobytes() for g in active}:
-            idxs = np.array([g for g in active if A_cur[g].tobytes() == key_bytes])
-            Ag = A_cur[idxs[0]]
+        # saut : jump_batch suppose un seul graphe -> on groupe par graphe identique.
+        # BUG CORRIGE (cf. notes/IWS_classe_axiomes_reflexions.md, erratum) : les groupes
+        # doivent etre determines UNE SEULE FOIS sur l'etat A_cur D'AVANT tout saut de cette
+        # profondeur. Re-scanner A_cur (qui est mute groupe par groupe plus bas) pour
+        # retrouver "idxs" a chaque iteration est incorrect : si le graphe resultant du saut
+        # d'un groupe deja traite coincide par hasard avec le graphe (pas encore traite) d'un
+        # AUTRE groupe, cet individu est reinjecte et resaute une deuxieme fois -- effet
+        # non-deterministe (ordre d'iteration d'un set Python, donc dependant du hachage).
+        groups_map = {}
+        for g in active:
+            groups_map.setdefault(A_cur[g].tobytes(), []).append(g)
+        for key_bytes, idxs_list in groups_map.items():
+            idxs = np.array(idxs_list)
+            Ag = A_cur[idxs[0]].copy()
             H2,V2,tau2,P2, labs, i2s = jump_batch(H[idxs],V[idxs],tau[idxs],P[idxs],Ag,N)
             H[idxs],V[idxs],tau[idxs],P[idxs] = H2,V2,tau2,P2
             for pos,g in enumerate(idxs):
