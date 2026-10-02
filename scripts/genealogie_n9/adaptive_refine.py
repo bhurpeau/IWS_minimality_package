@@ -1,5 +1,8 @@
 import sys, numpy as np, pickle, time
-sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
+import pathlib as _pathlib
+_SCRIPTS = _pathlib.Path(__file__).resolve().parents[1]
+for _sub in ('core', 'utils', 'axiomes_crash_tests', 'partitions_Fy', 'genealogie_n9', 'minimalite_U5_U4_U3', 'R0_reachability', 'construction_temoin_Q'):
+    sys.path.insert(0, str(_SCRIPTS / _sub))
 from iws_kairos_core import (A1_kept1, make_tau_init, initial_group, advance_one_kairos,
                               label_map_from_groups, N, d)
 
@@ -68,6 +71,6 @@ for r in sorted(results, key=lambda r: -r['n_labels_fine'])[:15]:
     print("  centre (%.1f,%.1f) : %d etiquettes aux coins grossiers -> %d etiquettes en raffine" %
           (r['phi4_center'], r['phi5_center'], r['n_labels_coarse_corners'], r['n_labels_fine']))
 
-with open('/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad/adaptive_refine.pkl','wb') as f:
+with open('../../output/adaptive_refine.pkl','wb') as f:
     pickle.dump(dict(PHI4_0=PHI4_0, PHI5_0=PHI5_0, lab_0=lab_0, flagged=flagged, results=results, n0=n0), f)
 print("\nSauvegarde -> adaptive_refine.pkl")

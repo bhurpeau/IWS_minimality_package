@@ -1,10 +1,12 @@
+import pathlib as _pathlib
+_pathlib.Path(__file__).resolve().parent.joinpath('figures').mkdir(exist_ok=True)
 import pickle, numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap, BoundaryNorm
 
-d = pickle.load(open('/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad/n9_etape1.pkl','rb'))
+d = pickle.load(open(str(_pathlib.Path(__file__).resolve().parent / 'n9_etape1.pkl'),'rb'))
 PHI2, PHI6, lab_arr, path_to_id, n_grid = d['PHI2'], d['PHI6'], d['lab_arr'], d['path_to_id'], d['n_grid']
 
 okabe_ito = ["#0072B2", "#E69F00", "#009E73", "#CC79A7"]
@@ -25,5 +27,5 @@ legend_labels = ["{%s}" % ",".join(map(str,sorted(path[0][1]))) for path,_ in la
 ax.legend(handles, legend_labels, title="nouveau voisinage de 0", loc="upper right", fontsize=9)
 
 fig.tight_layout()
-fig.savefig("/mnt/user-data/outputs/partition_Fy_N9_etape1.png", dpi=150)
+fig.savefig(str(_pathlib.Path(__file__).resolve().parent / 'figures' / 'partition_Fy_N9_etape1.png'), dpi=150)
 print("Figure sauvegardée.")

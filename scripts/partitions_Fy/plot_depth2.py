@@ -1,3 +1,7 @@
+import pathlib as _pathlib
+def _lp(name): return str(_pathlib.Path(__file__).resolve().parent / name)
+import pathlib as _pathlib
+_pathlib.Path(__file__).resolve().parent.joinpath('figures').mkdir(exist_ok=True)
 import numpy as np, itertools
 import matplotlib
 matplotlib.use("Agg")
@@ -21,7 +25,7 @@ print("|Aut(A1)| =", len(auts1), auts1)
 swap45_fixing0 = [(0,1,2,4,3,5),(0,2,1,5,3,4)]  # juste pour info, non utilisé
 print("(1 2)(4 5) encore dans Aut(A1) ?", (0,2,1,3,5,4) in auts1)
 
-data = np.load("depth2b_grid.npy", allow_pickle=True).item()
+data = np.load(_lp("depth2b_grid.npy"), allow_pickle=True).item()
 PHI4, PHI5, kept = data["PHI4"], data["PHI5"], data["kept_label"]
 
 okabe_ito = ["#0072B2", "#E69F00", "#009E73", "#999999"]
@@ -42,7 +46,7 @@ handles = [Patch(facecolor=okabe_ito[0], label="gardé = nœud 1 (dominant)"),
            Patch(facecolor=okabe_ito[2], label="gardé = nœud 5")]
 ax.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5,-0.13), ncol=1, fontsize=8, frameon=False)
 fig.tight_layout()
-fig.savefig("/mnt/user-data/outputs/partition_Fy_N6_etape2.png", bbox_inches="tight")
+fig.savefig(str(_pathlib.Path(__file__).resolve().parent / 'figures' / 'partition_Fy_N6_etape2.png'), bbox_inches="tight")
 print("Figure sauvegardée.")
 
 # aires

@@ -1,5 +1,10 @@
+import pathlib as _pathlib
+def _lp(name): return str(_pathlib.Path(__file__).resolve().parent / name)
 import sys, numpy as np, pickle, time
-sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
+import pathlib as _pathlib
+_SCRIPTS = _pathlib.Path(__file__).resolve().parents[1]
+for _sub in ('core', 'utils', 'axiomes_crash_tests', 'partitions_Fy', 'genealogie_n9', 'minimalite_U5_U4_U3', 'R0_reachability', 'construction_temoin_Q'):
+    sys.path.insert(0, str(_SCRIPTS / _sub))
 from iws_kairos_core_gen import (automorphisms, initial_group, advance_one_kairos,
                                   label_map_from_groups, d, build_A_from_label)
 
@@ -16,7 +21,7 @@ A0 = np.zeros((N,N))
 for i,j in edges: A0[i,j]=A0[j,i]=1
 auts0 = automorphisms(A0, N)
 
-with open('n9_branch_centers.pkl','rb') as f:
+with open(_lp('n9_branch_centers.pkl'),'rb') as f:
     centers = pickle.load(f)
 branch_labels = list(centers.keys())
 
@@ -73,7 +78,7 @@ for b in branch_labels:
     results[b] = dict(PHI2=PHI2, PHI6=PHI6, label_maps=label_maps_b, split_records=split_records_b,
                        n_grid=n_grid, G0=G0, center=(c2,c6), radius=radius, n_ok=n_ok)
 
-with open('n9_depth_growth_4branches_zoom.pkl','wb') as f:
+with open(_lp('n9_depth_growth_4branches_zoom.pkl'),'wb') as f:
     pickle.dump(dict(results=results, branch_labels=branch_labels), f)
 
 print("\n\n=== RESUME : |P_k^loc| par branche (resolution EGALE, 3600 pts chacune) ===")

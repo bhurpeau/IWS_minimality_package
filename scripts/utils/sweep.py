@@ -1,5 +1,5 @@
 import io, contextlib, re, numpy as np
-src = open('/mnt/user-data/outputs/temoin_C23_noyau.py').read()
+src = open('../axiomes_crash_tests/temoin_C23_noyau.py').read()
 src = src.split("# ---------------- 3.")[0]
 def run(amp, U, beta=None, zeta=None):
     s = src.replace("amp = 0.2", f"amp = {amp}").replace("U = 2.5", f"U = {U}")

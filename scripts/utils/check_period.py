@@ -1,5 +1,5 @@
 import numpy as np, itertools
-src = open('/mnt/user-data/outputs/temoin_C23_noyau.py').read().split("# ---------------- 1.")[0]
+src = open('../axiomes_crash_tests/temoin_C23_noyau.py').read().split("# ---------------- 1.")[0]
 g = {}; exec(src, g)
 rk4, kairos, Atilde, A0, N, d, Theta = g['rk4'], g['kairos'], g['Atilde'], g['A0'], g['N'], g['d'], g['Theta']
 dt = 1e-3

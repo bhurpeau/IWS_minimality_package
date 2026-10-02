@@ -1,3 +1,5 @@
+import pathlib as _pathlib
+def _lp(name): return str(_pathlib.Path(__file__).resolve().parent / name)
 """
 Recherche d'un contre-exemple a la separation par U4 (Benoit) : une paire
 x,x' separee par un seul noeud force different de 0 (donc par U3\\U4), mais
@@ -25,7 +27,10 @@ suffit pas a trancher (c'est exactement la mise en garde de Benoit : chercher
 "moins aveuglement", pas "sans verifier").
 """
 import sys, numpy as np, time, pickle
-sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
+import pathlib as _pathlib
+_SCRIPTS = _pathlib.Path(__file__).resolve().parents[1]
+for _sub in ('core', 'utils', 'axiomes_crash_tests', 'partitions_Fy', 'genealogie_n9', 'minimalite_U5_U4_U3', 'R0_reachability', 'construction_temoin_Q'):
+    sys.path.insert(0, str(_SCRIPTS / _sub))
 from nerode_separating_families import run_pair_family, summarize
 from iws_kairos_core_gen import automorphisms, d
 
@@ -37,7 +42,7 @@ N6 = 6
 # "typiques" du temoin mais sur la mauvaise chambre), avec une structure
 # d'automorphismes differente (2 au lieu de ce qui est effectivement observe
 # ici) et donc des resultats non comparables au reste du chantier.
-with open('nerode_pairs.pkl', 'rb') as f:
+with open(_lp('nerode_pairs.pkl'), 'rb') as f:
     _saved = pickle.load(f)
 A1_6 = _saved['A1_6']
 mag = 0.3

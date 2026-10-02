@@ -1,5 +1,8 @@
 import sys, numpy as np, pickle, time
-sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
+import pathlib
+_SCRIPTS = pathlib.Path(__file__).resolve().parents[1]   # remonte à scripts/
+for _sub in ("core", "minimalite_U5_U4_U3", "R0_reachability", "construction_temoin_Q", "utils"):
+    sys.path.insert(0, str(_SCRIPTS / _sub))
 from iws_kairos_core import A1_kept1, make_tau_init, initial_group, advance_one_kairos, label_map_from_groups
 
 # zoom local sur le deuxieme site interessant trouve par adaptive_refine.py :
@@ -28,6 +31,6 @@ for name,(lo4,hi4,lo5,hi5) in windows.items():
     out[name] = dict(PHI4=PHI4,PHI5=PHI5,lab=lab)
     print(name, "n_labels=", len(np.unique(lab)))
 
-with open('/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad/adaptive_refine_zoom2.pkl','wb') as f:
+with open('../../output/adaptive_refine_zoom2.pkl','wb') as f:
     pickle.dump(out, f)
 print("Sauvegarde.")

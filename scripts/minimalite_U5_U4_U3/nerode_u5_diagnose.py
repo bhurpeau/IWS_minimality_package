@@ -1,3 +1,5 @@
+import pathlib as _pathlib
+def _lp(name): return str(_pathlib.Path(__file__).resolve().parent / name)
 """
 Due diligence sur les 3 cas "NON SEPARE jusqu'a K=7" obtenus avec U5
 (mono-axe, noeud 0, direction fixee a 0 deg, amplitude variable) :
@@ -15,7 +17,10 @@ Due diligence sur les 3 cas "NON SEPARE jusqu'a K=7" obtenus avec U5
     2) balayage BEAUCOUP plus dense d'amplitudes (40 valeurs, 0.1 a 8.0), K=7
 """
 import sys, numpy as np, pickle, time
-sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
+import pathlib as _pathlib
+_SCRIPTS = _pathlib.Path(__file__).resolve().parents[1]
+for _sub in ('core', 'utils', 'axiomes_crash_tests', 'partitions_Fy', 'genealogie_n9', 'minimalite_U5_U4_U3', 'R0_reachability', 'construction_temoin_Q'):
+    sys.path.insert(0, str(_SCRIPTS / _sub))
 from nerode_separating_families import run_pair_family, summarize
 from iws_kairos_core_gen import d
 
@@ -23,7 +28,7 @@ mag = 0.3
 N6, N9 = 6, 9
 
 # --- reconstruire les 3 paires exactement comme dans nerode_matrix_full.py ---
-with open('nerode_pairs.pkl', 'rb') as f:
+with open(_lp('nerode_pairs.pkl'), 'rb') as f:
     saved = pickle.load(f)
 A1_6 = saved['A1_6']
 phisA, phisAp = saved['phisA'], saved['phisAp']

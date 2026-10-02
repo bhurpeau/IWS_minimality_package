@@ -1,10 +1,15 @@
+import pathlib as _pathlib
+def _lp(name): return str(_pathlib.Path(__file__).resolve().parent / name)
 """
 Rang/Jacobien de F2:(r,phi) -> (theta1,theta2) in T^2 (Benoit), avant de
 construire le contre-exemple. Difference centree numerique sur une grille
 de points (r,phi), batchee (4 evaluations voisines par point).
 """
 import sys, numpy as np, time
-sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
+import pathlib as _pathlib
+_SCRIPTS = _pathlib.Path(__file__).resolve().parents[1]
+for _sub in ('core', 'utils', 'axiomes_crash_tests', 'partitions_Fy', 'genealogie_n9', 'minimalite_U5_U4_U3', 'R0_reachability', 'construction_temoin_Q'):
+    sys.path.insert(0, str(_SCRIPTS / _sub))
 from nerode_R0_sequential import map_R0_sequential
 
 def unwrap_near(angles_deg, ref_deg):
@@ -58,6 +63,6 @@ if __name__ == '__main__':
     frac_tiny = (np.abs(det_rel) < 0.01).mean()
     print("  fraction avec |det_rel|<0.01 : %.1f%%" % (100*frac_tiny))
 
-    np.save('R0_jac_rs.npy', rs); np.save('R0_jac_phis.npy', phis)
-    np.save('R0_jac_det_rel.npy', res['det_rel']); np.save('R0_jac_ok.npy', ok)
+    np.save(_lp('R0_jac_rs.npy'), rs); np.save(_lp('R0_jac_phis.npy'), phis)
+    np.save(_lp('R0_jac_det_rel.npy'), res['det_rel']); np.save(_lp('R0_jac_ok.npy'), ok)
     print("sauvegarde -> R0_jac_*.npy")

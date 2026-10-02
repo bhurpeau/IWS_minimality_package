@@ -1,5 +1,10 @@
+import pathlib as _pathlib
+def _lp(name): return str(_pathlib.Path(__file__).resolve().parent / name)
 import sys, numpy as np, pickle, time
-sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
+import pathlib as _pathlib
+_SCRIPTS = _pathlib.Path(__file__).resolve().parents[1]
+for _sub in ('core', 'utils', 'axiomes_crash_tests', 'partitions_Fy', 'genealogie_n9', 'minimalite_U5_U4_U3', 'R0_reachability', 'construction_temoin_Q'):
+    sys.path.insert(0, str(_SCRIPTS / _sub))
 from iws_kairos_core_gen import (automorphisms, run_to_kairos, jump_batch,
                                   build_A_from_label, d)
 
@@ -18,7 +23,7 @@ for i,j in edges: A0[i,j]=A0[j,i]=1
 
 SIGMA_26 = tuple(6 if v==2 else (2 if v==6 else v) for v in range(N))
 
-with open('n9_branch_centers.pkl','rb') as f:
+with open(_lp('n9_branch_centers.pkl'),'rb') as f:
     centers = pickle.load(f)
 b246 = frozenset([2,4,6])
 c2, c6 = centers[b246]
@@ -139,7 +144,7 @@ for e in all_log:
     if e.get('no_split') and e['has_26_in_parent_aut']:
         print(f" k={e['depth']}  chemin={e['parent_path']}  taille={e['parent_size']}  (2,6) present mais pas de scission ce pas-ci")
 
-with open('n9_246_deep_26.pkl','wb') as f:
+with open(_lp('n9_246_deep_26.pkl'),'wb') as f:
     pickle.dump(dict(all_log=all_log), f)
 print("\nSauvegarde -> n9_246_deep_26.pkl")
 print("Temps total : %.1fs" % (time.time()-t0))

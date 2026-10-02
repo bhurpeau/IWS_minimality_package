@@ -1,7 +1,7 @@
 import numpy as np
 import itertools
 
-src = open('/mnt/user-data/outputs/temoin_C23_noyau.py').read().split("# ---------------- 1.")[0]
+src = open(str(_pathlib.Path(__file__).resolve().parents[1] / 'axiomes_crash_tests' / 'temoin_C23_noyau.py')).read().split("# ---------------- 1.")[0]
 g = {}
 exec(src, g)
 rk4, kairos, Atilde, cosine = g['rk4'], g['kairos'], g['Atilde'], g['cosine']

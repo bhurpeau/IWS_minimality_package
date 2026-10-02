@@ -1,3 +1,7 @@
+import pathlib as _pathlib
+def _lp(name): return str(_pathlib.Path(__file__).resolve().parent / name)
+import pathlib as _pathlib
+_pathlib.Path(__file__).resolve().parent.joinpath('figures').mkdir(exist_ok=True)
 import numpy as np
 import matplotlib
 matplotlib.use("Agg")
@@ -5,10 +9,8 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 from matplotlib.patches import Patch
 import os
-os.chdir('/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
-
-d1 = np.load("depth2_kept3_grid.npy", allow_pickle=True).item()
-d2 = np.load("depth2_kept3_2D_grid.npy", allow_pickle=True).item()
+d1 = np.load(str(_pathlib.Path(__file__).resolve().parents[1] / "partitions_Fy" / "depth2_kept3_grid.npy"), allow_pickle=True).item()
+d2 = np.load(str(_pathlib.Path(__file__).resolve().parents[1] / "partitions_Fy" / "depth2_kept3_2D_grid.npy"), allow_pickle=True).item()
 
 okabe_ito = ["#009E73", "#0072B2", "#E69F00"]
 label_map = {3:0, 4:1, 5:2}
@@ -37,6 +39,6 @@ handles = [Patch(facecolor=okabe_ito[0], label="gardé = 3"),
 fig.legend(handles=handles, loc="lower center", ncol=5, fontsize=8.5, frameon=False, bbox_to_anchor=(0.5,-0.04))
 fig.suptitle("Chambre « gardé=3 » (N=6) : séparer paroi structurelle et paroi de protocole", fontsize=12)
 fig.tight_layout(rect=[0,0.05,1,0.95])
-fig.savefig("/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad/v57_review/fig/opacity_walls_protocol_control.pdf", bbox_inches="tight")
-fig.savefig("/mnt/user-data/outputs/opacity_walls_protocol_control.png", bbox_inches="tight", dpi=150)
+fig.savefig("str(_pathlib.Path(__file__).resolve().parent) + '/'v57_review/fig/opacity_walls_protocol_control.pdf", bbox_inches="tight")
+fig.savefig(str(_pathlib.Path(__file__).resolve().parent / 'figures' / 'opacity_walls_protocol_control.png'), bbox_inches="tight", dpi=150)
 print("OK walls_protocol_control")

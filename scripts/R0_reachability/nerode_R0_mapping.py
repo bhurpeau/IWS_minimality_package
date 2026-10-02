@@ -15,7 +15,10 @@ t-il tout le cercle S^1, ou laisse-t-il un arc interdit ? Et cet arc (s'il
 existe) persiste-t-il quand on densifie / elargit l'amplitude ?
 """
 import sys, numpy as np, time
-sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
+import pathlib as _pathlib
+_SCRIPTS = _pathlib.Path(__file__).resolve().parents[1]
+for _sub in ('core', 'utils', 'axiomes_crash_tests', 'partitions_Fy', 'genealogie_n9', 'minimalite_U5_U4_U3', 'R0_reachability', 'construction_temoin_Q'):
+    sys.path.insert(0, str(_SCRIPTS / _sub))
 from iws_kairos_core_gen import Atilde, rhs_batch, rk4_batch, d, Theta, rP
 
 N9 = 9

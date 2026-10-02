@@ -1,3 +1,4 @@
+import pathlib as _pathlib
 import numpy as np
 import time
 
@@ -118,7 +119,7 @@ for g in range(G):
 vals, counts = np.unique(kept_label, return_counts=True)
 print("  classification (gardé parmi {1,4,5}) :", dict(zip(vals.tolist(), counts.tolist())))
 
-np.save("/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad/depth2b_grid.npy",
+np.save(str(_pathlib.Path(__file__).resolve().parent / 'depth2b_grid.npy'),
         dict(PHI4=PHI4, PHI5=PHI5, kept_label=kept_label.reshape(n_grid,n_grid), i2=i2.reshape(n_grid,n_grid)),
         allow_pickle=True)
 print("Sauvegardé.")

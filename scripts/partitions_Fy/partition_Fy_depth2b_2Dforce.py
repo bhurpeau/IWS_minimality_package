@@ -1,3 +1,4 @@
+import pathlib as _pathlib
 import numpy as np, itertools, time
 
 # Meme experience que partition_Fy_depth2b.py (chambre "garde=1", Aut(A1)=1),
@@ -110,7 +111,7 @@ print("  classification (garde parmi {1,4,5}) :", dict(zip(vals.tolist(),counts.
 for v in (1,4,5):
     print(f"   aire kept={v} : {100*(kept_label==v).sum()/G:.2f}%")
 
-np.save("/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad/depth2b_2D_grid.npy",
+np.save(str(_pathlib.Path(__file__).resolve().parent / 'depth2b_2D_grid.npy'),
         dict(PHI4=PHI4, PHI5=PHI5, kept_label=kept_label.reshape(n_grid,n_grid)),
         allow_pickle=True)
 print("Sauvegardé.")

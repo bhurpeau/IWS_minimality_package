@@ -1,5 +1,10 @@
+import pathlib as _pathlib
+def _lp(name): return str(_pathlib.Path(__file__).resolve().parent / name)
 import sys, numpy as np, pickle
-sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
+import pathlib as _pathlib
+_SCRIPTS = _pathlib.Path(__file__).resolve().parents[1]
+for _sub in ('core', 'utils', 'axiomes_crash_tests', 'partitions_Fy', 'genealogie_n9', 'minimalite_U5_U4_U3', 'R0_reachability', 'construction_temoin_Q'):
+    sys.path.insert(0, str(_SCRIPTS / _sub))
 from iws_kairos_core_gen import (automorphisms, initial_group, run_to_kairos, jump_batch,
                                   build_A_from_label, d)
 
@@ -14,7 +19,7 @@ edges = [(0,1),(0,2),(0,3),(4,5)]
 A0 = np.zeros((N,N))
 for i,j in edges: A0[i,j]=A0[j,i]=1
 
-with open('n9_branch_centers.pkl','rb') as f:
+with open(_lp('n9_branch_centers.pkl'),'rb') as f:
     centers = pickle.load(f)
 b246 = frozenset([2,4,6])
 c2, c6 = centers[b246]

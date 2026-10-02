@@ -16,7 +16,10 @@ tombe exactement dans Q ou pas, la correlation donnera deja la lecture
 mecanique.
 """
 import sys, numpy as np, time
-sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
+import pathlib
+_SCRIPTS = pathlib.Path(__file__).resolve().parents[1]   # remonte à scripts/
+for _sub in ("core", "minimalite_U5_U4_U3", "R0_reachability", "construction_temoin_Q", "utils"):
+    sys.path.insert(0, str(_SCRIPTS / _sub))
 from nerode_separating_families import run_pair_family, summarize
 from iws_kairos_core_gen import automorphisms, d
 

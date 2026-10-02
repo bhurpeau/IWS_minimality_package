@@ -1,3 +1,5 @@
+import pathlib as _pathlib
+def _lp(name): return str(_pathlib.Path(__file__).resolve().parent / name)
 import pickle, numpy as np
 import matplotlib
 matplotlib.use("Agg")
@@ -5,15 +7,13 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap, BoundaryNorm
 from matplotlib.patches import Rectangle
 import os
-os.chdir('/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
-
 okabe_ito = ["#0072B2", "#E69F00", "#009E73", "#CC79A7", "#D55E00", "#56B4E9", "#F0E442"]
 
-d = pickle.load(open('adaptive_refine.pkl','rb'))
+d = pickle.load(open(_lp('adaptive_refine.pkl'),'rb'))
 PHI4_0, PHI5_0, lab_0, flagged, n0 = d['PHI4_0'], d['PHI5_0'], d['lab_0'], d['flagged'], d['n0']
 step = 360.0/n0
 
-d2 = pickle.load(open('adaptive_refine_zoom2.pkl','rb'))
+d2 = pickle.load(open(_lp('adaptive_refine_zoom2.pkl'),'rb'))
 PHI4s, PHI5s, labs = d2['site2_haut']['PHI4'], d2['site2_haut']['PHI5'], d2['site2_haut']['lab']
 
 fig, axes = plt.subplots(1,2, figsize=(12,5.8), dpi=150)
@@ -41,6 +41,6 @@ ax.set_aspect("equal")
 
 fig.suptitle("Raffinement adaptatif sur le tore complet (témoin N=6)", fontsize=12)
 fig.tight_layout(rect=[0,0,1,0.94])
-fig.savefig("/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad/v57_review/fig/opacity_adaptive_refinement.pdf", bbox_inches="tight")
-fig.savefig("/mnt/user-data/outputs/opacity_adaptive_refinement.png", bbox_inches="tight", dpi=150)
+fig.savefig("../../output/opacity_adaptive_refinement.pdf", bbox_inches="tight")
+fig.savefig("../../output/opacity_adaptive_refinement.png", bbox_inches="tight", dpi=150)
 print("OK adaptive_refinement")

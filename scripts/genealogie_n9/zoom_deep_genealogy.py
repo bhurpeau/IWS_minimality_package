@@ -1,5 +1,8 @@
 import sys, numpy as np, pickle, time
-sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
+import pathlib as _pathlib
+_SCRIPTS = _pathlib.Path(__file__).resolve().parents[1]
+for _sub in ('core', 'utils', 'axiomes_crash_tests', 'partitions_Fy', 'genealogie_n9', 'minimalite_U5_U4_U3', 'R0_reachability', 'construction_temoin_Q'):
+    sys.path.insert(0, str(_SCRIPTS / _sub))
 from iws_kairos_core import A1_kept1, make_tau_init, initial_group, advance_one_kairos, label_map_from_groups
 
 # Poursuite du zoom du coin (0,0) [depth_growth_zoom.py, §4.10] jusqu'a k=7,
@@ -46,7 +49,7 @@ for depth in range(2, MAX_DEPTH+1):
     else:
         print("  k=%d : aucune scission" % depth)
 
-with open('/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad/zoom_deep_genealogy.pkl','wb') as f:
+with open(str(_pathlib.Path(__file__).resolve().parent / 'zoom_deep_genealogy.pkl'),'wb') as f:
     pickle.dump(dict(PHI4=PHI4, PHI5=PHI5, label_maps=label_maps, all_splits=all_splits,
                       n_grid=n_grid, final_sizes=sizes), f)
 print("\nSauvegarde -> zoom_deep_genealogy.pkl")

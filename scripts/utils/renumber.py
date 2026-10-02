@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-path = "/mnt/user-data/outputs/IWS_classe_axiomes_reflexions.md"
+path = "../../notes/IWS_classe_axiomes_reflexions.md"
 with open(path, encoding="utf-8") as f:
     text = f.read()
 

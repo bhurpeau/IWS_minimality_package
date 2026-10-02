@@ -1,5 +1,8 @@
 import sys, numpy as np, pickle, time
-sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
+import pathlib as _pathlib
+_SCRIPTS = _pathlib.Path(__file__).resolve().parents[1]
+for _sub in ('core', 'utils', 'axiomes_crash_tests', 'partitions_Fy', 'genealogie_n9', 'minimalite_U5_U4_U3', 'R0_reachability', 'construction_temoin_Q'):
+    sys.path.insert(0, str(_SCRIPTS / _sub))
 from iws_kairos_core_gen import (automorphisms, make_u, initial_group, advance_one_kairos,
                                   label_map_from_groups, d)
 
@@ -51,7 +54,7 @@ for path,pid in path_to_id.items():
     print("  id=%d : nouveau voisinage de 0 = %s : %d pts (%.2f%%)" %
           (pid, sorted(nbset), count, 100*count/G0))
 
-with open('/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad/n9_etape1.pkl','wb') as f:
+with open(str(_pathlib.Path(__file__).resolve().parent / 'n9_etape1.pkl'),'wb') as f:
     pickle.dump(dict(PHI2=PHI2, PHI6=PHI6, lab_arr=lab_arr.reshape(n_grid,n_grid), path_to_id=path_to_id,
                       n_grid=n_grid, A0=A0, auts0=auts0), f)
 print("Sauvegarde -> n9_etape1.pkl")

@@ -1,5 +1,10 @@
+import pathlib as _pathlib
+def _lp(name): return str(_pathlib.Path(__file__).resolve().parent / name)
 import sys, numpy as np, time, pickle
-sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
+import pathlib as _pathlib
+_SCRIPTS = _pathlib.Path(__file__).resolve().parents[1]
+for _sub in ('core', 'utils', 'axiomes_crash_tests', 'partitions_Fy', 'genealogie_n9', 'minimalite_U5_U4_U3', 'R0_reachability', 'construction_temoin_Q'):
+    sys.path.insert(0, str(_SCRIPTS / _sub))
 from nerode_separating_families import run_pair_family, summarize, K_MAX
 from iws_kairos_core_gen import automorphisms, build_A_from_label, d
 
@@ -68,6 +73,6 @@ if found_BC is None:
 phisB, phisBp, depthB = found_BC
 tau_B, tau_Bp = tau6(phisB), tau6(phisBp)
 
-with open('nerode_pairs.pkl','wb') as f:
+with open(_lp('nerode_pairs.pkl'),'wb') as f:
     pickle.dump(dict(A1_6=A1_6, phisA=phisA, phisAp=phisAp, phisB=phisB, phisBp=phisBp, depthB=depthB), f)
 print("\nPaires sauvegardees -> nerode_pairs.pkl")

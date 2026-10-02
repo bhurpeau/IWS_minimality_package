@@ -160,6 +160,6 @@ for depth in range(2, MAX_DEPTH+1):
     print("depth=%d : %d chemins, repartition %s" % (depth, len(path_to_id),
           dict(zip(vals.tolist(),counts.tolist()))))
 
-with open('/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad/depth_growth_zoom.pkl','wb') as f:
+with open('../../output/depth_growth_zoom.pkl','wb') as f:
     pickle.dump(dict(PHI4=PHI4, PHI5=PHI5, label_maps=label_maps, n_grid=n_grid), f)
 print("Sauvegarde -> depth_growth_zoom.pkl")

@@ -1,5 +1,10 @@
+import pathlib as _pathlib
+def _lp(name): return str(_pathlib.Path(__file__).resolve().parent / name)
 import sys, numpy as np, pickle
-sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
+import pathlib as _pathlib
+_SCRIPTS = _pathlib.Path(__file__).resolve().parents[1]
+for _sub in ('core', 'utils', 'axiomes_crash_tests', 'partitions_Fy', 'genealogie_n9', 'minimalite_U5_U4_U3', 'R0_reachability', 'construction_temoin_Q'):
+    sys.path.insert(0, str(_SCRIPTS / _sub))
 from nerode_separating_families import run_pair_family, K_MAX
 from iws_kairos_core_gen import d
 
@@ -8,7 +13,7 @@ def vec(phi_deg):
     r = np.radians(phi_deg); return mag*np.array([np.cos(r), np.sin(r)])
 
 N6 = 6
-with open('nerode_pairs.pkl','rb') as f:
+with open(_lp('nerode_pairs.pkl'),'rb') as f:
     saved = pickle.load(f)
 A1_6 = saved['A1_6']
 
@@ -39,6 +44,6 @@ for dx in steps:
                     best = (p1,p2,d0)
 print("\nMeilleur trouve :", best)
 if best:
-    with open('nerode_pair_late.pkl','wb') as f:
+    with open(_lp('nerode_pair_late.pkl'),'wb') as f:
         pickle.dump(dict(phisB=best[0], phisBp=best[1], depthB=best[2]), f)
     print("Sauvegarde -> nerode_pair_late.pkl")

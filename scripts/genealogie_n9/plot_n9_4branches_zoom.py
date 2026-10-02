@@ -1,9 +1,11 @@
+import pathlib as _pathlib
+_pathlib.Path(__file__).resolve().parent.joinpath('figures').mkdir(exist_ok=True)
 import pickle, numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-with open('/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad/n9_depth_growth_4branches_zoom.pkl','rb') as f:
+with open(str(_pathlib.Path(__file__).resolve().parent / 'n9_depth_growth_4branches_zoom.pkl'),'rb') as f:
     d = pickle.load(f)
 results = d['results']; branch_labels = d['branch_labels']
 
@@ -41,5 +43,5 @@ for ax, b in zip(axes.ravel(), order):
 fig.suptitle("N=9 : 4 chambres de $k{=}1$ zoomées localement (budget égal, 3600 pts chacune), carte à $k{=}5$",
              fontsize=12)
 fig.tight_layout(rect=[0,0,1,0.96])
-fig.savefig('/mnt/user-data/outputs/partition_Fy_N9_4branches_zoom_k5.png', dpi=140)
+fig.savefig(str(_pathlib.Path(__file__).resolve().parent / 'figures' / 'partition_Fy_N9_4branches_zoom_k5.png'), dpi=140)
 print("Sauvegardé -> partition_Fy_N9_4branches_zoom_k5.png")

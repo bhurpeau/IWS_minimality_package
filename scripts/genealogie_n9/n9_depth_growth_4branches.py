@@ -1,5 +1,8 @@
 import sys, numpy as np, pickle, time, itertools
-sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
+import pathlib as _pathlib
+_SCRIPTS = _pathlib.Path(__file__).resolve().parents[1]
+for _sub in ('core', 'utils', 'axiomes_crash_tests', 'partitions_Fy', 'genealogie_n9', 'minimalite_U5_U4_U3', 'R0_reachability', 'construction_temoin_Q'):
+    sys.path.insert(0, str(_SCRIPTS / _sub))
 from iws_kairos_core_gen import (automorphisms, initial_group, advance_one_kairos,
                                   label_map_from_groups, d, build_A_from_label)
 
@@ -83,7 +86,7 @@ for depth in range(1, MAX_DEPTH+1):
         sizes_per_branch[anc] += int((lab_arr==pid).sum())
     print(" k=%d :" % depth, {tuple(sorted(b)): len(counts_per_branch[b]) for b in branch_labels})
 
-with open('/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad/n9_depth_growth_4branches.pkl','wb') as f:
+with open(str(_pathlib.Path(__file__).resolve().parent / 'n9_depth_growth_4branches.pkl'),'wb') as f:
     pickle.dump(dict(PHI2=PHI2, PHI6=PHI6, label_maps=label_maps, split_records=split_records,
                       n_grid=n_grid, branch_labels=branch_labels, A1_by_branch=A1_by_branch), f)
 print("\nSauvegarde -> n9_depth_growth_4branches.pkl")

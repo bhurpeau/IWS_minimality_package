@@ -1,5 +1,10 @@
+import pathlib as _pathlib
+def _lp(name): return str(_pathlib.Path(__file__).resolve().parent / name)
 import sys, numpy as np, time
-sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
+import pathlib
+_SCRIPTS = pathlib.Path(__file__).resolve().parents[1]   # remonte à scripts/
+for _sub in ("core", "minimalite_U5_U4_U3", "R0_reachability", "construction_temoin_Q", "utils"):
+    sys.path.insert(0, str(_SCRIPTS / _sub))
 from nerode_separating_families import run_pair_family
 from iws_kairos_core_gen import d
 
@@ -27,8 +32,8 @@ def tau9_pert7(phi7_deg):
     tau[8] = mag*np.array([np.cos(phi8_fixed), np.sin(phi8_fixed)])
     return tau
 
-amps_grid = np.load('phi7_amps.npy'); angs_grid = np.load('phi7_angs.npy')
-theta1 = np.load('phi7_theta1.npy'); theta2 = np.load('phi7_theta2.npy'); alive_seq = np.load('phi7_alive.npy')
+amps_grid = np.load(_lp('phi7_amps.npy')); angs_grid = np.load(_lp('phi7_angs.npy'))
+theta1 = np.load(_lp('phi7_theta1.npy')); theta2 = np.load(_lp('phi7_theta2.npy')); alive_seq = np.load(_lp('phi7_alive.npy'))
 protocols = [(0, a*np.cos(np.radians(g)), a*np.sin(np.radians(g))) for a,g in zip(amps_grid,angs_grid)]
 
 delta = float(sys.argv[1])

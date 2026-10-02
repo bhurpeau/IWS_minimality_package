@@ -1,3 +1,7 @@
+import pathlib as _pathlib
+def _lp(name): return str(_pathlib.Path(__file__).resolve().parent / name)
+import pathlib as _pathlib
+_pathlib.Path(__file__).resolve().parent.joinpath('figures').mkdir(exist_ok=True)
 import numpy as np
 import matplotlib
 matplotlib.use("Agg")
@@ -5,8 +9,8 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 from matplotlib.patches import Patch
 
-data_old = np.load("depth2b_grid.npy", allow_pickle=True).item()
-data_new = np.load("depth2b_2D_grid.npy", allow_pickle=True).item()
+data_old = np.load(_lp("depth2b_grid.npy"), allow_pickle=True).item()
+data_new = np.load(_lp("depth2b_2D_grid.npy"), allow_pickle=True).item()
 
 okabe_ito = ["#0072B2", "#E69F00", "#009E73"]
 label_map = {1:0, 4:1, 5:2}
@@ -29,7 +33,7 @@ handles = [Patch(facecolor=okabe_ito[0], label="gardé = nœud 1 (dominant)"),
 fig.legend(handles=handles, loc="lower center", ncol=3, fontsize=9, frameon=False, bbox_to_anchor=(0.5,-0.02))
 fig.suptitle("Chambre « gardé=1 » (Aut(A₁)=1) : les bandes {4,5} survivent au forçage générique", fontsize=11)
 fig.tight_layout(rect=[0,0.05,1,0.95])
-fig.savefig("/mnt/user-data/outputs/partition_Fy_N6_etape2_kept1_compare.png", bbox_inches="tight")
+fig.savefig(str(_pathlib.Path(__file__).resolve().parent / 'figures' / 'partition_Fy_N6_etape2_kept1_compare.png'), bbox_inches="tight")
 print("Figure sauvegardée.")
 
 for label,data in [("1D",data_old), ("2D",data_new)]:

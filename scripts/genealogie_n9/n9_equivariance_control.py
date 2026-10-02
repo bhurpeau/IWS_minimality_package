@@ -1,5 +1,10 @@
+import pathlib as _pathlib
+def _lp(name): return str(_pathlib.Path(__file__).resolve().parent / name)
 import sys, numpy as np, pickle, time
-sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
+import pathlib as _pathlib
+_SCRIPTS = _pathlib.Path(__file__).resolve().parents[1]
+for _sub in ('core', 'utils', 'axiomes_crash_tests', 'partitions_Fy', 'genealogie_n9', 'minimalite_U5_U4_U3', 'R0_reachability', 'construction_temoin_Q'):
+    sys.path.insert(0, str(_SCRIPTS / _sub))
 from iws_kairos_core_gen import (automorphisms, initial_group, advance_one_kairos,
                                   label_map_from_groups, d, build_A_from_label)
 
@@ -27,7 +32,7 @@ for v in range(N): P[sigma[v], v] = 1
 A1_145_transported = P @ A1_145 @ P.T
 print("sigma . A1_{1,4,5} == A1_{2,4,5} ?", np.array_equal(A1_145_transported, A1_245))
 
-with open('n9_branch_centers.pkl','rb') as f:
+with open(_lp('n9_branch_centers.pkl'),'rb') as f:
     centers = pickle.load(f)
 b145 = frozenset([1,4,5])
 c2_145, c6_145 = centers[b145]

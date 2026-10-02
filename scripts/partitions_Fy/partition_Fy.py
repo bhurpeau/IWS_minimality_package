@@ -1,3 +1,5 @@
+import pathlib as _pathlib
+_pathlib.Path(__file__).resolve().parent.joinpath('figures').mkdir(exist_ok=True)
 import numpy as np
 
 # ---------------------------------------------------------------------------
@@ -94,5 +96,5 @@ handles += [plt.Line2D([0], [0], color="black", lw=2.2, label="mur structurel (œ
 ax.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, -0.13), ncol=1, fontsize=8, frameon=False)
 
 fig.tight_layout()
-fig.savefig("/mnt/user-data/outputs/partition_Fy_N6_etape1.png", bbox_inches="tight")
+fig.savefig(str(_pathlib.Path(__file__).resolve().parent / 'figures' / 'partition_Fy_N6_etape1.png'), bbox_inches="tight")
 print("\nFigure sauvegard√©e.")

@@ -21,7 +21,10 @@ On cartographie R_0^{(1,2)} sur le temoin N=9, chambre {2,4,6}, puis on
 visualise/quantifie les trous.
 """
 import sys, numpy as np, time
-sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
+import sys, pathlib
+_SCRIPTS = pathlib.Path(__file__).resolve().parents[1]   # remonte à scripts/
+for _sub in ("core", "minimalite_U5_U4_U3", "R0_reachability", "construction_temoin_Q", "utils"):
+    sys.path.insert(0, str(_SCRIPTS / _sub))
 from iws_kairos_core_gen import Atilde, rk4_batch, cos_sim, build_A_from_label, d, Theta, rP, rV
 
 N9 = 9

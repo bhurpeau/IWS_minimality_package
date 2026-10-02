@@ -1,3 +1,4 @@
+import pathlib as _pathlib
 import numpy as np, itertools, time
 
 # Chambre "garde=3" du temoin N=6 : retires={1,2}, ajoutes={4,5} au Kairos 1.
@@ -126,7 +127,7 @@ if tie_exact.sum() > 0:
     d4 = phi4_flat[idx]; d5 = phi5_flat[idx]
     print("  écart max |phi4-phi5| parmi ces points (deg) :", np.degrees(np.abs(((d4-d5+np.pi)%(2*np.pi))-np.pi)).max())
 
-np.save("/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad/depth2_kept3_grid.npy",
+np.save(str(_pathlib.Path(__file__).resolve().parent / 'depth2_kept3_grid.npy'),
         dict(PHI4=PHI4, PHI5=PHI5, kept_label=kept_label.reshape(n_grid,n_grid),
              tie_exact=tie_exact.reshape(n_grid,n_grid), i2=i2.reshape(n_grid,n_grid)),
         allow_pickle=True)

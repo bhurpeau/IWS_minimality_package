@@ -1,3 +1,4 @@
+import pathlib as _pathlib
 import numpy as np, itertools, time
 
 # Meme experience que partition_Fy_depth2_kept3.py, mais avec un forcage 2D
@@ -129,7 +130,7 @@ if tie_exact.sum()>0:
     print("   -> sur antidiagonale (phi4=-phi5) :", (dsum<1.0).sum())
     print("   -> ni l'un ni l'autre :", ((ddiag>=1.0)&(dsum>=1.0)).sum())
 
-np.save("/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad/depth2_kept3_2D_grid.npy",
+np.save(str(_pathlib.Path(__file__).resolve().parent / 'depth2_kept3_2D_grid.npy'),
         dict(PHI4=PHI4, PHI5=PHI5, kept_label=kept_label.reshape(n_grid,n_grid)),
         allow_pickle=True)
 print("Sauvegardé.")

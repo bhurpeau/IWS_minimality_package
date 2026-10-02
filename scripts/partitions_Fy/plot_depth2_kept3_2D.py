@@ -1,3 +1,7 @@
+import pathlib as _pathlib
+def _lp(name): return str(_pathlib.Path(__file__).resolve().parent / name)
+import pathlib as _pathlib
+_pathlib.Path(__file__).resolve().parent.joinpath('figures').mkdir(exist_ok=True)
 import numpy as np
 import matplotlib
 matplotlib.use("Agg")
@@ -5,7 +9,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 from matplotlib.patches import Patch
 
-data = np.load("depth2_kept3_2D_grid.npy", allow_pickle=True).item()
+data = np.load(_lp("depth2_kept3_2D_grid.npy"), allow_pickle=True).item()
 PHI4, PHI5, kept = data["PHI4"], data["PHI5"], data["kept_label"]
 
 okabe_ito = ["#009E73", "#0072B2", "#E69F00"]
@@ -30,5 +34,5 @@ handles = [Patch(facecolor=okabe_ito[0], label="gardé = nœud 3 (dominant)"),
            plt.Line2D([0],[0], color="0.15", lw=1.2, ls=(0,(2,2)), label="φ4=−φ5 (disparu)")]
 ax.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5,-0.14), ncol=1, fontsize=8, frameon=False)
 fig.tight_layout()
-fig.savefig("/mnt/user-data/outputs/partition_Fy_N6_etape2_kept3_2Dforce.png", bbox_inches="tight")
+fig.savefig(str(_pathlib.Path(__file__).resolve().parent / 'figures' / 'partition_Fy_N6_etape2_kept3_2Dforce.png'), bbox_inches="tight")
 print("Figure sauvegardée.")

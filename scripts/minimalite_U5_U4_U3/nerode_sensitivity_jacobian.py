@@ -1,3 +1,5 @@
+import pathlib as _pathlib
+def _lp(name): return str(_pathlib.Path(__file__).resolve().parent / name)
 """
 Test de sensibilite local (Benoit) : au lieu d'un scan aveugle de paires, on
 calcule directement le Jacobien du score de decision K* par rapport au
@@ -25,12 +27,15 @@ signature recherchee par Benoit d'une vraie difference de pouvoir separant
 entre U4 et U3, pas seulement de vitesse.
 """
 import sys, numpy as np, pickle, time
-sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
+import pathlib as _pathlib
+_SCRIPTS = _pathlib.Path(__file__).resolve().parents[1]
+for _sub in ('core', 'utils', 'axiomes_crash_tests', 'partitions_Fy', 'genealogie_n9', 'minimalite_U5_U4_U3', 'R0_reachability', 'construction_temoin_Q'):
+    sys.path.insert(0, str(_SCRIPTS / _sub))
 from iws_kairos_core_gen import (Atilde, rhs_batch, rk4_batch, cos_sim,
                                    build_A_from_label, d, Theta, rP, rV)
 
 N6 = 6
-with open('nerode_pairs.pkl', 'rb') as f:
+with open(_lp('nerode_pairs.pkl'), 'rb') as f:
     saved = pickle.load(f)
 A1_6 = saved['A1_6']
 mag = 0.3

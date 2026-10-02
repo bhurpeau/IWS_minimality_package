@@ -236,7 +236,7 @@ for depth in range(2, MAX_DEPTH+1):
                               n_walls=len(walls), n_new_walls=new_walls))
     prev_walls = walls
 
-with open('/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad/depth_growth_kept3.pkl','wb') as f:
+with open('../../output/depth_growth_kept3.pkl','wb') as f:
     pickle.dump(dict(PHI4=PHI4, PHI5=PHI5, label_maps=label_maps, split_records=split_records,
                       summary_rows=summary_rows, n_grid=n_grid), f)
 print("Sauvegarde -> depth_growth_kept3.pkl")

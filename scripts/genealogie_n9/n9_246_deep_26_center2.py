@@ -1,5 +1,10 @@
+import pathlib as _pathlib
+def _lp(name): return str(_pathlib.Path(__file__).resolve().parent / name)
 import sys, numpy as np, pickle, time
-sys.path.insert(0, '/tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad')
+import pathlib as _pathlib
+_SCRIPTS = _pathlib.Path(__file__).resolve().parents[1]
+for _sub in ('core', 'utils', 'axiomes_crash_tests', 'partitions_Fy', 'genealogie_n9', 'minimalite_U5_U4_U3', 'R0_reachability', 'construction_temoin_Q'):
+    sys.path.insert(0, str(_SCRIPTS / _sub))
 from iws_kairos_core_gen import (automorphisms, run_to_kairos, jump_batch,
                                   build_A_from_label, d)
 
@@ -129,6 +134,6 @@ for depth in range(2,7):
     n_with_26 = sum(1 for e in entries if e['has_26_in_parent_aut'])
     print(" k=%d : %d/%d groupes-parents ont (2 6) dans Aut(A)" % (depth, n_with_26, len(entries)))
 
-with open('n9_246_deep_26_center2.pkl','wb') as f:
+with open(_lp('n9_246_deep_26_center2.pkl'),'wb') as f:
     pickle.dump(dict(all_log=all_log, center=(c2,c6)), f)
 print("\nTemps total : %.1fs" % (time.time()-t0))
