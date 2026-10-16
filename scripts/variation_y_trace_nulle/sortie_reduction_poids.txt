@@ -1,0 +1,20 @@
+Test A (a ~ th, zero transverse)
+  e=1e-1   a=9.912e-02   F''=2.30213
+  e=1e-2   a=9.991e-03   F''=7.13131
+  e=1e-3   a=9.999e-04   F''=11.86248
+  e=1e-4   a=1.000e-04   F''=16.49024
+  e=1e-5   a=1.000e-05   F''=21.09867
+  pente par decade attendue 2*b*a'^2*ln10 = 4.6052 (b=g/v=1, a'=1)
+Test B (a ~ th^2, hors colinearite)
+  e=1e-1   a=9.127e-03   F''=0.95656
+  e=1e-2   a=9.130e-05   F''=0.54718
+  e=1e-3   a=9.130e-07   F''=0.53692
+  e=1e-4   a=9.130e-09   F''=0.53662
+  e=1e-5   a=9.130e-11   F''=0.53660
+Test C (a = th^2-0.01, zero regulier en 0.1)
+  e=1e-1   a=2.913e-02   F''=1.62827
+  e=1e-2   a=2.091e-03   F''=1.08084
+  e=1e-3   a=2.009e-04   F''=1.15960
+  e=1e-4   a=2.001e-05   F''=1.32911
+  e=1e-5   a=2.000e-06   F''=1.51140
+  pente par decade attendue 2*b*a'^2*ln10 = 0.1842 (a'=0.2)

@@ -1,0 +1,11 @@
+MANIFESTE DE CERTIFICATION - premier episode, protocole Pi (Theta = 11/5, P_0(0) = 77/100, tau_i(0) = 3/5 e)
+Numerotation : note V5, script V4 (V4 : suppression d'un test redondant dans a_priori et d'un 'if False else' ; sortie identique a celle de la V3).
+Python : Python 3.11.15
+python-flint : 0.9.0  (pip install python-flint==0.9.0)
+Commande : python3 certif_N_premier_episode_V4.py   (< 1 s ; leve AssertionError si un controle echoue)
+
+4125cf7426fdc5a4416743cf951b52e88b1e10722ecbea3580297e5ef8cf92eb  certif_N_premier_episode_V4.py
+97b643bb1fa291f90f1acb5bc51b9be96400657b5019fbd3f6411d0f53e4d937  sortie_certification_N_V4.txt
+ca1190a56535a02efe6b079d728a918378a34c012fbfce3eacfdba7b4929e7cb  verif_N_extrapolation_eps.py
+4159c9e093010ff682050379c1122101d353702f8db415694ce1a0115d19c35b  sortie_N_extrapolation_eps.txt
+d42920f70978cd9fd38fb3ae6294da99fc0965b7383e8b12d27c1afc653882c0  ../criticite_transverse_classes_V5.tex

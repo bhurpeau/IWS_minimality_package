@@ -1,0 +1,28 @@
+dt = 0.002  interpolation = True
+eta=0 : b=[0.18982827 0.14787898] a=0.223129  M=[[0.223129, -0.0], [0.0, 0.223129]]  residu affine=4.44e-16  c1=0.995741
+  (a/rho = lambda = 0.743764 ; M doit etre a*I : |M01|,|M10| = 1.1e-13, 5.0e-14 ; M00-M11 = -1.7e-13)
+  Delta(-0.140) = +1.149e-03
+  Delta(-0.150) = +6.230e-04
+  Delta(-0.160) = +9.597e-05
+  Delta(-0.165) = -1.678e-04
+  Delta(-0.170) = -4.316e-04
+  Delta(-0.180) = -9.595e-04
+  Delta(-0.190) = -1.487e-03
+eta* = -0.161819   |b|=0.223049 a=0.223049   phi* = 221.7497 deg   Delta'(eta*) = +5.2750e-02
+phi* dans la fenetre [219.0, 225.5] deg ? True (marges 2.75 / 3.75 deg)
+simulation directe : mot de reference retrouve en (phi*, eta*) ? True ; ||tau_4|| = 5.249e-14
+u = d tau/d eta = [0.15516586 0.00373156] ; v = d tau/d phi = [ 0.14852353 -0.16640813] ; det[v,u] = +2.6375e-02 (|v||u| = 3.4620e-02)
+pente conique predite : largeur ~ K|eta-eta*| avec K = 6.347 deg par unite d'eta  (theta_c = 5.511 deg)
+largeur du doigt (modele affine) vs mesure par balayage (finger_width_scan) :
+   eta=-0.050  modele 0.6482  balayage 0.6627   modele/|eta-eta*| = 5.797
+   eta=-0.100  modele 0.3744  balayage 0.4066   modele/|eta-eta*| = 6.056
+   eta=-0.120  modele 0.2573  balayage 0.2891   modele/|eta-eta*| = 6.153
+   eta=-0.140  modele 0.1363  balayage 0.1706   modele/|eta-eta*| = 6.246
+   eta=-0.150  modele 0.0744  balayage 0.1110   modele/|eta-eta*| = 6.293
+   eta=-0.160  modele 0.0115  balayage 0.0511   modele/|eta-eta*| = 6.332
+   eta=-0.165  modele 0.0000  balayage 0.0210   modele/|eta-eta*| = 0.000
+   eta=-0.16162  modele 0.00125   w/|eps| = 6.256
+   eta=-0.16132  modele 0.00315   w/|eps| = 6.305
+   eta=-0.16082  modele 0.00632   w/|eps| = 6.321
+   eta=-0.15982  modele 0.01266   w/|eps| = 6.329
+   eta=-0.15682  modele 0.03161   w/|eps| = 6.321

@@ -1,0 +1,274 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm,booktabs,enumitem,geometry}
+\geometry{margin=2.4cm}
+
+\newtheorem{theoreme}{Théorème}
+\newtheorem{proposition}[theoreme]{Proposition}
+\newtheorem{lemme}[theoreme]{Lemme}
+\newtheorem{corollaire}[theoreme]{Corollaire}
+\theoremstyle{remark}
+\newtheorem{remarque}[theoreme]{Remarque}
+\theoremstyle{definition}
+\newtheorem{hyp}{Hypothèse}
+
+\newcommand{\R}{\mathbb R}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\vth}{\vartheta}
+\newcommand{\zt}{\widetilde z}
+\newcommand{\Pt}{\widetilde P}
+
+\title{Stabilité perturbative à mot fixé du noyau découplé\\
+vers le noyau faiblement couplé\\[2pt]\large (version 2, après relecture)}
+\author{Programme de soustraction --- IWS, Tome II (travail de recherche)}
+\date{octobre 2026}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Statut.} Texte de travail. Le théorème~\ref{thm:stab} (ordre un) est démontré ici ; la version~1 de la preuve comparait les deux trajectoires \emph{à travers} le saut, ce qui était fautif (voir l'historique ci-dessous) ; la version~2 travaille avec des \emph{prolongements virtuels pré-impact}. Le théorème~\ref{thm:aff} (défaut d'affinité) est \emph{conditionnel} à l'hypothèse~\ref{h:P2}, reformulée sur le prolongement pré-impact ; la proposition~\ref{prop:suff} en donne des conditions suffisantes (esquisse). La section~\ref{sec:num} rassemble des \emph{témoins} numériques ; ils ne démontrent rien.
+
+\noindent\textbf{Historique des corrections (v1 $\to$ v2).}
+(1) Étapes~1--2 : la dérivée $\dot P^0_{i_r}\ge\nu/2$ sur une fenêtre \emph{centrée} en $t_r^0$ n'a pas de sens pour la trajectoire hybride (réinitialisation de $P_{i_r}$ à $r_P\Theta$) ; les comparaisons au voisinage de l'impact se font désormais sur les prolongements pré-impact $\zt^\eps_r,\zt^0_r$, qui sont de vraies solutions d'EDO sur le graphe $A_{r-1}$.
+(2) L'hypothèse de régularité $C^2$ porte sur $\Pt_r$ (prolongement pré-impact de $P_{i_r}$), pas sur la composante $P$ de la trajectoire hybride.
+(3) Le mot comprend $k-1$ recâblages et un $k$-ième impact.
+(4) La constante $\Upsilon_r$ de la récurrence ne dépend que de la longueur de l'épisode $r$, non de l'horizon total ; on distingue l'amplification $C_r$ du rayon $\eps_0(k)$.
+
+\noindent\textbf{Corrections de la relecture suivante (v2$\to$v2b).} (5) La récurrence s'arrête au rang $k-1$ (synchronisation post-saut, marges de classement) ; le rang $k$ n'utilise que la comparaison pré-impact (étape~3). (6) $r_P\in]0,1[$ strictement, et $\rho$ est choisi selon $\delta_{\rm post}=\min((1-r_P)\Theta,\sigma)$, ce qui garantit la sortie du garde après le saut (sans quoi $r_P=1$ pourrait redéclencher immédiatement ; si la sémantique du Tome~I traitait $r_P=1$ à part, il faudrait l'expliciter). (7) La lettre $\kappa$ est réservée aux paramètres de pression : les constantes de Lipschitz sont notées $K_P$ et $\chi_r$.
+
+\section{Cadre}
+
+On fixe $N$, $d$, les paramètres du noyau (Annexe~F), un graphe initial $A_0$ et un présent observable $y=(H^0,V^0,P^0)$ avec $\max_iP^0_i<\Theta$. L'état continu est $z=(H,V,\tau,P)$ et l'on note $\eta=(H,V,\tau)$ la partie qui ne dépend pas de $P$. Le paramètre caché est $\vth:=\tau(0)\in\R^{N\times d}$.
+
+Pour $(\bar\gamma,\bar\lambda)\ge0$ fixés et $\eps\ge0$, on pose $(\gamma_1,\lambda)=\eps(\bar\gamma,\bar\lambda)$ ; $\eps=0$ est le noyau découplé. Entre deux Kairos, pour chaque n\oe ud $i$ et à graphe $A$ fixé,
+\begin{align*}
+\dot H_i&=V_i,\qquad
+\dot V_i=-\bigl(\gamma_0+\eps\bar\gamma\norm{\tau_i}\bigr)V_i-M_{\eps\bar\lambda}(\tau_i)H_i+\zeta\tanh\bigl((\tilde AH)_i\bigr)+u_i(t),\\
+\dot\tau_i&=\alpha\tanh\bigl((\tilde AH)_i\bigr)-\beta\tau_i,\qquad
+\dot P_i=\kappa_1\norm{H_i}+\kappa_2\norm{V_i}-\kappa_3P_i,
+\end{align*}
+avec $M_\lambda(\tau)=I-\frac{\lambda}{1+(1+\lambda)\norm\tau^2}\tau\tau^\top$. On note $\dot z=F_{A,\eps}(t,z)$. Remarquer que $\dot P_i$ ne dépend que de $H_i,V_i,P_i$.
+
+Le \emph{Kairos} est le premier instant $T$ (après le saut précédent) où $\max_iP_i\ge\Theta$ ; $i^\ast$ est le n\oe ud qui l'atteint ; le saut est $J_{i^\ast}:P_{i^\ast}\mapsto r_PP_{i^\ast},\,V_{i^\ast}\mapsto r_VV_{i^\ast}$ (avec $r_V\in]0,1]$ et $r_P\in]0,1[$ \emph{strictement} : pour $r_P=1$ le nœud déclencheur resterait à $P=\Theta$ et le garde se redéclencherait aussitôt ; $J_{i^\ast}$ est alors $1$-lipschitzien), suivi de la réécriture $A\mapsto A^+$ : avec $\mathrm{nb}$ et $\mathrm{nn}$ les voisins et non-voisins de $i^\ast$ et $m=\min(2,|\mathrm{nb}|,|\mathrm{nn}|)$, on retire les $m$ voisins de plus faible similarité cosinus $s_j=\cos(\tau_{i^\ast},\tau_j)$ et l'on ajoute les $m$ non-voisins de plus forte similarité ($s_j:=0$ si une trace est nulle ; ex æquo départagés par l'indice).
+
+\paragraph{Mot.} On appelle \emph{mot} de profondeur $k$ la donnée $w=\bigl((i_1,S_1),\dots,(i_{k-1},S_{k-1}),\,i_k\bigr)$ : les $k-1$ premiers impacts avec leurs recâblages, puis le $k$-ième impact, \emph{non suivi de son saut} (le $k$-ième recâblage n'intervient pas dans $\tau^{(k)}$). On note $T_r^\eps(\vth)$ le $r$-ième instant de Kairos après $t=0$, $t_r^0$ sa valeur à $\eps=0$, pour $1\le r\le k-1$, $A_r$ le graphe après le $r$-ième saut (il est déterminé par $w$ ; $A_0$ est donné ; le graphe après le $k$-ième saut n'est pas défini par le mot) et $\tau^{(r)}_\eps(\vth):=\tau(T_r^\eps)$.
+
+\paragraph{Prolongement virtuel pré-impact.} Pour une trajectoire hybride jusqu'au $(r-1)$-ième saut inclus, notons $\zt_r(t)$, $t\ge T_{r-1}$, la solution de $\dot z=F_{A_{r-1},\eps}(t,z)$ issue de l'état post-saut en $T_{r-1}$, \emph{sans appliquer le $r$-ième saut}. C'est une vraie solution d'EDO, définie au-delà de $T_r$ ; elle coïncide avec la trajectoire hybride sur $[T_{r-1},T_r]$. On note $\Pt_r$ sa composante $P_{i_r}$ (ou $\Pt_{r,j}$ pour $P_j$).
+
+\begin{lemme}[structure du noyau découplé]\label{lem:dec}
+À $\eps=0$, $(H,V,P)$ est solution d'un système fermé qui ne contient pas $\tau$. Donc, si $\vth$ réalise le mot $w$, les trajectoires $(H,V,P)$ et les instants $t_r^0$ sont les mêmes pour tous ces $\vth$ (autonomie du visible \emph{conditionnelle au mot}), et
+\[
+\tau_0^{(r)}(\vth)=b_{r,w}+e^{-\beta t_r^0}\,\vth,\qquad b_{r,w}\in\R^{N\times d}\ \text{indépendant de }\vth.
+\]
+\end{lemme}
+\begin{proof}
+La variation des constantes donne $\tau_i(t)=e^{-\beta t}\vth_i+\alpha\int_0^te^{-\beta(t-s)}\tanh((\tilde A(s)H(s))_i)\,ds$, et le second terme ne dépend que de $(H,\text{mot})$.
+\end{proof}
+
+Le mot lui-même dépend de $\vth$ (par les classements de similarités) : c'est le mécanisme d'historicité.
+
+\section{Hypothèses}
+
+On fixe $w$, $k$, $u\in L^\infty$, $\norm{u}_\infty\le u_{\max}$, et un compact $K\subset\R^{N\times d}$.
+
+\begin{hyp}[chambre]\label{h:ch} Pour tout $\vth\in K$ le noyau découplé réalise $w$ (impacts $i_1,\dots,i_k$, recâblages $S_1,\dots,S_{k-1}$).\end{hyp}
+\begin{hyp}[transversalité]\label{h:nu} $\nu:=\min_{r\le k}\dfrac{d\Pt^0_r}{dt}(t_r^0)>0$, où $\Pt^0_r$ est la composante $i_r$ du prolongement pré-impact de référence (dérivée à gauche du $P_{i_r}$ hybride en $t_r^0$).\end{hyp}
+\begin{hyp}[séparation]\label{h:sig} $\sigma:=\min_{r\le k}\bigl(\Theta-\max_{j\ne i_r}\Pt^0_{r,j}(t_r^0)\bigr)>0$.\end{hyp}
+\begin{hyp}[écart]\label{h:g} $g:=\min_{r\le k}(t_r^0-t_{r-1}^0)>0$, $t_0^0:=0$.\end{hyp}
+\begin{hyp}[traces non nulles aux Kairos suivis d'un recâblage]\label{h:tau} $\nu_\tau:=\min_{\vth\in K,\,r\le k-1,\,m_r\ge1,\,j}\norm{\tau_{0,j}^{(r)}(\vth)}>0$. Convention : le minimum d'un ensemble vide vaut $+\infty$ ; pour $k=1$, ou si aucun des $r\le k-1$ n'a $m_r\ge1$, l'hypothèse est sans objet et $\nu_\tau=+\infty$ (alors $\chi_r=0$ et le seuil correspondant est vide).\end{hyp}
+\begin{hyp}[marges de sélection]\label{h:mu}
+Pour $r\le k-1$ avec $m_r\ge1$, soient $s_{(1)}\le\dots\le s_{(|\mathrm{nb}|)}$ les similarités des voisins et $s'_{(1)}\ge\dots\ge s'_{(|\mathrm{nn}|)}$ celles des non-voisins (à $\eps=0$, au Kairos $r$). La marge de frontière est $\min\bigl(s_{(m+1)}-s_{(m)},\,s'_{(m)}-s'_{(m+1)}\bigr)$ (convention $+\infty$ si l'indice n'existe pas). On suppose $\mu:=\min_{\vth\in K,\,r\le k-1,\,m_r\ge1}(\text{marge})>0$, avec la convention $\min\varnothing=+\infty$ : pour $k=1$, ou sans sélection compétitive (aucun recâblage concerné, ou toutes les marges infinies), l'hypothèse est sans objet, le seuil $2\chi_r\eps<\mu$ est automatiquement satisfait et le théorème n'est restreint en rien.
+\end{hyp}
+
+\begin{remarque}
+Par le lemme~\ref{lem:dec}, $\nu,\sigma,g$ ne dépendent pas de $\vth\in K$. Les hypothèses~\ref{h:tau}--\ref{h:mu} sont des minima de fonctions continues de $\vth$ sur le compact $K$ contenu dans la chambre ouverte : elles se réduisent à des inégalités strictes \emph{ponctuelles}. Seules les marges \emph{de frontière} comptent : l'ordre à l'intérieur de l'ensemble retiré (ou ajouté) est sans effet sur le mot. Les hypothèses~\ref{h:nu}--\ref{h:g} sont des conditions sur la \emph{dynamique visible} seule.
+\end{remarque}
+
+\section{Théorème de stabilité à l'ordre un}
+
+\begin{theoreme}[stabilité à mot fixé]\label{thm:stab}
+Sous les hypothèses~\ref{h:ch}--\ref{h:mu}, il existe $\eps_0>0$ et des constantes $C_1,\dots,C_k$ (indépendantes de $\vth\in K$) telles que pour $0\le\eps<\eps_0$ et tout $\vth\in K$ :
+\begin{enumerate}[label=(\roman*)]
+\item le noyau couplé réalise le même mot $w$ (mêmes $k$ premiers impacts et mêmes $k-1$ premiers recâblages) ;
+\item $\lvert T_r^\eps(\vth)-t_r^0\rvert\le D_r\eps$ avec $D_r=4F_r/\nu$ ;
+\item $\displaystyle\bigl\lVert\tau^{(r)}_\eps(\vth)-\bigl[b_{r,w}+e^{-\beta t_r^0}\vth\bigr]\bigr\rVert\le C_r\eps$, \qquad $1\le r\le k$.
+\end{enumerate}
+\end{theoreme}
+
+Le point (iii) ne dit pas que $\tau^{(r)}_\eps$ est affine ; il borne son écart à une application qui l'est.
+
+\subsection{Démonstration}
+
+\paragraph{Étape 0 : bornes et constantes.} Fixons $\bar\eps>0$ et $\eps\in[0,\bar\eps]$. L'équation de $\tau$ ne dépend pas de $\eps$ et les sauts ne modifient pas $\tau$ : $\norm{\tau_i}\le\bar\tau:=\max(\sup_K\norm\vth,\alpha\sqrt d/\beta)$ le long de toute exécution et de tout prolongement virtuel. Sur $\eta=(H,V,\tau)$ le champ est à croissance linéaire uniforme ($\Gamma\le\gamma_0+\bar\eps\bar\gamma\bar\tau$, $\norm M\le1$, $\tilde A$ non expansive, $\tanh$ bornée) ; Grönwall donne $R$, indépendant de $\eps,\vth$ et du graphe, tel que les trajectoires hybrides sur $[0,t_k^0+g/2]$ et leurs prolongements virtuels sur des fenêtres de longueur $\le g/2$ restent dans la boule $B_R$ ; $P$ est borné de même. Sur $B_R$, pour tout graphe $A$ (en nombre fini) et p.p.\ $t$ :
+\begin{itemize}[nosep]
+\item $F_{A,\eps}(t,\cdot)$ est $L$-lipschitzien (constantes d'Annexe~A pour $\Gamma$ et $M$) ;
+\item $\norm{F_{A,\eps}(t,z)-F_{A,0}(t,z)}\le B\eps$, avec $B=\sqrt N(\bar\gamma\bar\tau R+\bar\lambda\bar\tau^2R)$ (car $\norm{(\Gamma_\eps-\gamma_0)V_i}\le\eps\bar\gamma\bar\tau\norm{V_i}$ et $\norm{(M_\eps-I)H_i}\le\eps\bar\lambda\bar\tau^2\norm{H_i}$) ;
+\item $\norm{F_{A,\eps}(t,z)}\le\bar\Phi$ (vitesse bornée, $u\in L^\infty$) ;
+\item le long de toute solution dans $B_R$, $\dot P_i$ est lipschitzienne en $t$ de constante $L_P$ ($H$, $V$, $P$ sont lipschitziennes en $t$ et la norme est $1$-lipschitzienne), et $|\dot P_i|\le\dot P_{\max}$ ; de plus $|\dot P_{\eps,i}-\dot P^0_i|\le K_P\norm{\zt^\eps-\zt^0}$ avec $K_P=\kappa_1+\kappa_2+\kappa_3$.
+\end{itemize}
+
+\paragraph{Lemme G (Grönwall).} Si $z_\eps$ et $z_0$ résolvent $\dot z=F_{A,\eps}$ et $\dot z=F_{A,0}$ sur $[a,b]$ avec le \emph{même} graphe $A$, alors $\norm{z_\eps(t)-z_0(t)}\le e^{L(t-a)}\bigl(\norm{z_\eps(a)-z_0(a)}+B\eps(t-a)\bigr)$. (Dériver $e=\norm{z_\eps-z_0}$ : $\dot e\le Le+B\eps$.)
+
+\paragraph{Étape 1 : fenêtres de référence.} Posons $\delta_{\rm post}:=\min\bigl((1-r_P)\Theta,\,\sigma\bigr)>0$ (c'est ici que $r_P<1$ sert). Choisissons $\rho>0$ avec $\rho\le g/4$, $\rho\le\nu/(2L_P)$, $\rho\le\delta_{\rm post}/(4\dot P_{\max})$. Posons $a_0=0$, $a_r=t_r^0+\rho$, $J_r=[t_r^0-\rho,t_r^0+\rho]$. Pour le prolongement virtuel de référence $\zt^0_r$ (défini sur $[a_{r-1},t_r^0+\rho]$ ; pour $r=1$ sur $[0,t_1^0+\rho]$) :
+\begin{itemize}[nosep]
+\item $\dot{\Pt}{}^0_r\ge\nu/2$ sur $J_r$, donc $\Pt^0_r\le\Theta-\nu\rho/2$ en $t_r^0-\rho$ et $\ge\Theta+\nu\rho/2$ en $t_r^0+\rho$ ;
+\item $\Pt^0_{r,j}\le\Theta-\sigma/2$ sur $J_r$ pour $j\ne i_r$ (car $\rho\dot P_{\max}\le\sigma/2$) ;
+\item sur la zone calme $Q_r=[a_{r-1},t_r^0-\rho]$ (non vide car $2\rho\le g$), $\max_j\Pt^0_{r,j}$ est continue et $<\Theta$ (premier franchissement en $t_r^0$), donc $\le\Theta-\sigma_1$ pour un $\sigma_1>0$ indépendant de $\vth$ ;
+\item \emph{sortie du garde après le saut} (pour $r\le k-1$) : sur la trajectoire hybride de référence, pour $t\in[t_r^0,a_r]$, $P_{i_r}(t)\le r_P\Theta+\dot P_{\max}\rho\le\Theta-\tfrac34\delta_{\rm post}$ et, pour $j\ne i_r$, $P_j(t)\le\Theta-\sigma+\dot P_{\max}\rho\le\Theta-\tfrac34\delta_{\rm post}$ : aucun nouveau Kairos sur $[t_r^0,a_r]$.
+\end{itemize}
+
+\paragraph{Étape 2 : récurrence.} Pour $r\in\{0,\dots,k-1\}$, on note $(\mathrm I_r)$ : il existe $\eps_r>0$ et $E_r$ tels que, pour $\eps<\eps_r$ et $\vth\in K$, le système couplé réalise $w_{\le r}$ (impacts et recâblages), $T_j^\eps\in J_j$ avec $\lvert T_j^\eps-t_j^0\rvert\le D_j\eps$ pour $j\le r$, et $\norm{z_\eps(a_r)-z_0(a_r)}\le E_r\eps$. Pour $r=0$ : $E_0=0$ (mêmes données initiales). Montrons $(\mathrm I_{r-1})\Rightarrow(\mathrm I_r)$ pour $1\le r\le k-1$ (le rang $r=k$ est traité à part à l'étape~3 : il n'y a ni marge de classement ni synchronisation post-saut au rang $k$). Soit $\ell_r:=t_r^0-t_{r-1}^0+2\rho$ (longueur de $[a_{r-1},t_r^0+\rho]$ à $\rho$ près).
+
+\begin{enumerate}[label=(\alph*)]
+\item \emph{Prolongements virtuels.} À $a_{r-1}$ les deux systèmes ont effectué $r-1$ sauts et ont le graphe $A_{r-1}$. Soient $\zt^\eps_r$ et $\zt^0_r$ les prolongements virtuels issus de leurs états en $a_{r-1}$ ; ce sont deux solutions d'EDO sur le \emph{même} graphe, sur $[a_{r-1},t_r^0+\rho]$. Le lemme~G donne, sur tout cet intervalle,
+\[
+\norm{\zt^\eps_r(t)-\zt^0_r(t)}\le F_r\eps,\qquad F_r:=e^{L\ell_r}\bigl(E_{r-1}+B\ell_r\bigr).
+\]
+\item \emph{Franchissement.} Soit $i=i_r$, $t^0=t_r^0$ et $\varphi(t):=\Pt^\eps_{r}(t)-\Theta$ (composante $i$ du prolongement virtuel $\eps$). Pour $\eps$ assez petit ($K_PF_r\eps\le\nu/4$) on a $\dot\varphi\ge\nu/2-K_PF_r\eps\ge\nu/4$ sur $J_r$ \emph{entier}. Comme $\varphi(t^0-\rho)\le-\nu\rho/2+F_r\eps<0$ et $\varphi(t^0+\rho)\ge\nu\rho/2-F_r\eps>0$, $\varphi$ s'annule en un unique $T\in J_r$. De plus $\lvert\varphi(t^0)\rvert\le F_r\eps$ (car $\Pt^0_r(t^0)=\Theta$), donc $\lvert T-t^0\rvert\le 4F_r\eps/\nu=D_r\eps$ (on exige $D_r\eps\le\rho$).
+ Aucun autre franchissement avant $T$ : sur la zone calme, $\max_j\Pt^\eps_{r,j}\le\Theta-\sigma_1+F_r\eps<\Theta$ si $F_r\eps<\sigma_1$ ; sur $J_r$, pour $j\ne i$, $\Pt^\eps_{r,j}\le\Theta-\sigma/2+F_r\eps<\Theta$ si $F_r\eps<\sigma/2$. Donc $T$ est le premier instant où $\max_j\ge\Theta$, c'est-à-dire $T=T_r^\eps$, et le n\oe ud qui franchit est $i_r$.
+\item \emph{Même mot.} Les états pré-impact vérifient $\norm{\zt^\eps_r(T)-\zt^0_r(t^0)}\le F_r\eps+\bar\Phi\lvert T-t^0\rvert\le(F_r+\bar\Phi D_r)\eps=:C_r\eps$ : c'est le point~(iii) (la trace est continue à travers le saut). Comme $r\le k-1$ : $\norm{\tau_{\eps,j}(T)}\ge\nu_\tau-C_r\eps>0$ pour $\eps$ petit (la convention $s_j=0$ n'est pas activée) et
+ \[
+ \lvert\cos(a,b)-\cos(a',b')\rvert\le\Bigl\lVert\tfrac a{\norm a}-\tfrac{a'}{\norm{a'}}\Bigr\rVert+\Bigl\lVert\tfrac b{\norm b}-\tfrac{b'}{\norm{b'}}\Bigr\rVert\le\tfrac2{\min(\norm a,\norm b)}\bigl(\norm{a-a'}+\norm{b-b'}\bigr)\quad(\text{si }\norm{a'}\ge\norm a,\ \norm{b'}\ge\norm b\text{, symétrique sinon}),
+ \]
+ donc, comme tous les modules sont $\ge\nu_\tau/2$ et les écarts $\le C_r\eps$, chaque similarité $s_j$ varie d'au plus $\chi_r\eps$, $\chi_r:=8C_r/\nu_\tau$ ; une marge de frontière varie d'au plus $2\chi_r\eps$. Si $2\chi_r\eps<\mu$, les ensembles retiré et ajouté sont inchangés (seules comptent les marges de frontière) : \emph{le mot est conservé} et les deux systèmes ont le graphe $A_r$ après leurs sauts respectifs.
+\item \emph{Transport après les sauts.} Posons $x_\eps=J_i(\zt^\eps_r(T))$ et $x_0=J_i(\zt^0_r(t^0))$ (états post-saut) : $\norm{x_\eps-x_0}\le(F_r+\bar\Phi D_r)\eps$ par $1$-lipschitzianité de $J_i$. À l'instant $S=\max(T,t^0)$, le système qui a sauté le plus tôt s'est déplacé d'au plus $\bar\Phi\lvert T-t^0\rvert$ depuis son état post-saut (graphe $A_r$ pour les deux) : $\norm{z_\eps(S)-z_0(S)}\le(F_r+2\bar\Phi D_r)\eps$.
+ \emph{Pas de nouveau Kairos avant $a_r$.} (i)~Sur $[T,S]$ si $T<t^0$ (le système $\eps$ a sauté, pas la référence) : $P^\eps_i\le r_P\Theta+\dot P_{\max}D_r\eps\le\Theta-\delta_{\rm post}+\dot P_{\max}D_r\eps$ et, pour $j\ne i$, $P^\eps_j\le\Pt^\eps_{r,j}(T)+\dot P_{\max}D_r\eps\le\Theta-\sigma/2+(F_r+\dot P_{\max}D_r)\eps$ ; tous deux $<\Theta$ dès que $(F_r+\dot P_{\max}D_r)\eps<\delta_{\rm post}/2$ ; la référence n'a pas encore sauté sur $[T,t_r^0[$, et aucun autre n\oe ud n'y atteint le seuil, d'après l'étape~(b). Si $T>t^0$, c'est le système $\eps$ qui est pré-saut sur $[t^0,T]$, sans Kairos par~(b). (ii)~Sur $[S,a_r]$ : la référence vérifie $\max P\le\Theta-\tfrac34\delta_{\rm post}$ (étape~1) et $\lvert P^\eps-P^0\rvert\le\norm{z_\eps-z_0}\le E_r\eps$ par le lemme~G ci-dessous ; donc $\max P^\eps<\Theta$ dès que $E_r\eps<\tfrac34\delta_{\rm post}$. Ainsi, jusqu'en $a_r$, les deux systèmes sont de \emph{vraies} trajectoires à graphe $A_r$ (aucun saut supplémentaire).
+ Lemme~G sur $[S,a_r]$ (longueur $\le2\rho$) :
+ \[
+ \norm{z_\eps(a_r)-z_0(a_r)}\le E_r\eps,\qquad E_r:=e^{2L\rho}\bigl(F_r+2\bar\Phi D_r+2\rho B\bigr).
+ \]
+ (Les constantes $F_r,D_r,E_r$ sont définies par ces formules, indépendamment de $\eps$ : il n'y a pas de circularité dans la condition $E_r\eps<\tfrac34\delta_{\rm post}$.)
+\end{enumerate}
+\paragraph{Étape 3 : le rang $k$ (sans synchronisation).} Supposons $(\mathrm I_{k-1})$ (avec $E_{k-1}$). On applique \emph{seulement} (a), (b) et la première partie de (c) au rang $r=k$ : les prolongements virtuels $\zt^\eps_k,\zt^0_k$ issus de l'état en $a_{k-1}$ sur le graphe $A_{k-1}$ vérifient $\norm{\zt^\eps_k-\zt^0_k}\le F_k\eps$ sur $[a_{k-1},t_k^0+\rho]$ ; le franchissement monotone donne un unique $T_k^\eps\in J_k$, premier Kairos après $T_{k-1}^\eps$, avec $\lvert T_k^\eps-t_k^0\rvert\le D_k\eps$ et le bon n\oe ud $i_k$ ; et $\norm{\tau_\eps^{(k)}-\tau_0^{(k)}}\le\norm{\zt^\eps_k(T_k^\eps)-\zt^0_k(t_k^0)}\le C_k\eps$. On ne construit \emph{ni} $E_k$, \emph{ni} de comparaison des graphes après le $k$-ième impact, \emph{ni} de marge de classement au rang $k$ : le théorème n'en a pas besoin, et le $k$-ième recâblage n'intervient pas dans $\tau^{(k)}$.
+
+\paragraph{Seuils sur $\eps$.} Pour $1\le r\le k-1$ : $F_r\eps<\min(\sigma_1,\sigma/2,\nu\rho/2)$, $K_PF_r\eps\le\nu/4$, $D_r\eps\le\rho$, $C_r\eps<\nu_\tau/2$, $2\chi_r\eps<\mu$, $(F_r+\dot P_{\max}D_r)\eps<\delta_{\rm post}/2$, $E_r\eps<\tfrac34\delta_{\rm post}$. Pour $r=k$ : seulement $F_k\eps<\min(\sigma_1,\sigma/2,\nu\rho/2)$, $K_PF_k\eps\le\nu/4$, $D_k\eps\le\rho$. $\eps_0$ est le plus petit de ces seuils. Les constantes sont indépendantes de $\vth\in K$ par le lemme~\ref{lem:dec} et la compacité. $\square$
+
+Pour $1\le r\le k-1$, la récurrence est de la forme $E_r\le\Upsilon_rE_{r-1}+B'_r$ ($E_0=0$) avec
+\[
+\Upsilon_r=e^{2L\rho+L\ell_r}\Bigl(1+\tfrac{8\bar\Phi}\nu\Bigr),\qquad
+B'_r=e^{2L\rho}\Bigl(e^{L\ell_r}B\ell_r\bigl(1+\tfrac{8\bar\Phi}\nu\bigr)+2\rho B\Bigr).
+\]
+$\Upsilon_r$ ne dépend de $r$ que par la longueur $\ell_r$ de l'épisode (la lettre $A$ est réservée aux graphes).
+
+\begin{remarque}[pourquoi les prolongements virtuels]
+Dans la trajectoire hybride, $P_{i_r}$ est réinitialisée à $r_P\Theta$ en $t_r^0$ : les énoncés « $\dot P^0_{i_r}\ge\nu/2$ sur $J_r$ » et « $\norm{z_\eps(s)-z_0(s)}\le F\eps$ en $s=\min(T,t^0)$ » ne valent pas pour les trajectoires hybrides à travers $[t_r^0-\rho,t_r^0+\rho]$ (l'une des deux peut avoir sauté et pas l'autre). Sur les prolongements virtuels, les deux flots sont des solutions d'EDO sur le même graphe, le lemme~G s'applique sur toute la fenêtre, et le franchissement monotone se fait sur des fonctions $C^1$ avec $\dot\varphi\ge\nu/4$ sur toute la fenêtre.
+\end{remarque}
+
+\begin{remarque}[régularité du protocole]
+La preuve n'utilise \emph{pas} le théorème des fonctions implicites en $\vth$ : le déplacement de l'impact est contrôlé par un argument de franchissement monotone, qui exige seulement $\dot P$ lipschitzienne en $t$ --- vrai pour $u\in L^\infty$ (car $H$ est $C^1$, $V$ lipschitzienne). On compare toujours les systèmes au \emph{même temps absolu} : une translation $O(\eps)$ de l'instant de saut ne perturbe pas $u$, et la différence de graphe sur l'intervalle entre les deux sauts est absorbée par le terme $\bar\Phi\lvert T-t^0\rvert$. Une régularité de $u$ n'est requise que pour le théorème~\ref{thm:aff}.
+\end{remarque}
+
+\begin{remarque}[deux quantités distinctes en profondeur]
+Il faut distinguer l'\emph{amplification} $C_r$ de l'erreur à mot conservé et le \emph{rayon} $\eps_0(k)$ du voisinage où le mot reste conservé. $C_r$ est bornée par la récurrence ci-dessus, de croissance exponentielle en $r$ via les facteurs $\Upsilon_r$ ; cette borne ne voit pas la dissipation et n'est pas optimale. Une borne polynomiale demanderait de contrôler la sensibilité de toute l'évolution \emph{hybride}, de la forme $D\mathcal E_w\sim\mathsf S_rD\varphi_r\cdots\mathsf S_1D\varphi_1$ (flot $D\varphi_j$, passage par le saut $\mathsf S_j$ décalage temporel compris) ; la dissipation continue seule ne suffit pas, les décalages des impacts et les sauts pouvant amplifier. Quant à $\eps_0(k)$, c'est le minimum des seuils listés après l'étape~3 (sur $F_r\eps$, $K_PF_r\eps$, $D_r\eps$, $C_r\eps$, $2\chi_r\eps$, et les deux seuils de sortie du garde), qui dépendent de $\sigma$, $\mu$, $\nu_\tau$, $g$, $\rho$, $\delta_{\rm post}$ : il peut se rétrécir fortement avec $k$ même si $C_r$ restait bornée. Les mesures du §\ref{sec:num} montrent que $\sigma_r$ et le minimum de $\norm{V_0}$ décroissent le long du mot. De plus $R$ et $L$ dépendent de l'horizon $T$ par la borne a priori : l'indépendance en $r$ de $\Upsilon_r$ pour un mot périodique suppose une borne a priori \emph{uniforme en $T$} (estimation d'énergie de l'Annexe, non vérifiée ici).
+\end{remarque}
+
+\section{Défaut d'affinité d'ordre $\eps\delta^2$}\label{sec:aff}
+
+\begin{hyp}[$u$ de classe $C^1$]\label{h:u} $u\in C^1([0,T])$ (par exemple un protocole constant).\end{hyp}
+\begin{hyp}[traces non nulles sur tout l'horizon]\label{h:tn} $\nu_\tau':=\min_{t\le T,\,j,\,\vth\in B}\norm{\tau_{0,j}(t;\vth)}>0$, où $B=\bar B(\vth_0,\delta_0)\subset K$ (boule fermée, de rayon $\delta_0$). Ainsi $\Gamma_\eps$ est $C^\infty$ le long des trajectoires pour $\eps$ petit.\end{hyp}
+\begin{hyp}[régularité des impacts pré-saut]\label{h:P2}
+Pour chaque $r\le k$, la fonction $(t,\vth,\eps)\mapsto\Pt^\eps_r(t;\vth)$ --- composante $i_r$ du prolongement virtuel pré-impact $\zt^\eps_r$ du $r$-ième Kairos, construit sur le graphe $A_{r-1}$ à partir de la trajectoire hybride jusqu'au $(r-1)$-ième saut --- est de classe $C^2$ en $(t,\vth)$ sur $U_r=\,]t_r^0-\rho,t_r^0+\rho[\times\,\mathrm{int}(B)$, et ses dérivées d'ordre $\le2$ en $(t,\vth)$ sont de classe $C^1$ en $\eps\in[0,\eps_1]$, conjointement continues.
+\end{hyp}
+
+\begin{theoreme}[défaut d'affinité]\label{thm:aff}
+Sous les hypothèses du théorème~\ref{thm:stab} sur $B$ et les hypothèses~\ref{h:u}--\ref{h:P2}, il existe $\eps_1>0$ et $M_r,M'_r$ tels que pour $\eps<\eps_1$ et $\vth\in B$ :
+\[
+\bigl\lVert D^2_\vth\tau^{(r)}_\eps(\vth)\bigr\rVert\le M_r\eps,\qquad
+\bigl\lVert D_\vth\tau^{(r)}_\eps(\vth)-e^{-\beta t_r^0}I\bigr\rVert\le M'_r\eps.
+\]
+En conséquence, pour $\norm h\le\delta\le\delta_0$, $\tau^{(r)}_\eps(\vth_0+h)=A_\eps+B_\eps h+\mathcal R_\eps(h)$ avec
+\[
+\sup_{\norm h\le\delta}\norm{\mathcal R_\eps(h)}\le\tfrac12M_r\,\eps\,\delta^2 ,
+\]
+c'est-à-dire que la distance sup de $\tau^{(r)}_\eps$ aux applications affines sur $B(\vth_0,\delta)$ est $O(\eps\delta^2)$.
+\end{theoreme}
+
+\begin{proof}
+Par le théorème~\ref{thm:stab} (sur $B$), le mot est conservé pour $\eps<\eps_0$. La sous-dynamique $\eta=(H,V,\tau)$ n'a pas besoin de $P$ ; son champ $f_{A,\eps}(t,\eta)$ est $C^\infty$ en $(\eta,\eps)$ au voisinage des trajectoires (hyp.~\ref{h:tn}) et $C^1$ en $t$ (hyp.~\ref{h:u}). Son flot $\varphi^\eps(s,t;\eta)$ est donc $C^\infty$ en $(\eta,\eps)$ et $C^2$ en $(s,t)$, avec toutes les dérivées mixtes continues. Les sauts $J_j$ sont linéaires. Donc
+\[
+\tau^{(r)}_\eps(\vth)=G_r\bigl(\eps,\vth,T_1^\eps(\vth),\dots,T_r^\eps(\vth)\bigr)
+\]
+avec $G_r$ de classe $C^2$ en $(\vth,T)$, dérivées d'ordre $\le2$ de classe $C^1$ en $\eps$. Les instants d'impact sont définis par $\Pt^\eps_j(T_j^\eps(\vth);\vth)=\Theta$ avec $\partial_t\Pt^\eps_j\ge\nu/4>0$ (étape~(b) de la preuve du théorème~\ref{thm:stab}) : le théorème des fonctions implicites, appliqué à $\Pt^\eps_j$ (hyp.~\ref{h:P2}) et non à la composante hybride de $P$, donne la même régularité aux $T_j^\eps(\cdot)$, par récurrence sur $j$ (le prolongement $\Pt_j$ dépend des $T_{j'}$, $j'<j$). Par la règle de dérivation des fonctions composées, $(\eps,\vth)\mapsto D^2_\vth\tau^{(r)}_\eps(\vth)$ est continue sur $[0,\eps_1]\times B$, $C^1$ en $\eps$. Or à $\eps=0$, $\tau_0^{(r)}=b_{r,w}+e^{-\beta t_r^0}\vth$ (lemme~\ref{lem:dec}) : $D^2_\vth\tau_0^{(r)}=0$ et $D_\vth\tau_0^{(r)}=e^{-\beta t_r^0}I$. Donc $D^2_\vth\tau^{(r)}_\eps=\int_0^\eps\partial_{\eps'}D^2_\vth\tau^{(r)}_{\eps'}\,d\eps'$, borné par $M_r\eps$ avec $M_r:=\sup_{[0,\eps_1]\times B}\norm{\partial_\eps D^2_\vth\tau^{(r)}}<\infty$ (compacité). Même argument pour $D_\vth$. La borne du reste est la formule de Taylor avec reste de Lagrange sur la boule convexe. $\square$
+\end{proof}
+
+\begin{remarque}[l'intégration d'une norme ne suffit pas à donner $C^2$]
+$\Pt_r$ est, à des facteurs exponentiels et des réinitialisations près, une intégrale $\int(\kappa_1\norm{H_{i_r}}+\kappa_2\norm{V_{i_r}})\,ds$. L'exemple élémentaire $J(h)=\int_{-1}^1\sqrt{s^2+h^2}\,ds$ vérifie $J(h)-J(0)\sim h^2\log\frac1{|h|}$ : $J$ n'est pas $C^2$ en $h=0$. Le même mécanisme apparaîtrait si la courbe plane $s\mapsto V_{i_r}(s;\vth)$ (ou $H_{i_r}$) traversait l'origine à un instant intérieur pour une valeur de $\vth$ de la boule : le défaut d'affinité serait alors en $\eps\delta^2\log(1/\delta)$ et non en $\eps\delta^2$. L'hypothèse~\ref{h:P2} est donc un contenu réel, non une formalité.
+\end{remarque}
+
+\begin{proposition}[conditions suffisantes pour l'hypothèse~\ref{h:P2} --- esquisse]\label{prop:suff}
+Supposons $u\in C^1$, $r_V>0$, les hypothèses du théorème~\ref{thm:stab} et~\ref{h:tn} sur $B$, et, pour chaque $r\le k$ :
+\begin{enumerate}[label=(N\arabic*)]
+\item le n\oe ud $i_r$ est forcé avec $u_{i_r}(0)\ne0$ et $H(0)=V(0)=0$ ;
+\item sur la trajectoire \emph{visible de référence} à $\eps=0$ (qui ne dépend pas de $\vth$ par le lemme~\ref{lem:dec}), $\inf_{0<s\le t_r^0+\rho}\norm{H^0_{i_r}(s)}/\min(s,1)^2>0$ et $\inf_{0<s\le t_r^0+\rho}\norm{V^0_{i_r}(s)}/\min(s,1)>0$.
+\end{enumerate}
+Alors l'hypothèse~\ref{h:P2} est satisfaite (pour $\eps_1$ et $\mathrm{int}(B)$ éventuellement réduits).
+\end{proposition}
+\begin{proof}[Esquisse]
+Comme $\dot P_{i}$ ne dépend que de $H_i,V_i,P_i$, $\Pt_r$ ne fait intervenir que les normes du n\oe ud $i_r$ le long de l'histoire des épisodes $1,\dots,r$ ; la réinitialisation de $V_{i_r}$ (facteur $r_V\in]0,1]$) ne change pas son caractère non nul. Sur le premier épisode, $H_{i_r}(0)=V_{i_r}(0)=0$ ; on écrit $V_{i_r}(s)=s\,v(s;\vth,\eps)$ avec $v(s)=\int_0^1\dot V_{i_r}(\sigma s)\,d\sigma$ lisse en $(s,\vth,\eps)$ et $v(0)=u_{i_r}(0)\ne0$ ; de même $H_{i_r}=s^2h$, $h(0)=u_{i_r}(0)/2$. Alors $\norm{V_{i_r}}=s\norm v$ et $\norm{H_{i_r}}=s^2\norm h$ sont lisses tant que $v,h$ ne s'annulent pas, ce que (N2) assure à $\eps=0$, puis pour $\eps\le\eps_1$ et $\vth$ dans la boule par continuité uniforme (compacité de $[0,t_r^0+\rho]\times B$). Sur les épisodes suivants, $\norm{H_{i_r}},\norm{V_{i_r}}$ sont bornés inférieurement par la même continuité, donc lisses. Les réinitialisations en $T_j^\eps(\vth)$ introduisent des termes de bord de la forme $\bigl(\norm{V(T_j^-)}-\norm{V(T_j^+)}\bigr)\partial T_j$, lisses si $T_j$ l'est : on procède par récurrence sur $j$ avec le théorème des fonctions implicites appliqué à $\Pt_j$ (déjà $C^2$). $\square$
+\end{proof}
+La proposition n'est qu'esquissée : le point le moins vérifié est l'uniformité de la factorisation en $s=0$ pour les dérivées d'ordre deux en $(\vth,\eps)$ ; un nœud non forcé demande un traitement distinct (ordre d'annulation en $0$ inconnu a priori).
+
+\begin{remarque}[relation avec le résidu mesuré]
+Le résidu hors échantillon d'un ajustement par moindres carrés est borné par la distance sup à l'espace affine fois une constante de Lebesgue dépendant du plan d'échantillonnage ; il hérite donc de la borne $\tfrac12M_r\eps\delta^2$ à un facteur de conditionnement près.
+\end{remarque}
+
+\section{Nécessité de la marge}
+
+\begin{remarque}[nécessité de la marge --- argument sous régularité]\label{rem:marge}
+Soit $g_\eps(\vth)$ la marge signée d'une frontière de sélection au Kairos $r$, supposée $C^1$ en $(\vth,\eps)$ près d'un point $\vth_0$ du mur $\{g_0=0\}$, avec $\nabla_\vth g_0(\vth_0)\ne0$ et $h:=\partial_\eps g_0(\vth_0)<0$. Comme $g_\eps(\vth)=g_0(\vth)+\eps h+o(\eps)$, le mur perturbé $\{g_\eps=0\}$ est à distance $\simeq\eps|h|/\lVert\nabla g_0\rVert$ du mur de référence, et les points compris entre les deux murs réalisent $w$ à $\eps=0$ et un autre mot à $\eps$.
+\end{remarque}
+Elle indique qu'une hypothèse de marge strictement positive est nécessaire pour toute constante $\eps_0$ uniforme sur un compact : un compact qui touche le mur ne peut pas être traité (argument local, non une preuve de non-existence de $\eps_0$ en toute généralité). C'est le contre-exemple de minimalité logique attendu pour l'hypothèse~\ref{h:mu}. La prédiction quantitative du §\ref{sec:num} est : \emph{premier $\eps$ de perte du mot $\approx$ marge$/\lvert h\rvert$}.
+
+\section{Témoins numériques sur le cas $N=6$}\label{sec:num}
+
+\paragraph{Portée.} Dans toutes les expériences, $\delta$ est l'\emph{écart-type} d'un bruit gaussien appliqué aux 12 coordonnées de $\vth$ autour du point $\phi_4=222{,}5^\circ$ (protocole constant de référence, graphe \texttt{A1\_kept1}, instant de Kairos interpolé exactement, $\mathrm{dt}=2\cdot10^{-3}$ sauf mention) ; ce n'est pas le rayon d'une boule fermée. Les minima relevés sur des échantillons ne \emph{certifient} donc pas les hypothèses uniformes sur $B(\vth_0,\delta)$ : un minimum de norme de trace de l'ordre de $10^{-4}$ signale une proximité inquiétante d'une trace nulle, il ne démontre pas qu'elle existe dans la boule.
+
+\paragraph{Hypothèses sur le témoin} (mot périodique $((0,\{1,2,3\}),(0,\{1,4,5\}))^3$, $\delta=0{,}003$, 548 tirages sur 600 ; \texttt{verif\_hypotheses\_theoreme.py}).
+
+\begin{center}
+\begin{tabular}{rrrrrrr}
+\toprule
+$r$ & $t_r^0$ & $t_r^0-t_{r-1}^0$ & $\nu_r$ & $\sigma_r$ & $\min_j\norm{\tau_j}$ & marge min.\\
+\midrule
+1 & 1,353 & 1,353 & 1,357 & 1,213 & 0,171 & $5{,}6\cdot10^{-5}$\\
+2 & 1,935 & 0,581 & 1,461 & 1,113 & 0,138 & $4{,}9\cdot10^{-2}$\\
+3 & 2,467 & 0,532 & 1,459 & 0,952 & 0,018 & $1{,}2\cdot10^{-2}$\\
+4 & 2,984 & 0,517 & 1,441 & 0,743 & 0,091 & $1{,}3\cdot10^{-2}$\\
+5 & 3,496 & 0,512 & 1,426 & 0,513 & 0,285 & $3{,}7\cdot10^{-4}$\\
+6 & 4,004 & 0,508 & 1,424 & 0,297 & 0,412 & $4{,}3\cdot10^{-3}$\\
+7 & 4,509 & 0,506 & 1,425 & 0,122 & 0,619 & ---\\
+\bottomrule
+\end{tabular}
+\end{center}
+(« marge min. » = minimum sur les tirages des marges de frontière au saut $r$.) Les hypothèses~\ref{h:nu}--\ref{h:g} sont satisfaites avec $\nu\simeq1{,}42$, $g\simeq0{,}51$, mais $\sigma_r$ \emph{décroît} le long du mot ($1{,}21\to0{,}12$ en sept Kairos). Minimum sur les tirages de $\norm{\tau_j(t)}$ sur tout l'horizon : $0{,}0099$. Pour $\delta=0{,}03$ (323 tirages), le minimum sur les tirages tombe à $\simeq10^{-4}$ (aux Kairos : $2\cdot10^{-4}$) : ce n'est pas la preuve d'un mur de trace nulle dans la boule, mais l'hypothèse~\ref{h:tau} n'est plus plausible uniformément, et $K$ devrait être restreint.
+
+\paragraph{Condition (N2) de la proposition~\ref{prop:suff}} (\texttt{verif\_nonannulation\_normes.py}, trajectoire visible de référence, $\mathrm{dt}=5\cdot10^{-4}$). Le n\oe ud déclencheur est toujours le n\oe ud forcé $0$. Quand $s\to0$ : $\norm{V_0}/s\to2{,}499$ et $\norm{H_0}/s^2\to1{,}250$ (valeurs attendues $|u|=2{,}5$ et $|u|/2$). Minima sur $s>2\cdot10^{-3}$ : $\norm{H_0}/\min(s,1)^2\ge1{,}08$ ; $\norm{V_0}/\min(s,1)\ge0{,}061$. Mais le minimum de $\norm{V_0}$ par épisode \emph{décroît géométriquement} avec la profondeur (rapports $\simeq0{,}55$) :
+\[
+\min\norm{V_0}:\ 1{,}113;\ 0{,}688;\ 0{,}388;\ 0{,}207;\ 0{,}107;\ 0{,}061\qquad(\text{épisodes }2\text{ à }7).
+\]
+Donc (N2) est satisfaite sur le témoin à chaque profondeur fixée, mais la constante $M_r$ du théorème~\ref{thm:aff} (qui fait intervenir des dérivées de $\norm{V_0}$, d'ordre $1/\norm{V_0}$) \emph{se dégrade avec $r$} ; c'est une raison supplémentaire de ne rien affirmer sur l'uniformité en $k$.
+
+\paragraph{Régularité $C^2$ ponctuelle} (\texttt{verif\_regularite\_C2.py}). Différences secondes centrées $Q(\delta,h)=\norm{\tau_\eps(\vth_0+\delta h)-2\tau_\eps(\vth_0)+\tau_\eps(\vth_0-\delta h)}/\delta^2$ en 8 directions unitaires $h$, $\delta\in\{2{,}5\cdot10^{-4};\ldots;4\cdot10^{-3}\}$, rangs 2 à 6. À $\eps=0$ : $\max Q\le7{,}5\cdot10^{-8}$ (arrondi). À $\eps>0$, $Q/\eps$ est \emph{constant à quatre chiffres} sur toute la plage de $\delta$ (il n'y a donc aucun facteur $\log(1/\delta)$ : la fonction est quadratique à cette échelle) et la dépendance en $\eps$ est linéaire à 1--8~\% entre $\eps=0{,}02$ et $0{,}1$. Ordres de grandeur de $Q/\eps$ aux rangs 2, 4, 6 : $\gamma_1$ seul $2{,}0\cdot10^{-2}$, $4{,}1\cdot10^{-2}$, $6{,}1\cdot10^{-2}$ ; $\lambda$ seul $2{,}1\cdot10^{-3}$, $1{,}5\cdot10^{-2}$, $4{,}0\cdot10^{-2}$. C'est compatible avec le théorème~\ref{thm:aff} au point de référence $\vth_0$, \emph{où aucune norme ne s'annule} ; cela ne teste pas un point où la courbe de $V_0$ passerait par l'origine (le cas critique de la remarque sur $J(h)$).
+
+\paragraph{Test de la prédiction « marge$/|h|$ ».} On estime $h$ par différences finies en $\eps$ (le long de $(\bar\gamma,\bar\lambda)=(1{,}25;2)$, à $\eps=0{,}02$) de la marge signée de la frontière la plus proche de chaque échantillon, puis $\eps^\ast=\text{marge}/|h|$ pour $h<0$, qu'on compare au premier $\eps$ où le mot change.
+\begin{itemize}[nosep]
+\item Grille grossière (rapports 1,4 à 2 entre valeurs successives), $\delta=0{,}003$ : les 387 échantillons qui perdent le mot avant $\eps=1{,}4$ sont tous prédits (aucun cas inexpliqué), Spearman $0{,}92$, observé$/$prédit : médiane $1{,}92$, quartiles $1{,}72$--$2{,}06$.
+\item Grille géométrique fine (rapport $1{,}06$ de $0{,}02$ à $1{,}5$, même échantillon ; \texttt{verif\_seuil\_grille\_fine.py}) : 439 échantillons perdent le mot avant $\eps=1{,}5$, tous prédits ; Spearman $0{,}996$. Le seuil vrai est encadré par $]\eps_{\rm prec},\eps_{\rm obs}]$ (largeur relative $6\,\%$) : observé$/$prédit médian $1{,}70$ (quartiles $1{,}59$--$1{,}82$) et \emph{précédent}$/$prédit médian $1{,}61$ (quartiles $1{,}50$--$1{,}72$). Le facteur n'est donc \emph{pas} un artefact de grille : même la borne inférieure du seuil dépasse la prédiction linéaire. Le rapport croît avec la taille du seuil prédit (médianes $1{,}47$; $1{,}66$; $1{,}77$; $1{,}89$ par quartile de $\eps_{\rm pred}$), ce qui est compatible avec un terme d'ordre $\eps^2$ dans la marge ; je n'ai pas isolé ce terme (il faudrait une dérivée seconde en $\eps$ de la marge), donc l'attribution à la courbure reste une hypothèse.
+\item À l'inverse, la marge seule ne prédit pas la perte du mot (première version du test, qui comparait la marge elle-même au premier $\eps$ de perte : Spearman $0{,}31$) ; à $\delta=0{,}03$ (323 tirages, quatre sauts) la prédiction linéaire est médiocre (13 échantillons prédits pour 16 observés, Spearman $0{,}58$, rapport médian $0{,}15$), la linéarisation n'étant plus pertinente quand le mur est proche.
+\end{itemize}
+
+\paragraph{Ce qui n'est pas testé.} Un seul témoin, un seul protocole, un mot périodique ; le nombre de murs ; la constante de Lebesgue du lien avec le résidu mesuré ; un point où $V_0$ ou $H_0$ passe par l'origine ; un n\oe ud déclencheur non forcé.
+
+\section{Conséquence pour le programme de soustraction}
+
+\begin{itemize}[nosep]
+\item \emph{découplage} $\Rightarrow$ affinité exacte (lemme~\ref{lem:dec}) ;
+\item \emph{couplage faible régulier, mot fixé} $\Rightarrow$ proximité $O(\eps)$ de la forme affine (th.~\ref{thm:stab}) et, sous l'hypothèse de régularité~\ref{h:P2}, défaut d'affinité $O(\eps\delta^2)$ (th.~\ref{thm:aff}) ;
+\item \emph{marge de classement nulle ou événement dégénéré} $\Rightarrow$ changement de mot possible, description locale rompue (rem.~\ref{rem:marge}).
+\end{itemize}
+Le découplage n'est donc pas nécessaire à une géométrie localement contrôlée à mot fixé, mais seulement à son expression affine \emph{exacte}. Restent ouverts : une borne polynomiale sur $C_r$ (sensibilité de l'évolution hybride complète), le comportement de $\eps_0(k)$, la preuve de la proposition~\ref{prop:suff} (et son extension aux n\oe uds non forcés), et l'extension à travers les changements de mot.
+
+\end{document}

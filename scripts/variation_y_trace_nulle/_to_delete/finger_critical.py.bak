@@ -1,0 +1,57 @@
+"""
+Localise le eta* critique : pour chaque eta on trouve le phi4 de plus faible ||tau_4|| (approche de l'origine),
+on raffine dans une fenetre fine, et on suit
+  d(eta)   = min_phi ||tau_4(phi)||             (distance a la trace nulle)
+  side     = signe de tau_4 x tau_4' au minimum (cote par lequel la courbe passe l'origine)
+  width    = largeur du doigt {g14<0} (racines de g14 = c1 - c4)
+  c4max    = max c4 sur la fenetre fine
+"""
+import sys, os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import numpy as np
+import finger_y_variation as F
+from iws_kairos_core import run_to_kairos, cos_sim, make_tau_init
+
+REF = ((0, frozenset({1, 2, 3})), (0, frozenset({1, 4, 5})))
+
+def set_window(lo, hi, n):
+    F.phi4_deg = np.linspace(lo, hi, n)
+    F.tau_init = make_tau_init(np.radians(F.phi4_deg), np.full(n, np.radians(F.PHI5_DEG)),
+                               F.phi1_fixed, F.phi2_fixed, F.phi3_fixed)
+
+def traces(eta):
+    groups = F.groups_at_depth3(eta)
+    g = [x for x in groups if x['path'] == REF]
+    if not g: return None
+    g = g[0]
+    Hs, Vs, taus, Ps, done = run_to_kairos(g['H'], g['V'], g['tau'], g['P'], g['A'])
+    o = np.argsort(g['idx'])
+    return F.phi4_deg[g['idx']][o], taus[o], done[o]
+
+def measure(eta, lo=200., hi=228., n_coarse=1500, half=0.6, n_fine=6000):
+    set_window(lo, hi, n_coarse)
+    r = traces(eta)
+    if r is None: return None
+    phi, t, done = r
+    nr = np.linalg.norm(t[:, 4, :], axis=1)
+    pc = phi[np.argmin(nr)]
+    set_window(pc - half, pc + half, n_fine)
+    r = traces(eta)
+    if r is None: return None
+    phi, t, done = r
+    t4 = t[:, 4, :]; nr = np.linalg.norm(t4, axis=1); k = np.argmin(nr)
+    dt4 = np.gradient(t4, phi, axis=0)
+    side = np.sign(t4[k, 0] * dt4[k, 1] - t4[k, 1] * dt4[k, 0])
+    c1 = cos_sim(t[:, 0, :], t[:, 1, :]); c4 = cos_sim(t[:, 0, :], t4)
+    g = c1 - c4
+    roots = F.roots_of(phi, g, done)
+    return dict(eta=eta, phi_at_min=float(phi[k]), dmin=float(nr[k]), side=int(side),
+                roots=[float(x) for x in roots], width=(roots[-1] - roots[0]) if len(roots) >= 2 else 0.0,
+                c4max=float(c4.max()), c4min=float(c4.min()))
+
+if __name__ == "__main__":
+    etas = [float(x) for x in sys.argv[1:]]
+    for e in etas:
+        m = measure(e)
+        print("eta=%+.4f  phi_min=%.4f  dmin=%.5f side=%+d  nroots=%d width=%.4f  c4max=%.5f c4min=%.4f" %
+              (e, m['phi_at_min'], m['dmin'], m['side'], len(m['roots']), m['width'], m['c4max'], m['c4min']), flush=True)

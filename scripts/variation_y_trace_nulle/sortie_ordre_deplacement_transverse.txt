@@ -1,0 +1,34 @@
+(1) formule exacte vs quadrature
+  delta=0.5  exact=1.1616959406082339683  quad=1.1616959406082339683  diff=0.00e+00
+  delta=0.1  exact=1.000579832986623555  quad=1.000579832986623555  diff=0.00e+00
+  delta=0.01  exact=1.0000001040348755379  quad=1.0000001040348755379  diff=0.00e+00
+(2) developpement 1 + d^4 ln(2/d^2) + d^4/2 + O(d^8)  (reste/d^8)
+  delta=0.2    reste=3.199e-07  reste/d^8=0.12495   (reste-d^8/8+d^12/32)/d^16=0.01301
+  delta=0.1    reste=1.250e-09  reste/d^8=0.12500   (reste-d^8/8+d^12/32)/d^16=0.01302
+  delta=0.05   reste=4.883e-12  reste/d^8=0.12500   (reste-d^8/8+d^12/32)/d^16=0.01302
+  delta=0.025  reste=1.907e-14  reste/d^8=0.12500   (reste-d^8/8+d^12/32)/d^16=0.01302
+(3) F(d)=Phi(d^2) : derivees d'ordre k en d=h (centrees), comportement ~ d^(4-k) ln(1/d)
+  F^(2)(h) pour h=1e-2,1e-3,1e-4 : ['0.01108', '0.0001661', '2.214e-06']
+  F^(3)(h) pour h=1e-2,1e-3,1e-4 : ['1.977', '0.3082', '0.04187']
+  F^(4)(h) pour h=1e-2,1e-3,1e-4 : ['149.7', '260.2', '370.7']
+   (F'' -> 0 ; F''' -> 0 ; F'''' diverge en ln : C^3 mais pas C^4)
+(4) a = th1^2 - th2^2, th2 = 0.3 fixe ; d^2F/dth1^2 en th1 = 0.3 +- e
+  e=0.1       F''=3.9548   2(2th1)^2 ln(2/|a|)=4.2911
+  e=0.01      F''=3.8259   2(2th1)^2 ln(2/|a|)=4.4534
+  e=0.001     F''=5.1729   2(2th1)^2 ln(2/|a|)=5.8782
+  e=0.0001    F''=6.7852   2(2th1)^2 ln(2/|a|)=7.5032
+  e=1.0e-5    F''=8.4370   2(2th1)^2 ln(2/|a|)=9.1568
+   a l'origine : F-1 = O(|th|^4 ln) donc D^2F(0)=0 ; mais D^2F non borne au voisinage (diagonales).
+(5) a = d^m : F''(h) pour h -> 0
+  m=1 : F''(1e-2,1e-3,1e-4) = ['8.597', '13.2', '17.81']
+  m=2 : F''(1e-2,1e-3,1e-4) = ['0.01108', '0.0001661', '2.214e-06']
+  m=3 : F''(1e-2,1e-3,1e-4) = ['4.173e-06', '6.245e-10', '8.317e-14']
+(6) lemme de Glaeser local : |Da|^2 <= 2 L |a| quand Da=0 sur Z (a in C^2)
+  a=x^3, r=0.5   max |Da|^2/(2L|a|) = 0.7500  (<=1 attendu)
+  a=x^3, r=0.1   max |Da|^2/(2L|a|) = 0.7500  (<=1 attendu)
+  a=x^3, r=0.01  max |Da|^2/(2L|a|) = 0.7500  (<=1 attendu)
+  a=th1^2-th2^2, e=0.01   |Da|^2/(2L|a|) = 30.5  (L=2)
+  a=th1^2-th2^2, e=0.0001 |Da|^2/(2L|a|) = 3e+03  (L=2)
+  a=th1^2-th2^2, e=1e-06  |Da|^2/(2L|a|) = 3e+05  (L=2)
+  a=x^4(sin(1/x)+2) (C^{1,1}, D2a borne) r=0.1   max |Da|^2/(2L|a|)=0.492 avec L=1.41
+  a=x^4(sin(1/x)+2) (C^{1,1}, D2a borne) r=0.01  max |Da|^2/(2L|a|)=0.306 avec L=1.00

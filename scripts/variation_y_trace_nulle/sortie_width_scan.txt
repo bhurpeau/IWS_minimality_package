@@ -1,0 +1,10 @@
+eta=+0.000 dmin=0.01772 side=-1 roots=[218.5644] width=0.0000
+eta=-0.050 dmin=0.01288 side=-1 roots=[219.5437, 220.2064] width=0.6627
+eta=-0.100 dmin=0.00777 side=-1 roots=[220.5387, 220.9453] width=0.4066
+eta=-0.120 dmin=0.00548 side=-1 roots=[220.9348, 221.2239] width=0.2891
+eta=-0.140 dmin=0.00321 side=-1 roots=[221.3355, 221.5062] width=0.1706
+eta=-0.150 dmin=0.00208 side=-1 roots=[221.5377, 221.6487] width=0.1110
+eta=-0.160 dmin=0.00095 side=-1 roots=[221.7411, 221.7921] width=0.0511
+eta=-0.165 dmin=0.00039 side=-1 roots=[221.8432, 221.8642] width=0.0210
+eta=-0.170 dmin=0.00051 side=+1 roots=[] width=0.0000
+eta=-0.180 dmin=0.00163 side=+1 roots=[] width=0.0000

@@ -1,0 +1,24 @@
+dt=0.001  eta*=-0.161819  phi*=221.7497 deg  Delta'=5.2749e-02  c1=0.995377
+   phi5=347.0 : mot de reference conserve ? True   ||tau_4|| = 1.59e-13
+   phi5=348.0 : mot de reference conserve ? True   ||tau_4|| = 1.59e-13
+   phi5=348.5 : mot de reference conserve ? True   ||tau_4|| = 1.59e-13
+   phi5=349.0 : mot de reference conserve ? True   ||tau_4|| = 1.59e-13
+   phi5=349.5 : mot de reference conserve ? True   ||tau_4|| = 1.59e-13
+   phi5=350.0 : mot de reference conserve ? True   ||tau_4|| = 1.59e-13
+   phi5=351.0 : mot de reference conserve ? False
+dt=0.002  eta*=-0.161819  phi*=221.7497 deg  Delta'=5.2750e-02  c1=0.995377
+   phi5=347.0 : mot de reference conserve ? True   ||tau_4|| = 2.21e-14
+   phi5=348.0 : mot de reference conserve ? True   ||tau_4|| = 2.21e-14
+   phi5=348.5 : mot de reference conserve ? True   ||tau_4|| = 2.21e-14
+   phi5=349.0 : mot de reference conserve ? True   ||tau_4|| = 2.21e-14
+   phi5=349.5 : mot de reference conserve ? True   ||tau_4|| = 2.21e-14
+   phi5=350.0 : mot de reference conserve ? True   ||tau_4|| = 2.21e-14
+   phi5=351.0 : mot de reference conserve ? False
+dt=0.0005  eta*=-0.161818  phi*=221.7497 deg  Delta'=5.2749e-02  c1=0.995377
+   phi5=347.0 : mot de reference conserve ? True   ||tau_4|| = 1.28e-13
+   phi5=348.0 : mot de reference conserve ? True   ||tau_4|| = 1.28e-13
+   phi5=348.5 : mot de reference conserve ? True   ||tau_4|| = 1.28e-13
+   phi5=349.0 : mot de reference conserve ? True   ||tau_4|| = 1.28e-13
+   phi5=349.5 : mot de reference conserve ? True   ||tau_4|| = 1.28e-13
+   phi5=350.0 : mot de reference conserve ? True   ||tau_4|| = 1.28e-13
+   phi5=351.0 : mot de reference conserve ? False

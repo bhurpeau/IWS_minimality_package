@@ -1,0 +1,18 @@
+(1) D^2 F_in : formule en coordonnees tau vs differences finies (fenetre fixe en tau)
+  famille A
+   th=1e-1   formule=    1.319946  diff.finies=    1.319946  ecart=-2.0e-11
+   th=1e-2   formule=    5.980766  diff.finies=    5.980766  ecart=-1.7e-09
+   th=1e-3   formule=   10.699941  diff.finies=   10.699941  ecart=-1.7e-07
+   th=1e-4   formule=   15.326582  diff.finies=   15.326599  ecart=-1.7e-05
+  famille B
+   th=1e-1   formule=    0.460100  diff.finies=    0.460100  ecart=-4.7e-13
+   th=1e-2   formule=    0.120593  diff.finies=    0.120593  ecart=-8.5e-12
+   th=1e-3   formule=    0.112358  diff.finies=    0.112358  ecart=-1.6e-11
+   th=1e-4   formule=    0.112206  diff.finies=    0.112206  ecart=-2.4e-11
+(2) direction tournante W=(s-th)(cos th, sin th), e=(1,0) : exact
+   F=1.16  1+th^2=1.16 | F_par=1.06843075304  cos(th)(1+th^2)=1.06843075304
+   en coordonnees tau : W~=tau(cos th, sin th), rho=|tau|, DW~=tau(-sin th, cos th) orthogonal a W~ : |P_perp DW~|^2/rho = |tau| (integrable)
+   alors que a s fixe, |d_th p|^2/rho ~ sin^2(th)/|s-th| n'est pas integrable : la translation du zero est absorbee par tau = s - sigma(th)
+(3) contre-exemple de poids : W=(s,th), g=1/Phi(th), Phi(th)=int_{-1}^{1} sqrt(s^2+th^2) ds
+   th=0.1  F=1.0 (=1)   Phi''(th) approx = 4.0064  (diverge en 2 ln(1/th))
+   th=0.01  F=1.0 (=1)   Phi''(th) approx = 8.5968  (diverge en 2 ln(1/th))

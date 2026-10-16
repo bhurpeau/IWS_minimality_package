@@ -1,0 +1,21 @@
+max_x |Da|^2 / second membre ; attendu <= 1 :
+eps= 1e-01 m= 0e+00  avec marge: 0.985   Glaeser nu (2L|a|): 0.999   (60 fonctions)
+eps= 1e-01 m= 1e-06  avec marge: 0.982   Glaeser nu (2L|a|): 0.998   (60 fonctions)
+eps= 1e-01 m= 1e-02  avec marge: 0.758   Glaeser nu (2L|a|): 0.929   (60 fonctions)
+eps= 1e-02 m= 0e+00  avec marge: 0.990   Glaeser nu (2L|a|): 0.999   (60 fonctions)
+eps= 1e-02 m= 1e-06  avec marge: 0.967   Glaeser nu (2L|a|): 0.998   (60 fonctions)
+eps= 1e-02 m= 1e-02  avec marge: 0.720   Glaeser nu (2L|a|): 0.920   (60 fonctions)
+eps= 1e-03 m= 0e+00  avec marge: 0.984   Glaeser nu (2L|a|): 0.997   (60 fonctions)
+eps= 1e-03 m= 1e-06  avec marge: 0.966   Glaeser nu (2L|a|): 0.998   (60 fonctions)
+eps= 1e-03 m= 1e-02  avec marge: 0.747   Glaeser nu (2L|a|): 0.932   (60 fonctions)
+
+zero NON critique a distance d hors de U'=[-1,1] : a=eps*(x-1-d), au point x=1 ; ||Da||^2 ln(1/|a|)/eps = eps*ln(1/(eps*d))
+eps= 1e-01  ln d =         -4.6   quotient = 0.691
+eps= 1e-01  ln d =        -13.8   quotient = 1.612
+eps= 1e-01  ln d =        -10.0   quotient = 1.230
+eps= 1e-01  ln d =       -100.0   quotient = 10.230
+eps= 1e-02  ln d =         -4.6   quotient = 0.092
+eps= 1e-02  ln d =        -13.8   quotient = 0.184
+eps= 1e-02  ln d =       -100.0   quotient = 1.046
+eps= 1e-02  ln d =     -10000.0   quotient = 100.046
+-> avec d = exp(-1/eps^2) le quotient vaut ~1/eps -> infini : sans marge (zero non critique tout pres hors de U') pas de borne O(eps).

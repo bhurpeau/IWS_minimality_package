@@ -1,0 +1,331 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm,booktabs,enumitem,geometry}
+\geometry{margin=2.4cm}
+\newtheorem{theoreme}{Théorème}
+\newtheorem{proposition}[theoreme]{Proposition}
+\newtheorem{lemme}[theoreme]{Lemme}
+\newtheorem{corollaire}[theoreme]{Corollaire}
+\theoremstyle{remark}
+\newtheorem{remarque}[theoreme]{Remarque}
+\newcommand{\R}{\mathbb R}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\vth}{\vartheta}
+\newcommand{\D}{\mathrm D}
+\newcommand{\asinh}{\operatorname{arsinh}}
+
+\title{Zéros à déplacement transverse nul : classement par l'ordre\\[2pt]
+\large (complément à la note sur la singularité logarithmique)}
+\author{Programme de soustraction --- IWS, Tome II (travail de recherche)}
+\date{octobre 2026}
+\begin{document}
+\maketitle
+
+\noindent\textbf{Statut.} Le théorème~\ref{thm:carac} (modèle réduit $\lVert W\rVert^2=\xi^2+a(\vth)^2$) et la proposition~\ref{prop:ordre} sont démontrés. La \emph{réduction} d'une intégrale plane pondérée générale à ce modèle est démontrée sous régularité renforcée ($W\in C^5$, $g\in C^2$) au théorème~\ref{thm:R} (section~\ref{sec:R}) ; la version à la régularité effectivement fournie par $u\in C^1$ ($W\in C^2$, $g\in C^2$, zéros simples) est le théorème~\ref{thm:S} de la section~\ref{sec:B}, démontré et relu (projection fixe et coordonnées $\tau=s-\sigma(\vth)$, sans $\partial_s^3W$) ; son raccord au noyau IWS reste à relire. Aucune simulation du noyau n'intervient ; les scripts \texttt{verif\_ordre\_deplacement\_transverse.py} et \texttt{verif\_reduction\_poids.py} ne font que contrôler les formules et le théorème~\ref{thm:R} sur des familles planes explicites.
+
+\section{La fonction modèle}
+Pour $a\in\R$, posons
+\[
+\Phi(a)=\int_{-1}^{1}\sqrt{t^2+a^2}\,dt=\sqrt{1+a^2}+a^2\asinh\frac1{\lvert a\rvert}\quad(a\ne0),\qquad\Phi(0)=1 .
+\]
+Alors $\Phi$ est paire, $C^\infty$ sur $\R^*$, et pour $a\neq0$
+\[
+\Phi'(a)=2a\asinh\tfrac1{\lvert a\rvert},\qquad
+\Phi''(a)=2\asinh\tfrac1{\lvert a\rvert}-\frac2{\sqrt{1+a^2}}=2\ln\frac2{\lvert a\rvert}-2+O(a^2),
+\]
+\[
+\Phi(a)=1+a^2\ln\frac2{\lvert a\rvert}+\frac{a^2}2+O(a^4).
+\]
+(La dérivée vient de $\int_{-1}^1\frac{a\,dt}{\sqrt{t^2+a^2}}=2a\asinh\frac1{\lvert a\rvert}$.) En particulier $\Phi\in C^1(\R)$ avec $\Phi'(0)=0$, et $\Phi''(a)\to+\infty$ logarithmiquement quand $a\to0$ : \emph{c'est la singularité de la note principale}, en variable $a$.
+
+\paragraph{Un exemple analytique hors colinéarité.} Pour $W(s,\delta)=(s,\delta^2)$, $s\in[-1,1]$, le zéro de $W(\cdot,0)$ est simple, $\partial_\delta W(0,0)=0$ (donc $a=0$ au sens de la note principale), et $W$ n'est pas colinéaire à une direction fixe pour $\delta\ne0$. Pourtant
+\[
+F(\delta)=\int_{-1}^1\lVert W\rVert\,ds=\Phi(\delta^2)=1+\delta^4\ln\frac2{\delta^2}+\frac{\delta^4}2+\frac{\delta^8}8-\frac{\delta^{12}}{32}+O(\delta^{16}).
+\]
+Ainsi $F''(\delta)=O(\delta^2\ln\frac1\delta)\to0$ et $F'''(\delta)=O(\delta\ln\frac1\delta)\to0$ : $F$ est $C^3$, et $F^{(4)}(\delta)\sim48\ln\frac1\delta$ n'est pas borné ($F\notin C^4$). Contrôle numérique (précision 40 chiffres) : formule exacte égale à la quadrature, reste du développement $=\delta^8/8-\delta^{12}/32+O(\delta^{16})$, $F^{(4)}(10^{-2},10^{-3},10^{-4})=149{,}7;\ 260{,}2;\ 370{,}7$ (incréments $\approx48\ln10=110{,}5$ par décade).
+
+\section{Un lemme de Glaeser local et la caractérisation exacte}
+\begin{lemme}[inégalité de Glaeser locale]\label{lem:glaeser}
+Soient $U\subset\R^n$ ouvert, $a\in C^2(U;\R)$, $Z=\{a=0\}$, et $x\in U$ avec $\D a(x)\ne0$. Soit $L>0$ tel que $\lVert\D^2a\rVert\le L$ sur la boule fermée $\bar B(x,\rho)\subset U$, $\rho=\lvert\D a(x)\rvert/L$. Si $\lvert\D a(x)\rvert^2>2L\lvert a(x)\rvert$, il existe $z\in Z\cap\bar B(x,\rho)$ avec $\D a(z)\ne0$.
+\end{lemme}
+\begin{proof}
+Si $a(x)=0$, on prend $z=x$. Sinon, quitte à remplacer $a$ par $-a$, $a(x)>0$. Posons $d=-\D a(x)/\lvert\D a(x)\rvert$ et $\psi(t)=a(x+td)$ pour $t\in[0,\rho]$ : $\psi(0)>0$, $\psi'(0)=-\lvert\D a(x)\rvert$, et $\psi'$ est $L$-lipschitzienne. Par Taylor, $\psi(t)\le q(t):=a(x)-\lvert\D a(x)\rvert\,t+\tfrac L2t^2$. Le discriminant de $q$ est $\lvert\D a\rvert^2-2La>0$ ; sa plus petite racine $t_-=\bigl(\lvert\D a\rvert-\sqrt{\lvert\D a\rvert^2-2La}\bigr)/L$ vérifie $t_-\le\rho$ et $\psi(t_-)\le q(t_-)=0$. Il existe donc un premier zéro $t_z\in\,]0,t_-]$ de $\psi$, et
+\[
+\psi'(t_z)\le\psi'(0)+Lt_z\le-\lvert\D a\rvert+Lt_-=-\sqrt{\lvert\D a(x)\rvert^2-2La(x)}<0 .
+\]
+Le point $z=x+t_zd\in Z$ vérifie donc $\D a(z)\cdot d<0$, c'est-à-dire $\D a(z)\ne0$. $\square$
+\end{proof}
+
+\begin{corollaire}[inégalité locale]\label{cor:glaeser}
+Si $a\in C^2(U)$ et $\D a=0$ sur $Z$, alors tout $\vth_0\in Z$ a un voisinage $B(\vth_0,r)$ et un $L>0$ tels que $\lvert\D a\rvert^2\le2L\lvert a\rvert$ sur $B(\vth_0,r)$.
+\end{corollaire}
+\begin{proof}
+Prendre $r$ avec $\bar B(\vth_0,3r)\subset U$ et $L\ge\sup_{B(\vth_0,3r)}\lVert\D^2a\rVert$, $L>0$. Comme $\D a(\vth_0)=0$ et $\D a$ est $L$-lipschitzienne, $\lvert\D a(x)\rvert\le Lr$ pour $x\in B(\vth_0,r)$, donc $\rho\le r$ et $\bar B(x,\rho)\subset B(\vth_0,2r)$. Si l'inégalité était fausse en $x$, le lemme fournirait $z\in Z$ avec $\D a(z)\ne0$ : contradiction. $\square$
+\end{proof}
+
+\begin{theoreme}[caractérisation exacte dans le modèle réduit]\label{thm:carac}
+Soit $a\in C^2(U;\R)$ et $F=\Phi\circ a$. Alors $F\in C^1(U)$ et
+\[
+\boxed{\ F\in C^2(U)\iff\D a=0\ \text{sur }Z=\{a=0\}.\ }
+\]
+Dans ce cas $\D^2F=0$ sur $Z$, et $\D^2F=\Phi''(a)\,\D a\otimes\D a+\Phi'(a)\,\D^2a$ ailleurs.
+\end{theoreme}
+\begin{proof}
+$F\in C^1$ car $\Phi\in C^1$ ; hors de $Z$, la formule est la règle de composition.
+
+($\Rightarrow$) Si $\D a(\vth_z)\ne0$ en un $\vth_z\in Z$, il existe $h$ avec $\lvert\D a\cdot h\rvert\ge c>0$ près de $\vth_z$, et $a$ prend des valeurs non nulles arbitrairement proches de $\vth_z$. Là, $\D^2F[h,h]=\Phi''(a)(\D a\cdot h)^2+\Phi'(a)\D^2a[h,h]$ avec $\Phi'(a)\D^2a$ borné et $\Phi''(a)\to+\infty$ : $\D^2F$ n'est pas borné, donc $F$ n'est $C^2$ sur aucun voisinage de $\vth_z$.
+
+($\Leftarrow$) Soit $\vth_z\in Z$ ; $\D a(\vth_z)=0$ donne $\lvert a(\vth)\rvert\le C\lvert\vth-\vth_z\rvert^2$ et $\lvert\D a(\vth)\rvert\le C\lvert\vth-\vth_z\rvert$, d'où $\lvert\D F\rvert=\lvert\Phi'(a)\rvert\lvert\D a\rvert\le C\lvert\vth-\vth_z\rvert^3\ln\frac1{\lvert\vth-\vth_z\rvert}=o(\lvert\vth-\vth_z\rvert)$ : $\D F$ est différentiable en $\vth_z$, de différentielle nulle. Hors de $Z$, le corollaire~\ref{cor:glaeser} donne $\lvert\D a\rvert^2\le2L\lvert a\rvert$ près de $\vth_z$, donc
+\[
+\lVert\D^2F\rVert\le\bigl(2\ln\tfrac2{\lvert a\rvert}+C\bigr)\,2L\lvert a\rvert+C\lvert a\rvert\ln\tfrac2{\lvert a\rvert}\,\lVert\D^2a\rVert\longrightarrow0\quad(\vth\to\vth_z).
+\]
+Ainsi $\D^2F$ est continue en $\vth_z$ de valeur $0$, et ailleurs. $\square$
+\end{proof}
+
+La condition (L) de la première version de cette note est donc \emph{automatique} dès que $\D a=0$ sur $Z$ : $\lvert\D a\rvert^2\ln\frac1{\lvert a\rvert}\le2L\lvert a\rvert\ln\frac1{\lvert a\rvert}\to0$. Deux conditions techniques sont remplacées par une seule condition géométrique, nécessaire et suffisante dans le modèle.
+
+\paragraph{Conséquence pour $\mathcal Q$.} Pour la famille multiparamétrique, la partie potentiellement divergente de la hessienne près d'un zéro simple $s_k$ est portée par
+\[
+\mathcal Q(\vth)=\sum_k\frac{g(s_k)}{v_k}\,\bigl\lVert P^\perp_{\partial_sW}\,\D_\vth W(s_k,\vth)\bigr\rVert^2\log^+\frac L{d_k(\vth)} .
+\]
+Dans le modèle, $\mathcal Q=\lvert\D a\rvert^2\log^+\frac L{\lvert a\rvert}$. S'il est localement borné près du lieu des zéros, il exclut les zéros réguliers (près d'un zéro avec $\D a\ne0$, $\mathcal Q\to\infty$), donc $\D a=0$ sur $Z$, donc $F\in C^2$ et $\mathcal Q\to0$. La distinction entre hessienne bornée et continue reste vraie pour une hessienne générale ; elle est ici absorbée par le lemme~\ref{lem:glaeser}.
+
+\section{Applications : ordre du zéro et exemples}
+\begin{proposition}[ordre du zéro, un paramètre]\label{prop:ordre}
+\begin{itemize}[nosep]
+\item Si $a\in C^1$ et $a'(0)\ne0$ : $F=\Phi\circ a\notin C^2$. (Si $F\in C^2$, $F'$ serait lipschitzienne avec $F'(0)=0$, donc $\lvert F'(\delta)\rvert\le C\lvert\delta\rvert$ ; or $\lvert F'(\delta)\rvert=\lvert\Phi'(a)a'\rvert\sim2a'(0)^2\lvert\delta\rvert\ln\frac1{\lvert\delta\rvert}$.) Si de plus $a\in C^2$, $F''(\delta)\sim2a'(0)^2\ln\frac1{\lvert\delta\rvert}$ ; sans cette régularité l'équivalent n'est pas garanti (exemple $a=\delta+\delta^3\sin\frac1\delta$ : $C^1$, $a''$ oscillante).
+\item Si $a(\delta)=\delta^mc(\delta)$ avec $m\ge2$, $c$ continue, $c(0)\ne0$, $a\in C^2$ : alors $a'(0)=0$ et $a\ne0$ pour $\delta\ne0$ petit, donc $Z=\{0\}$ localement avec $a'=0$ sur $Z$ : $F\in C^2$ par le théorème~\ref{thm:carac}.
+\item Pour le monôme exact $a=c\,\delta^m$ : $F-1=c^2\delta^{2m}\bigl(m\ln\frac1{\lvert\delta\rvert}+O(1)\bigr)$, donc $F\in C^{2m-1}\setminus C^{2m}$. Le changement de signe n'est pas discriminant : $a=\delta^3$ change de signe et $F\in C^5\setminus C^6$.
+\end{itemize}
+Le logarithme est repoussé à l'ordre $\delta^{2m}$ : c'est l'ordre du contact, non la seule nullité de $a'(0)$, qui fixe la classe exacte.
+\end{proposition}
+
+\paragraph{Plusieurs paramètres : $C^2$ en un point ne suffit pas.} Avec $a(\vth)=\lvert\vth\rvert^2$, $Z=\{0\}$ et $\D a(0)=0$ : $F\in C^2$. Avec
+\[
+a(\vth)=\vth_1^2-\vth_2^2,
+\]
+$a(0)=0$, $\D a(0)=0$, $F-1=O(\lvert\vth\rvert^4\ln\frac1{\lvert\vth\rvert})$ et $\D^2F(0)=0$ ; mais sur les diagonales $\vth_1=\pm\vth_2$, tout point non nul est un zéro \emph{régulier} de $a$ ($\D a\ne0$), et le théorème~\ref{thm:carac} interdit $C^2$ sur tout voisinage de $0$. Contrôle numérique : à $\vth_2=0{,}3$, $\partial^2_{\vth_1}F$ en $\vth_1=0{,}3+e$ vaut $3{,}83;\ 5{,}17;\ 6{,}79;\ 8{,}44$ pour $e=10^{-2},\dots,10^{-5}$ (croissance de $\approx1{,}66$ par décade, prédite par $2(2\vth_1)^2\ln10=1{,}658$). Le zéro isolé au centre ne dit rien du lieu $\{a=0\}$ voisin : c'est tout le lieu qui doit être critique.
+
+\paragraph{Lecture géométrique.} Dans le modèle réduit, la régularité $C^2$ survit lorsque le lieu des zéros est entièrement critique pour la fonction de déplacement transverse $a$ ; elle est perdue dès qu'un zéro régulier de $a$ appartient à ce lieu. Le changement de signe n'est pas, à lui seul, discriminant : c'est la transversalité dans l'espace des paramètres qui l'est.
+
+\section{Réduction (R) dans le plan, à régularité renforcée}\label{sec:R}
+\paragraph{Hypothèses (P).} $U\subset\R^n$ ouvert, $J\subset\R$ compact, $W\in C^5(J\times U;\R^2)$, un poids \emph{paramétrique} $g\in C^2(J\times U)$, et des bornes mobiles $\alpha,\beta\in C^2(U)$ avec $[\alpha(\vth),\beta(\vth)]\subset J$ ; en $\vth_0\in U$, $W(\cdot,\vth_0)$ a un nombre fini $p\ge1$ de zéros $s_1<\dots<s_p$ dans $]\alpha(\vth_0),\beta(\vth_0)[$, simples ($\partial_sW(s_k,\vth_0)\ne0$), avec $g(s_k,\vth_0)>0$, et $W(\alpha(\vth_0),\vth_0)\ne0\ne W(\beta(\vth_0),\vth_0)$. Posons $F(\vth)=\int_{\alpha(\vth)}^{\beta(\vth)}g(s,\vth)\lVert W(s,\vth)\rVert\,ds$.
+
+\begin{lemme}[forme normale à paramètres]\label{lem:morse}
+Sous (P), près de $(s_k,\vth_0)$ : $f:=\lVert W\rVert^2\in C^5$ vérifie $\partial_sf=0$ et $\partial_s^2f=2\lVert\partial_sW\rVert^2>0$ en $(s_k,\vth_0)$ (car $W=0$ s'y annule). Il existe donc $\sigma\in C^4$ avec $\partial_sf(\sigma(\vth),\vth)=0$, et
+\[
+a(\vth):=\frac{\det\bigl(\partial_sW(\sigma,\vth),\,W(\sigma,\vth)\bigr)}{\lVert\partial_sW(\sigma,\vth)\rVert}\in C^4,\qquad a(\vth)^2=f(\sigma(\vth),\vth),
+\]
+(l'égalité vient de $W(\sigma,\vth)\perp\partial_sW(\sigma,\vth)$, conséquence de $\partial_sf=2W\cdot\partial_sW=0$ ; $a$ est lisse bien que $\lvert a\rvert$ ne le soit pas). Par Taylor, $f=a^2+(s-\sigma)^2A$ avec $A(s,\vth)=\int_0^1(1-t)\partial_s^2f(\sigma+t(s-\sigma),\vth)\,dt\in C^3$ et $A>0$ localement. Posons $\xi=(s-\sigma)\sqrt A\in C^3$ : alors
+\[
+\boxed{\ \lVert W(s,\vth)\rVert^2=\xi^2+a(\vth)^2\ }
+\]
+exactement, et $\partial_s\xi=\sqrt A>0$ en $s=\sigma$, de sorte que $s\mapsto\xi$ est un difféomorphisme local d'inverse $S(\xi,\vth)\in C^3$. Le poids $h(\xi,\vth):=g(S(\xi,\vth),\vth)\,\partial_\xi S(\xi,\vth)$ est de classe $C^2$ (la dépendance paramétrique de $g$ est simplement absorbée dans $h$), et $b(\vth):=h(0,\vth)=g(\sigma(\vth),\vth)/\sqrt{\tfrac12\partial_s^2f(\sigma,\vth)}$ est $C^2$ et $>0$ ($b(\vth_0)=g(s_k,\vth_0)/\lVert\partial_sW(s_k,\vth_0)\rVert$).
+\end{lemme}
+\emph{Décompte de régularité.} $f\in C^5\Rightarrow\sigma\in C^4,\ A\in C^3,\ \xi\in C^3,\ \partial_s\xi\in C^2,\ S\in C^3,\ \partial_\xi S\in C^2,\ h\in C^2$ : c'est ce décompte qui impose $W\in C^5$ ; il n'a pas été optimisé.
+
+\begin{lemme}[le poids résiduel ne crée pas de singularité d'ordre deux]\label{lem:poids}
+Soient $\eta>0$, $h\in C^2([-\eta,\eta]\times U)$, $a\in C^2(U)$ et $r(\xi,\vth)=h(\xi,\vth)-h(0,\vth)$. Alors, \emph{sans aucune condition sur $\D a$},
+\[
+R(\vth)=\int_{-\eta}^{\eta}r(\xi,\vth)\sqrt{\xi^2+a(\vth)^2}\,d\xi\in C^2(U).
+\]
+\end{lemme}
+\begin{proof}
+Posons $\varphi=\sqrt{\xi^2+a^2}$. On a $\lvert r\rvert\le C\lvert\xi\rvert$, $\partial_\vth r,\partial^2_\vth r$ bornés, $\partial_a\varphi=a/\varphi\in[-1,1]$, et $\partial_a^2\varphi=\xi^2/\varphi^3\le1/\lvert\xi\rvert$. Pour $\xi\ne0$ l'intégrande est $C^2$ en $\vth$ et
+\[
+\partial_\vth^2(r\varphi)=\partial^2_\vth r\,\varphi+2\,\partial_\vth r\otimes_{\rm s}\tfrac a\varphi\D a+r\,\tfrac{\xi^2}{\varphi^3}\,\D a\otimes\D a+r\,\tfrac a\varphi\,\D^2a ,
+\]
+dont le troisième terme est borné par $C\lvert\xi\rvert\cdot\lvert\xi\rvert^{-1}\lVert\D a\rVert^2=C\lVert\D a\rVert^2$ : le facteur dangereux $1/\lvert\xi\rvert$ est compensé par l'annulation de $r$ en $\xi=0$. Chaque terme est borné uniformément en $(\xi,\vth)$ sur les compacts et continu en $\vth$ pour $\xi\ne0$ ; le théorème de dérivation sous l'intégrale (convergence dominée, deux fois) donne $R\in C^2$. $\square$
+\end{proof}
+
+\begin{theoreme}[réduction et caractérisation]\label{thm:R}
+Sous (P), il existe un voisinage $B$ de $\vth_0$, $\eta>0$, des fonctions $a_k\in C^4(B)$, $b_k\in C^2(B)$, $b_k>0$, et $G\in C^2(B)$ tels que
+\[
+F(\vth)=G(\vth)+\sum_{k=1}^pb_k(\vth)\,\Phi_\eta\bigl(a_k(\vth)\bigr),\qquad\Phi_\eta(a)=\int_{-\eta}^{\eta}\sqrt{\xi^2+a^2}\,d\xi=\eta^2\Phi(a/\eta),
+\]
+et
+\[
+\boxed{\ F\in C^2(B)\iff\D a_k=0\ \text{sur }\{a_k=0\}\cap B\ \text{pour tout }k.\ }
+\]
+\end{theoreme}
+\begin{proof}
+\emph{Décomposition.} On choisit $\rho>0$ et des fenêtres \emph{fixes} $I_k=[s_k-\rho,s_k+\rho]\subset\,]\alpha(\vth_0),\beta(\vth_0)[$, deux à deux disjointes. Les morceaux restants ont pour extrémités $\alpha(\vth)$, $\beta(\vth)$ (mobiles, $C^2$) et les bords fixes $s_k\pm\rho$ ; sur chacun, $\lVert W(\cdot,\vth_0)\rVert>0$ (les extrémités mobiles ne sont pas des zéros), donc $\lVert W\rVert>0$ pour $\vth$ proche de $\vth_0$, $\lVert W\rVert=\sqrt f\in C^5$, l'intégrande $g\lVert W\rVert$ est $C^2$ en $(s,\vth)$ et l'intégrale est $C^2$ (règle de Leibniz avec bornes $C^2$). Sur $I_k$, le lemme~\ref{lem:morse} donne $\int_{I_k}g\lVert W\rVert\,ds=\int_{\xi^-(\vth)}^{\xi^+(\vth)}h\sqrt{\xi^2+a_k^2}\,d\xi$ avec $\xi^\pm=\xi(s_k\pm\rho,\vth)\in C^3$ de signe fixé ; pour $\eta<\min\lvert\xi^\pm\rvert$, on coupe en $[-\eta,\eta]$ et deux morceaux où $\xi\ne0$, dont l'intégrande est $C^2$ en $(\xi,\vth)$ et les bornes $C^2$ : contribution $C^2$. Reste $\int_{-\eta}^\eta h\sqrt{\xi^2+a_k^2}\,d\xi=b_k\Phi_\eta(a_k)+R_k$ avec $R_k\in C^2$ par le lemme~\ref{lem:poids}. On pose $G=$ somme des contributions $C^2$ et des $R_k$.
+
+\emph{Suffisance.} Si $\D a_k=0$ sur $Z_k=\{a_k=0\}$, le théorème~\ref{thm:carac} appliqué à $a_k/\eta$ donne $\Phi_\eta\circ a_k=\eta^2\Phi\circ(a_k/\eta)\in C^2$, et $b_k\in C^2$.
+
+\emph{Nécessité.} Supposons $F\in C^2(B)$ et $\D a_k(\vth_z)\ne0$ en un $\vth_z\in Z_k$. Alors $\sum_jb_j\Phi_\eta\circ a_j=F-G\in C^2(B)$. Soit $O$ l'ensemble des $\vth$ tels que, pour chaque $j$, $a_j(\vth)\ne0$ ou $\vth\in\operatorname{int}Z_j$ : $O$ est ouvert et dense ($Z_j\setminus\operatorname{int}Z_j$ est fermé d'intérieur vide), et sur $O$ chaque terme est $C^2$ (constant $b_j\eta^2$ sur $\operatorname{int}Z_j$). Là,
+\[
+\D^2\bigl(b_j\Phi_\eta(a_j)\bigr)=\Phi_\eta(a_j)\D^2b_j+2\Phi_\eta'(a_j)\D b_j\otimes_{\rm s}\D a_j+b_j\Phi_\eta''(a_j)\D a_j\otimes\D a_j+b_j\Phi_\eta'(a_j)\D^2a_j ,
+\]
+où $\Phi_\eta,\Phi_\eta'$ sont bornés et $\Phi_\eta''\ge0$ (convexité de $a\mapsto\sqrt{\xi^2+a^2}$). Donc $\D^2(F-G)[h,h]\ge b_k\Phi_\eta''(a_k)(\D a_k\cdot h)^2-C$ sur $O$. Pour $h$ avec $\D a_k(\vth_z)\cdot h\ne0$ et $\vth\to\vth_z$ dans l'ouvert dense $O\cap\{a_k\ne0\}$ (non vide près de $\vth_z$ car $\D a_k(\vth_z)\ne0$), $a_k\to0$ et $\Phi_\eta''(a_k)\to+\infty$ : $\D^2(F-G)$ n'est pas borné près de $\vth_z$, contradiction avec $F-G\in C^2$. $\square$
+\end{proof}
+
+\begin{remarque}[pas de compensation entre zéros]
+Les parties singulières $b_j\Phi_\eta''(a_j)\D a_j\otimes\D a_j$ sont semi-définies positives (avec $b_j>0$) : deux zéros distincts ne peuvent pas annuler mutuellement leurs singularités.
+\end{remarque}
+
+\paragraph{Contrôle numérique (30 chiffres, quadrature coupée au minimum $\sigma$).} Trois familles planes avec $g(s)=1+s/2$ et un jacobien non trivial : (A) $a\sim\vth$ : $F''$ croît de $4{,}61;\ 4{,}63;\ 4{,}73$ par décade pour $\vth\to0$, prédit $2\,b\,a'^2\ln10=4{,}605$ ; (B) $a\sim0{,}913\,\vth^2$, non colinéaire : $F''$ converge vers $0{,}5366$ ; (C) $a=\vth^2-0{,}01$, zéro régulier en $\vth=0{,}1$ : $F''$ croît de $0{,}170;\ 0{,}182$ par décade, prédit $2\,b\,a'^2\ln10=0{,}184$.
+
+\paragraph{Application au noyau (1) : régularité d'ordre cinq des épisodes antérieurs.} Cadre plan ($d=2$) des témoins ; $u$ constant (protocole de référence) ou $u\in C^5$ en temps ; graphe de rewiring $A_j$ localement constant sur la boule (écart de similarité cosinus du théorème~1 de la note P2) ; hypothèses $\lVert\tau_j\rVert\ge\nu'_\tau>0$ et (N) : $\lVert H_i\rVert,\lVert V_i\rVert\ne0$ ($i\in\mathcal J$) sur les épisodes de rang $<r$ et sur la fenêtre d'impact du rang $r$.
+
+\begin{proposition}[régularité $C^5$ des rangs $<r$]\label{prop:C5}
+Sous ces hypothèses, pour $j<r$ : $T_j\in C^5(B)$ et $\zeta^+_j\in C^5(B)$ ; pour l'épisode $r$, $(s,\vth)\mapsto\tilde\zeta_r(s;\vth)\in C^5$ ; et, au premier épisode, $V_i(s)=s\,v_i(s;\vth)$, $H_i(s)=s^2h_i(s;\vth)$ avec $v_i,h_i\in C^5$.
+\end{proposition}
+\begin{proof}
+\emph{(a) Flot d'un épisode régulier.} Le sous-système $(w,\tau)=(H,V,\tau)$ n'a pas de norme de $H$ ou $V$ ; ses seules non-linéarités sont $\tanh$, $\lVert\tau_j\rVert$ (régulière pour $\tau_j\ne0$) et $M_\lambda(\tau)$ : son champ $G_0(z)$ est $C^\infty$ près des trajectoires, et $u$ y entre de façon additive, $\dot z=G_0(z)+Bu(t)$. Avec $U(t)=\int u$ ($U\in C^6$ si $u\in C^5$) et $\omega=z-BU(t)$, on a $\dot\omega=G_0(\omega+BU(t))$, champ $C^5$ \emph{conjointement} en $(t,\omega)$ : son flot $\hat\Phi(t,s,\xi)$ est donc $C^5$ conjointement en $(t,s,\xi)$ (dépendance classique d'une EDO en le temps, l'instant initial et la donnée initiale). Les pressions s'en déduisent par Duhamel : $P_i(t)=e^{-\kappa_3(t-s)}P_i(s)+\int_s^te^{-\kappa_3(t-s')}\psi_i(z(s'))\,ds'$ avec $\psi_i=\kappa_1\lVert H_i\rVert+\kappa_2\lVert V_i\rVert$ de classe $C^\infty$ là où (N) tient : $\tilde P_i\in C^5$ conjointement en $(t,s,\xi)$.
+
+\emph{(b) Premier impact.} $\tilde P_{i_j}(t;\vth)-\Theta$ est $C^5$ en $(t,\vth)$ (composition de (a) avec $T_{j-1},\zeta^+_{j-1}\in C^5$) et $\partial_t\ge\nu/4>0$ : le théorème des fonctions implicites (version $C^k$) donne $T_j\in C^5$.
+
+\emph{(c) Transmission.} $\zeta^-_j(\vth)=\tilde\zeta_j(T_j(\vth);\vth)\in C^5$ par composition, et $\zeta^+_j=R_j\zeta^-_j$ avec $R_j$ linéaire : $\zeta^+_j\in C^5$. On itère jusqu'à $r-1$ ; la composante visible de $\tilde\zeta_r(s;\vth)=\hat\Phi_r(s,T_{r-1}(\vth),\zeta^+_{r-1}(\vth))$ est $C^5$.
+
+\emph{(d) Premier épisode, au repos.} On part de $H(0)=V(0)=0$ où $\lVert H_i\rVert,\lVert V_i\rVert$ ne sont pas lisses. Le sous-système $(w,\tau)$ reste régulier (a) : $z\in C^6$ en $(s,\vth)$ si $u\in C^5$, et $\dot V_i(s;\vth)\in C^5$ (car $\dot V_i=G_{0,V}(z)+u(s)$). Alors $V_i(s)=\int_0^s\dot V_i=s\,v_i$ avec $v_i=\int_0^1\dot V_i(\theta s;\vth)\,d\theta\in C^5$, et $H_i=\int_0^sV_i=s^2h_i$, $h_i=\int_0^1\theta\,v_i(\theta s;\vth)\,d\theta\in C^5$, avec $v_i(0)=\dot V_i(0)\ne0$ (déclencheur forcé). Donc $\psi_i=s\bigl(\kappa_2\lVert v_i\rVert+\kappa_1s\lVert h_i\rVert\bigr)$ et le facteur entre parenthèses est $C^5$ et $>0$ près de $s=0$ : la factorisation « au repos » du texte principal passe à l'ordre cinq, au prix d'une dérivée de plus sur $u$ ($u\in C^5$ au lieu de $C^4$, parce que $v_i$ est une moyenne de $\dot V_i$ et non de $z$). $\square$
+\end{proof}
+La proposition~\ref{prop:C5} ne fait appel à aucun résultat implicite de la note P2 : c'est la même chaîne (flot, théorème des fonctions implicites, saut linéaire), écrite à l'ordre cinq.
+
+\paragraph{Application au noyau (2) : l'instant d'impact du rang $r$.} Soit $W(s,\vth)=V_0(s;\vth)$ pendant l'épisode $r$ ($C^5$ par la proposition~\ref{prop:C5}). On ne suppose \emph{pas} d'avance $T_r\in C^2$ : le temps terminal $t$ est traité comme un paramètre indépendant, $(t,\vth)\in\R\times U$, avec le poids \emph{paramétrique} $g(s,t)=\kappa_2e^{-\kappa_3(t-s)}$ (pour $r=1$, $g(s,t)=s\,\kappa_2e^{-\kappa_3(t-s)}$, $>0$ pour $s>0$, la variable $W$ étant alors $v_0$). La pression pré-saut est
+\[
+\tilde P(t,\vth)=\int_{T_{r-1}(\vth)}^{t}g(s,t)\,\lVert W(s;\vth)\rVert\,ds+(\text{termes }C^2),
+\]
+où les autres n\oe uds et $\lVert H_0\rVert$ n'ont pas de zéro, et où $\lVert V_0\rVert$ ne s'annule ni en $T_{r-1}(\vth)$ ni près de $t$ (pas de zéro au bord de l'épisode). C'est exactement la forme du théorème~\ref{thm:R} avec paramètres $(t,\vth)$, bornes mobiles $\alpha=T_{r-1}(\vth)$, $\beta=t$ et poids $g\in C^2$, $a=a(\vth)$ ne dépendant pas de $t$ : $\tilde P\in C^2$ si et seulement si $\D_\vth a_k=0$ sur $Z_k$. Dans ce cas, $\partial_t\tilde P\ge\nu/4>0$ donne $T_r\in C^2$ par le théorème des fonctions implicites ; réciproquement, un zéro régulier fait perdre $C^2$ à $T_r$ par le corollaire sur le temps d'impact de la note « singularité logarithmique » (différence seconde signée $-\frac{2Ba_h^2}{v}\delta^2\ln\frac1\delta$). Il n'y a donc pas de circularité.
+
+\paragraph{Bilan des niveaux.}
+\begin{center}\small
+\begin{tabular}{p{4.4cm}p{6cm}p{3.4cm}}
+\toprule
+Niveau & Résultat & Statut\\\midrule
+Modèle $\Phi\circ a$ & caractérisation nécessaire et suffisante de $C^2$ & Démontré (thm~\ref{thm:carac})\\
+Intégrale plane pondérée, $W\in C^5$, $g\in C^2(J\times U)$, bornes mobiles & réduction exacte et même caractérisation & Démontré (thm~\ref{thm:R})\\
+Noyau IWS, $d=2$, $u$ constant ou $C^5$, rangs $<r$ réguliers & hypothèses de (P) vérifiées (prop.~\ref{prop:C5}) ; $T_r\in C^2\iff\D a_k=0$ sur $Z_k$ & Démontré sous ces hypothèses\\
+Intégrale plane pondérée, $W\in C^2$, $g\in C^2(J\times U)$, bornes mobiles $C^2$, zéros simples & caractérisation $F\in C^2\iff\D a_k=0$ sur $Z_k$ & Démontré (thm~\ref{thm:S}, cor.~\ref{cor:carac2})\\
+Noyau IWS, $u\in C^1$, $d=2$ & application complète : autres contributions à la pression, transmission des épisodes antérieurs, $t$ paramètre & Raccord à relire\\\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Résultat conceptuel.} En dimension deux, pour des zéros temporels simples et des poids positifs, la régularité $C^2$ d'une intégrale du type $\int g\lVert W\rVert\,ds$ se caractérise par la géométrie du lieu des zéros $\{a_k=0\}$ dans l'espace des paramètres (il doit être critique pour $a_k$), et non par la seule présence ou absence de zéros de $W$. C'est plus général que la question initiale sur $\lVert V_0\rVert$ ; l'énoncé ne dépend pas d'IWS.
+
+\paragraph{Ce qui reste ouvert.}
+\begin{center}\small
+\begin{tabular}{p{7.2cm}p{6.8cm}}
+\toprule
+Problème & État\\\midrule
+Réduction locale de l'intégrale plane, $W\in C^5$, $g\in C^2(J\times U)$ & Démontrée (théorème~\ref{thm:R}), témoins numériques\\
+Baisse de régularité : caractérisation avec la régularité fournie par $u\in C^1$ ($W$ seulement $C^2$) & Établie dans le plan par le théorème~\ref{thm:S} (sans décomposition explicite $G+b\Phi(a)$) ; raccord au noyau à relire\\
+Transport de la caractérisation aux temps de Kairos, $u\in C^1$ & Ouvert (à traiter séparément)\\
+Estimation quantitative $\lVert\D^2_\vth\tau^{(r)}\rVert=O(\varepsilon)$ en présence de zéros & Ouverte : $C^2$ à $\varepsilon$ fixé n'implique pas une hessienne uniformément $O(\varepsilon)$ quand $\varepsilon\to0$ ; question distincte de la précédente\\
+Zéros multiples ou dégénérés ($\partial_sW=0$), $d\ge3$ & Ouvert\\
+Transmission de la caractérisation à travers plusieurs Kairos & Non traitée par le lemme local\\
+Zéros de $\lVert H\rVert$, n\oe uds non forcés & Ouverts\\\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Projection fixe et coordonnées $\tau=s-\sigma(\vth)$ : le cadre à basse régularité}\label{sec:B}
+Le décompte du théorème~\ref{thm:R} ($W\in C^5$) vient de la construction du changement de variable de Morse et de la dérivation de son jacobien. On cherche ici une voie qui ne consomme que la régularité réellement disponible. Hypothèses (P$_2$) : $U\subset\R^n$ ouvert, $W\in C^2(J\times U;\R^2)$, un poids \emph{paramétrique} $g>0$ avec $g,\ \partial_sg,\ \D_\vth g,\ \D^2_\vth g$ continus (et $g\in C^2$ conjointement pour la suffisance), zéros de $W(\cdot,\vth_0)$ finis, simples, intérieurs à la fenêtre d'intégration, bornes mobiles $\alpha,\beta\in C^2(U)$ avec $[\alpha(\vth),\beta(\vth)]\subset J$, et $\lVert W\rVert>0$ aux deux bornes, uniformément après réduction du voisinage (comme au théorème~\ref{thm:R}). On traite un zéro $s_0$ ; plusieurs zéros se traitent par fenêtres fixes comme au théorème~\ref{thm:R}.
+
+\begin{lemme}[coordonnées à projection fixe]\label{lem:proj}
+Soient $e=\partial_sW(s_0,\vth_0)/\lVert\partial_sW(s_0,\vth_0)\rVert$ (fixe), $n\perp e$ unitaire, $q=\langle e,W\rangle$, $p=\langle n,W\rangle$. Alors, sur un voisinage de $(s_0,\vth_0)$ : (i) $q_s\ge m_0>0$ et il existe $\sigma\in C^2$ avec $q(\sigma(\vth),\vth)=0$ ; (ii) $a(\vth):=p(\sigma(\vth),\vth)\in C^2$, et $\{\vth:\ W(\cdot,\vth)\text{ s'annule dans la fenêtre}\}=\{a=0\}$ ; (iii) il existe $0<c\le C$ tels que, avec $\tau=s-\sigma(\vth)$,
+\[
+c\sqrt{\tau^2+a(\vth)^2}\ \le\ \lVert W(s,\vth)\rVert\ \le\ C\sqrt{\tau^2+a(\vth)^2}.
+\]
+\end{lemme}
+\begin{proof}
+(i) $q\in C^2$, $q_s(s_0,\vth_0)=\lVert\partial_sW\rVert>0$ : théorème des fonctions implicites. (ii) $a$ est la composée de $p\in C^2$ avec $\vth\mapsto(\sigma(\vth),\vth)\in C^2$. Un zéro de $W$ vérifie $q=0$, donc $s=\sigma(\vth)$, puis $p=a=0$. (iii) Par Taylor, $q=\tau m$ avec $m=\int_0^1q_s(\sigma+\theta\tau,\vth)d\theta\ge m_0$, et $p=a+\tau\nu$ avec $\nu=\int_0^1p_s(\sigma+\theta\tau,\vth)d\theta$ ; comme $p_s(s_0,\vth_0)=0$, $\lvert\nu\rvert\le\varepsilon<m_0$ près de $(s_0,\vth_0)$. Avec $(x+y)^2\ge\tfrac12x^2-y^2$ : $\lVert W\rVert^2\ge(m_0^2-\varepsilon^2)\tau^2+\tfrac12a^2$ ; la majoration est analogue. $\square$
+\end{proof}
+
+\begin{lemme}[décomposition]\label{lem:dec}
+Avec $\rho=\lVert W\rVert=\sqrt{q^2+p^2}$ : $\rho=\lvert q\rvert+p^2/(\rho+\lvert q\rvert)$, donc $F=F_\parallel+H$ avec $F_\parallel=\int g\lvert q\rvert\,ds$. Sous (P$_2$), $F_\parallel\in C^2$ (lemme symétrique multi-paramètres de la note « singularité logarithmique » appliqué à $Q=gq$, de mêmes zéros, $Q_s=gq_s$ en ces zéros), de hessienne
+\[
+\D^2F_\parallel=\int\mathrm{sgn}(q)\bigl[g\,\D^2q+2\,\D g\otimes_{\rm s}\D q+q\,\D^2g\bigr]ds+\sum_k\frac{2g(s_k)\,\D q\otimes\D q}{\lvert q_s\rvert}(s_k),
+\]
+les termes en $\D g,\D^2g$ étant réguliers. Lorsque les bornes $\alpha,\beta$ dépendent de $\vth$, cette expression doit être complétée par les termes de bord usuels de la règle de Leibniz. Ils sont $C^0$, puisque $q$ ne s'annule pas aux bornes et que $g,q,\alpha,\beta$ possèdent la régularité requise ; ils ne modifient ni la singularité intérieure ni la conclusion $F_\parallel\in C^2$. Donc $F\in C^2\iff H\in C^2$.
+\end{lemme}
+Ce lemme montre où est la singularité (dans $H$, quadratique en $p$) mais il ne suffit pas pour la preuve de suffisance ci-dessous : les termes tangentiels et transverses doivent être estimés ensemble (voir l'exemple à direction tournante).
+
+\paragraph{Le poids doit être $C^2$ dans les paramètres.} Pour $W(s,\vth)=(s,\vth)$, $J=[-1,1]$, $\Phi(\vth)=\int_{-1}^1\sqrt{s^2+\vth^2}\,ds$ et $g(s,\vth)=1/\Phi(\vth)$ (positif, $C^1$, pas $C^2$ en $\vth=0$ puisque $\Phi''\sim2\ln\frac1{\lvert\vth\rvert}$), on a $F\equiv1$, donc $F\in C^2$, alors que $a(\vth)=\vth$ et $\D a(0)\ne0$. La nécessité n'est donc pas vraie pour un poids paramétrique seulement $C^1$.
+
+\begin{lemme}[extension du lemme logarithmique à un poids paramétrique]\label{lem:logparam}
+Le lemme logarithmique (hypothèses H1--H3, $W\in C^2$) reste vrai si $g(s)$ est remplacé par $g(s,\delta)$ avec $g(\cdot,0)\in C^1$, $g>0$ aux zéros et $\partial_\delta^2g$ borné : la différence seconde de $F$ garde la même partie principale en $\delta^2\ln\frac1\delta$.
+\end{lemme}
+\begin{proof}
+Posons $N_\pm=\lVert W(s,\pm\delta)\rVert$, $g_0=g(s,0)$, $g_1=\partial_\delta g(s,0)$ ; alors $g(s,\pm\delta)=g_0\pm\delta g_1+R_\pm$, $\lvert R_\pm\rvert\le C\delta^2$. La différence seconde de l'intégrande vaut
+\[
+g_0\,(N_++N_--2N_0)+\delta g_1\,(N_+-N_-)+R_+N_++R_-N_- .
+\]
+Comme $\lvert N_+-N_-\rvert\le2\delta\sup\lVert\D_\delta W\rVert$, les deux derniers termes sont $O(\delta^2)$ ; le premier est celui du lemme. $\square$
+\end{proof}
+
+\begin{proposition}[nécessité à régularité $C^2$]\label{prop:nec2}
+Sous (P$_2$), s'il existe $\vth_z\in Z=\{a=0\}$ avec $\D a(\vth_z)\ne0$, alors $F$ n'est $C^2$ sur aucun voisinage de $\vth_z$.
+\end{proposition}
+\begin{proof}
+Au zéro, $\D_\vth[W(\sigma(\vth),\vth)]=(0,\D a)=\D_\vth W+\partial_sW\,\D\sigma$ ; la composante de $\D_\vth W\,h$ orthogonale à $\partial_sW$ est donc celle de $(0,\D a\cdot h)$, de module $\lvert\D a\cdot h\rvert\cos\varphi$ ($\varphi$ petit : angle entre $\partial_sW(s_0,\vth_z)$ et $e$). Elle est non nulle pour un $h$ convenable : l'hypothèse (H3) du lemme logarithmique est vérifiée, les autres le sont par (P$_2$), et le lemme~\ref{lem:logparam} donne $F(\vth_z+\delta h)-2F(\vth_z)+F(\vth_z-\delta h)\sim c\,\delta^2\ln\frac1\delta$ avec $c>0$, ce qui exclut $C^2$. $\square$
+\end{proof}
+
+\paragraph{Pourquoi un majorant par $\lVert\D_\vth p\rVert^2/\rho$ est trop grossier : l'exemple à direction tournante.} Soit $W(s,\vth)=(s-\vth)(\cos\vth,\sin\vth)$, $g=1$, $e=(1,0)$. Alors $\sigma=\vth$, $a\equiv0$, et pour $\lvert\vth\rvert<1$ :
+\[
+F=1+\vth^2,\qquad F_\parallel=\cos\vth\,(1+\vth^2),\qquad H=(1-\cos\vth)(1+\vth^2),
+\]
+tous analytiques. Pourtant, à $s$ fixé, $\partial_\vth p(\vth,\vth)=-\sin\vth$ et $\lvert\partial_\vth p\rvert^2/\rho\sim\sin^2\vth/\lvert s-\vth\rvert$ n'est pas intégrable. La singularité est artificielle : dans $\D^2F$ le terme pertinent est $\lVert P^\perp_W\D_\vth W\rVert^2/\rho$ (projection du vecteur complet), et, en coordonnées $\tau=s-\sigma(\vth)$, $\tilde W(\tau,\vth)=\tau(\cos\vth,\sin\vth)$ donne $\rho=\lvert\tau\rvert$, $\D_\vth\tilde W=\tau(-\sin\vth,\cos\vth)\perp\tilde W$, $\lVert P^\perp\D_\vth\tilde W\rVert^2/\rho=\lvert\tau\rvert$ : intégrable. La translation du zéro est absorbée par le changement $s\mapsto\tau$ (qui ne coûte aucune dérivée, son jacobien valant $1$).
+
+\paragraph{Structure en coordonnées $\tau$.} Posons $\tilde W(\tau,\vth)=W(\sigma(\vth)+\tau,\vth)$, $\tilde g(\tau,\vth)=g(\sigma(\vth)+\tau,\vth)$. Alors $\tilde W\in C^2$ conjointement (composition de $W\in C^2$ avec $\sigma\in C^2$ : aucune dérivée $\partial_s^3$ n'apparaît), $\tilde W=(\tau\tilde m,\ a+\tau\tilde\nu)$ avec $\tilde m=\int_0^1q_s(\sigma+\theta\tau,\vth)d\theta\ge m_0$, $\tilde\nu=\int_0^1p_s(\sigma+\theta\tau,\vth)d\theta$, $\lvert\tilde\nu\rvert<m_0$, et $\tilde m,\tilde\nu\in C^1$ conjointement. En particulier $\D_\vth\tilde W=(\tau\D\tilde m,\ \D a+\tau\D\tilde\nu)$ : \emph{le déplacement du zéro est exactement $(0,\D a)$ en $\tau=0$}. Avec $\rho=\lVert\tilde W\rVert\ge c\sqrt{\tau^2+a^2}$,
+\[
+\lVert P^\perp_{\tilde W}\D_\vth\tilde W[h]\rVert=\frac{\lvert\det(\tilde W,\D_\vth\tilde W[h])\rvert}{\rho}=\frac{\lvert\tau\rvert\,\lvert N[h]\rvert}{\rho},\quad N=\tilde m\,\D a-a\,\D\tilde m+\tau(\tilde m\,\D\tilde\nu-\tilde\nu\,\D\tilde m),
+\]
+d'où l'identité exacte, pour $\tau\ne0$ (où $\rho>0$ même si $a=0$) :
+\begin{equation}\label{eq:hess}
+\D^2_\vth\bigl(\tilde g\rho\bigr)[h,h]=\D^2\tilde g[h,h]\rho+2\,\D\tilde g[h]\ \hat w\!\cdot\!\D\tilde W[h]+\tilde g\Bigl(\hat w\!\cdot\!\D^2\tilde W[h,h]+\frac{\tau^2N[h]^2}{\rho^3}\Bigr).
+\end{equation}
+
+\begin{theoreme}[suffisance à régularité $C^2$]\label{thm:S}
+Sous (P$_2$) avec $g\in C^2(J\times U)$, si $\D a=0$ sur $Z\cap B$ ($B$ voisinage de $\vth_0$), alors $F\in C^2(B)$.
+\end{theoreme}
+\begin{proof}
+\emph{Réduction.} On coupe en $\{\lvert\tau\rvert\le r_0\}$ (limites \emph{fixes} en $\tau$) et son complémentaire, où $\rho\ge cr_0>0$ : la contribution du complémentaire est $C^2$ (intégrande $C^2$ en $(s,\vth)$, bornes $C^2$). Il reste $F_{\rm in}(\vth)=\int_{-r_0}^{r_0}\tilde g\rho\,d\tau$.
+
+\emph{$F_{\rm in}\in C^1$.} $\rho$ est lipschitzienne en $\vth$ avec $\lvert\D_\vth\rho\rvert\le\lVert\D\tilde W\rVert$ : $\D F_{\rm in}[h]=\int\Psi_h\,d\tau$, $\Psi_h=\D\tilde g[h]\rho+\tilde g\,\hat w\!\cdot\!\D\tilde W[h]$.
+
+\emph{Dérivée de $\Psi_h$.} Pour $\tau\ne0$, $\Psi_h(\tau,\cdot)\in C^1$ et $\partial_\vth\Psi_h[h]$ est le membre de droite de~\eqref{eq:hess}. Écrivons $N=\tilde m\,\D a+E$ avec $\lvert E\rvert\le C(\lvert a\rvert+\lvert\tau\rvert)\le C'\rho$ ($\D\tilde m,\D\tilde\nu$ bornés), puis $\tau^2N^2/\rho^3=T_1+T_2$ avec $T_1=\tau^2\tilde m^2(\D a\cdot h)^2/\rho^3\ge0$ et $\lvert T_2\rvert\le C\tau^2(\lvert\D a\rvert\rho+\rho^2)/\rho^3\le C(\lvert\D a\rvert+\rho)$. Tous les termes de~\eqref{eq:hess} autres que $\tilde g\,T_1$ sont donc bornés uniformément et continus en $\vth$ à $\tau\ne0$ fixé. Pour $T_1$, $\rho\ge c\sqrt{\tau^2+a^2}$ donne
+\[
+\int_{-r_0}^{r_0}T_1\,d\tau\le C\lvert\D a\rvert^2\Bigl(1+\ln^+\frac1{\lvert a\rvert}\Bigr).
+\]
+
+\emph{Controle près de $Z$.} Par le corollaire~\ref{cor:glaeser}, $\lvert\D a\rvert^2\le2L\lvert a\rvert$ près de tout point de $Z$ ; donc $\sup_{\vth\to\vth_z}\lvert\D a\rvert^2(1+\ln^+\frac1{\lvert a\rvert})\to0$ (car $a\to0$), et $T_1\equiv0$ aux points de $Z$ ($\D a=0$).
+
+\emph{Dérivabilité de $\D F_{\rm in}$ et continuité de sa dérivée.} Soit $\vth_z\in B$. Pour $h'$ petit, par la formule des accroissements finis (Fubini justifié par les bornes précédentes),
+\[
+\D F_{\rm in}(\vth_z+h')-\D F_{\rm in}(\vth_z)=\int_0^1\!\!\int\partial_\vth\Psi(\tau,\vth_z+\theta h')\,h'\,d\tau\,d\theta .
+\]
+Pour tout $\vth_z\in Z$, $\sup_{\lVert\vth-\vth_z\rVert\le r}\int T_1(\tau,\vth)\,d\tau\to0$ quand $r\downarrow0$ (même inégalité de Glaeser et continuité de $a$) : cette convergence \emph{uniforme} localement justifie l'échange des intégrations en $\tau$ et le long du segment de paramètres. La différence $\int\lvert\partial_\vth\Psi(\tau,\vth_z+\theta h')-\partial_\vth\Psi(\tau,\vth_z)\rvert d\tau$ tend alors vers $0$ avec $h'$ : les termes bornés par convergence dominée (continuité ponctuelle à $\tau\ne0$), le terme $T_1$ parce que $\int T_1(\cdot,\vth_z+\theta h')\to0$ et $T_1(\cdot,\vth_z)=0$ si $\vth_z\in Z$ (si $\vth_z\notin Z$, $\rho\ge c\lvert a(\vth_z)\rvert>0$ et $T_1$ est continu dans $L^1$). Donc $\D F_{\rm in}$ est dérivable en $\vth_z$, de dérivée $\int\partial_\vth\Psi(\tau,\vth_z)d\tau$, et cette dérivée dépend continûment de $\vth_z$ par le même argument. Ainsi $F_{\rm in}\in C^2$. $\square$
+\end{proof}
+
+\begin{corollaire}[caractérisation à basse régularité]\label{cor:carac2}
+Sous (P$_2$) avec $g\in C^2$ : $F\in C^2(B)\iff\D a_k=0$ sur $\{a_k=0\}\cap B$ pour chaque zéro $k$. Aucune forme normale de Morse ni dérivée $\partial_s^3W$ n'intervient.
+\end{corollaire}
+La partie $\Leftarrow$ est le théorème~\ref{thm:S}, la partie $\Rightarrow$ la proposition~\ref{prop:nec2} (lemme~\ref{lem:logparam}) ; pour plusieurs zéros, les contributions de fenêtres disjointes s'ajoutent et leurs parties singulières sont positives (aucune compensation entre zéros).
+
+\paragraph{Pourquoi la voie de Morse était plus chère.} Le coefficient $b(\vth)=g(\sigma,\vth)/\sqrt{\frac12\partial_s^2f(\sigma,\vth)}$ du théorème~\ref{thm:R} compose $\partial_sW$ avec $\sigma(\vth)$ ; deux dérivations en $\vth$ demandent $\partial_s^3W$, que $u\in C^1$ ne fournit pas. En coordonnées $\tau$, seul $\tilde W=W\circ(\sigma+\tau,\mathrm{id})$ est dérivé deux fois, et cela coûte seulement $W\in C^2$ et $\sigma\in C^2$.
+
+\paragraph{Application au noyau avec $u\in C^1$.} Pour l'épisode $r\ge1$, sur une fenêtre fixe $s\in[s_k-\rho,s_k+\rho]$ avec $s_k>0$ (hors de $s=0$ au premier épisode, où la factorisation $V_0=s\,v_0$ de la note P2 couvre $s=0$, $v_0(0)\ne0$ n'ayant pas de zéro), $W=V_0(s;\vth)=\Phi_r(s,T_{r-1}(\vth),\zeta^+_{r-1}(\vth))_V$ est $C^2$ conjointement : $\partial_s^2V_0$ existe car $u\in C^1$ ; $\D_\vth\partial_sW$, $\D^2_\vth W$ s'obtiennent par les équations variationnelles, où $u$ entre comme entrée indépendante de $\vth$ ; la dépendance en $(T_{r-1},\zeta^+_{r-1})\in C^2$ vient de la proposition de transmission de la note P2. Le poids $g=\kappa_2e^{-\kappa_3(t-s)}$ est $C^\infty$ et $t$ est traité comme paramètre indépendant, de sorte que le corollaire~\ref{cor:carac2} s'applique à $\tilde P(t,\vth)$ : $\tilde P\in C^2$ si et seulement si $\D_\vth a_k=0$ sur $Z_k$, puis $T_r\in C^2$ par le théorème des fonctions implicites. Cette application est écrite ici pour la première fois et attend relecture. Elle suppose en outre que les autres contributions à $\tilde P_r$ (terme en $\lVert H_i\rVert$, données transmises, parties régulières des intégrales à bornes mobiles) sont déjà $C^2$ ; la borne quantitative $\lVert\D^2_\vth\tau^{(r)}\rVert\le M_r\varepsilon$ en présence de zéros demande un contrôle uniforme en $\varepsilon$ non établi ici.
+
+\paragraph{Régularité anisotrope : précision.} Les équations variationnelles $\dot X=\D G(z)X$ et $\dot Y=\D G(z)Y+\D^2G(z)[X,X]$ ont des coefficients $C^2$ en temps lorsque $u\in C^1$ : leurs solutions $X=\D_\vth z$ et $Y=\D^2_\vth z$ (ordres $b=1,2$) sont $C^3$ en temps. On ne revendique pas ce gain pour tous les ordres $b$ : aux rangs postérieurs à des impacts, les dérivées paramétriques d'ordre supérieur à deux n'ont pas été établies.
+
+\paragraph{Contrôle numérique (30 chiffres).} (1) Familles A ($a\sim\vth$) et B ($a\sim0{,}913\vth^2$) : la formule~\eqref{eq:hess} intégrée en $\tau$ coïncide avec les différences finies de $F_{\rm in}$ (écart $<10^{-11}$ pour $\vth\ge10^{-3}$ en B, $<2\cdot10^{-7}$ en A à $10^{-3}$ ; $1{,}7\cdot10^{-5}$ en A à $10^{-4}$, bruit de différences finies), avec $\D^2F_{\rm in}\to0{,}1122$ en B (C$^2$) et croissance $\approx4{,}6$ par décade en A. (2) Direction tournante : $F=1+\vth^2$, $F_\parallel=\cos\vth\,(1+\vth^2)$ vérifiés à $\vth=0{,}4$. (3) Contre-exemple de poids : $F=1$ à $15$ chiffres pour $\vth=0{,}1$ et $0{,}01$, tandis que $\Phi''(\vth)=4{,}0064;\ 8{,}5968$ diverge. (4) Familles A$'$, B$'$ (terme $\frac12\lvert s\rvert^{5/2}$, régularité exactement $C^2$ en $s$ au zéro mobile) : mêmes comportements que A, B ; accroissements de $H''$ par décade en A$'$ : $4{,}834;\ 4{,}719;\ 4{,}626$ (limite $2\ln10=4{,}605$).
+
+\section{Résumé}
+\begin{center}\small
+\begin{tabular}{p{5.2cm}p{5.6cm}p{3.6cm}}
+\toprule
+Situation (modèle $F=\Phi\circ a$, $a\in C^2$) & Conclusion & Statut\\\midrule
+$\D a=0$ sur tout $Z$ & $F\in C^2$, $\D^2F=0$ sur $Z$ & Théorème~\ref{thm:carac}\\
+un zéro régulier ($\D a\ne0$) dans $Z$ & $F\notin C^2$, $F''\sim2\ln\frac1{\lvert a\rvert}\lvert\D a\rvert^2$ & Théorème~\ref{thm:carac}\\
+$a=c\delta^m$ & $F\in C^{2m-1}\setminus C^{2m}$ ($m=3$ : changement de signe, mais $C^5$) & Prop.~\ref{prop:ordre}\\
+$\D a=0$ au centre seulement ($\vth_1^2-\vth_2^2$) & $C^2$ en $0$, pas sur la boule & Théorème~\ref{thm:carac}\\
+Intégrale plane pondérée générale, $W\in C^5$, $g\in C^2$ & même caractérisation (sur chaque $a_k$) & Théorème~\ref{thm:R}\\
+Nécessité de $\D a=0$ sur $Z$, $W\in C^2$, poids paramétrique $C^2$ en $\vth$ & perte de $C^2$ si un zéro régulier & Prop.~\ref{prop:nec2}\\
+Suffisance de $\D a=0$ sur $Z$, $W\in C^2$, $g\in C^2$ & $F\in C^2$ & Théorème~\ref{thm:S} (démontré, relu)\\
+Noyau IWS, $u\in C^1$, $d=2$, zéros simples & $T_r\in C^2\iff\D a_k=0$ sur $Z_k$ & Corollaire~\ref{cor:carac2} + transmission P2 (à relire)\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{document}

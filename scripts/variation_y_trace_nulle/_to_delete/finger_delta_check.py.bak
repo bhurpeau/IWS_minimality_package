@@ -1,0 +1,102 @@
+"""
+Verification de la valeur critique par la condition geometrique (Benoit) :
+    tau_4^{(4)}(phi, eta) = b(eta) + a(eta) e(phi)     (forme affine, a = lambda*rho)
+    Delta(eta) = ||b(eta)||^2 - a(eta)^2 = 0 ,  phi* = arg(-b(eta*))
+Controles : (i) residu de l'ajustement affine ; (ii) racine eta* de Delta ; (iii) Delta'(eta*) != 0 ;
+(iv) phi* a l'interieur de la fenetre realisant le mot de reference ; (v) ||tau_4|| = 0 par simulation directe
+en (phi*, eta*) ; (vi) transversalite : det[d tau/d phi, d tau/d eta] != 0 ; (vii) pente conique K predite
+vs largeur du doigt calculee avec le modele affine, comparee aux largeurs mesurees par balayage.
+Usage : python3 -I finger_delta_check.py [dt]      (dt par defaut 2e-3, comme les balayages)
+"""
+import sys, os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import numpy as np
+from scipy.optimize import brentq
+import iws_kairos_core as core
+import finger_y_variation as F
+import finger_critical as C
+
+DT = float(sys.argv[1]) if len(sys.argv) > 1 else 2e-3
+INTERP = os.environ.get('INTERP', '1') == '1'
+if INTERP:
+    import iws_kairos_interp as KI
+    KI.patch(DT)                                     # interpolation a l'instant exact du Kairos, rangs 1-4
+else:
+    core.run_to_kairos.__defaults__ = (DT, 15.0)     # instantane du premier pas apres franchissement
+LO, HI, NW = 219.0, 225.5, 27
+REF = C.REF
+
+def rank4(eta, lo=LO, hi=HI, n=NW):
+    C.set_window(lo, hi, n)
+    r = C.traces(eta)
+    assert r is not None, "mot de reference perdu en eta=%g" % eta
+    phi, t, done = r
+    assert done.all()
+    return np.radians(phi), t
+
+def affine_fit(eta):
+    phi, t = rank4(eta)
+    X = np.stack([np.ones_like(phi), np.cos(phi), np.sin(phi)], axis=1)
+    coef, res, *_ = np.linalg.lstsq(X, t[:, 4, :], rcond=None)   # (3,2)
+    b = coef[0]; M = coef[1:].T                                    # tau = b + M e(phi)
+    resid = np.abs(X @ coef - t[:, 4, :]).max()
+    a = 0.5 * (M[0, 0] + M[1, 1])
+    return dict(b=b, a=a, M=M, resid=resid, t0=t[0, 0], c1=float(core.cos_sim(t[0, 0], t[0, 1])))
+
+def Delta(eta):
+    f = affine_fit(eta)
+    return float(f['b'] @ f['b'] - f['a'] ** 2)
+
+if __name__ == "__main__":
+    print("dt = %g  interpolation = %s" % (DT, INTERP))
+    f0 = affine_fit(0.0)
+    print("eta=0 : b=%s a=%.6f  M=%s  residu affine=%.2e  c1=%.6f" % (f0['b'], f0['a'], f0['M'].round(6).tolist(), f0['resid'], f0['c1']))
+    print("  (a/rho = lambda = %.6f ; M doit etre a*I : |M01|,|M10| = %.1e, %.1e ; M00-M11 = %.1e)" %
+          (f0['a'] / 0.3, abs(f0['M'][0, 1]), abs(f0['M'][1, 0]), f0['M'][0, 0] - f0['M'][1, 1]))
+    for e in (-0.14, -0.15, -0.16, -0.165, -0.17, -0.18, -0.19):
+        print("  Delta(%+.3f) = %+.3e" % (e, Delta(e)))
+    es = brentq(Delta, -0.19, -0.15, xtol=1e-9)
+    fs = affine_fit(es)
+    phis = np.arctan2(-fs['b'][1], -fs['b'][0]) % (2 * np.pi)
+    h = 2e-3
+    dDelta = (Delta(es + h) - Delta(es - h)) / (2 * h)
+    print("eta* = %.6f   |b|=%.6f a=%.6f   phi* = %.4f deg   Delta'(eta*) = %+.4e" % (es, np.linalg.norm(fs['b']), fs['a'], np.degrees(phis), dDelta))
+    print("phi* dans la fenetre [%.1f, %.1f] deg ? %s (marges %.2f / %.2f deg)" % (LO, HI, LO < np.degrees(phis) < HI, np.degrees(phis) - LO, HI - np.degrees(phis)))
+    # (v) simulation directe en (phi*, eta*)
+    C.set_window(np.degrees(phis), np.degrees(phis) + 1e-9, 2)
+    r = C.traces(es)
+    print("simulation directe : mot de reference retrouve en (phi*, eta*) ? %s ; ||tau_4|| = %.3e" % (r is not None, np.linalg.norm(r[1][0, 4]) if r is not None else float('nan')))
+    # (vi) transversalite
+    def tau_model(phi, eta):
+        f = affine_fit(eta); return f['b'] + f['a'] * np.array([np.cos(phi), np.sin(phi)])
+    fp, fm = affine_fit(es + h), affine_fit(es - h)
+    u = (fp['b'] - fm['b']) / (2 * h) + (fp['a'] - fm['a']) / (2 * h) * np.array([np.cos(phis), np.sin(phis)])   # d tau / d eta
+    v = fs['a'] * np.array([-np.sin(phis), np.cos(phis)])                                                      # d tau / d phi (rad)
+    det = v[0] * u[1] - v[1] * u[0]
+    print("u = d tau/d eta = %s ; v = d tau/d phi = %s ; det[v,u] = %+.4e (|v||u| = %.4e)" % (u, v, det, np.linalg.norm(u) * np.linalg.norm(v)))
+    # (vii) pente conique : angle(tau, e0) < theta_c, e0 = direction de tau_0, theta_c = arccos c1
+    e0 = fs['t0'] / np.linalg.norm(fs['t0']); c1 = fs['c1']; tc = np.arccos(c1); T = np.tan(tc)
+    cr = lambda x, y: x[0] * y[1] - x[1] * y[0]
+    dt_ = lambda x, y: x[0] * y[0] + x[1] * y[1]
+    xi = {}
+    for s in (+1, -1):
+        xi[s] = -(cr(u, e0) - s * T * dt_(u, e0)) / (cr(v, e0) - s * T * dt_(v, e0))     # xi = K_s * eps
+    Kpred = abs(xi[1] - xi[-1]) * 180 / np.pi
+    print("pente conique predite : largeur ~ K|eta-eta*| avec K = %.3f deg par unite d'eta  (theta_c = %.3f deg)" % (Kpred, np.degrees(tc)))
+    # largeur du doigt par le modele affine complet (c4 = c1), grille fine
+    def width_model(eta):
+        f = affine_fit(eta)
+        ph = np.linspace(np.radians(219.0), np.radians(225.5), 400001)
+        tau = f['b'][None, :] + f['a'] * np.stack([np.cos(ph), np.sin(ph)], axis=1)
+        e0_ = f['t0'] / np.linalg.norm(f['t0'])
+        c4 = (tau @ e0_) / np.linalg.norm(tau, axis=1)
+        inside = c4 > f['c1']
+        if not inside.any(): return 0.0
+        idx = np.flatnonzero(inside); return np.degrees(ph[idx[-1]] - ph[idx[0]])
+    print("largeur du doigt (modele affine) vs mesure par balayage (finger_width_scan) :")
+    meas = {-0.05: 0.6627, -0.10: 0.4066, -0.12: 0.2891, -0.14: 0.1706, -0.15: 0.1110, -0.16: 0.0511, -0.165: 0.0210}
+    for e, wm in meas.items():
+        w = width_model(e)
+        print("   eta=%+.3f  modele %.4f  balayage %.4f   modele/|eta-eta*| = %.3f" % (e, w, wm, w / abs(e - es)))
+    for e in (es + 0.0002, es + 0.0005, es + 0.001, es + 0.002, es + 0.005):
+        print("   eta=%+.5f  modele %.5f   w/|eps| = %.3f" % (e, width_model(e), width_model(e) / abs(e - es)))

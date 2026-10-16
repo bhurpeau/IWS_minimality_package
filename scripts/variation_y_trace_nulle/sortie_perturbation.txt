@@ -1,0 +1,58 @@
+eps=0 : 41/41 echantillons dans le mot de reference (1 mots distincts), 1s
+  rang 2 : residu affine (dans l'echantillon) = 5.83e-16 ; hors echantillon (pairs->impairs) = 5.00e-16
+  rang 3 : residu affine (dans l'echantillon) = 6.80e-16 ; hors echantillon (pairs->impairs) = 4.44e-16
+  rang 4 : residu affine (dans l'echantillon) = 5.79e-16 ; hors echantillon (pairs->impairs) = 8.88e-16
+
+=== gamma1 seul (gamma_1=eps, lambda=0) ===
+   eps       in-mot  mots |  rang2: dev  oos  ext |  rang3: dev  oos  ext |  rang4: dev  oos  ext
+  1e-05   41/41   1 | 7.52e-08 1.11e-15 2.21e-15 | 1.60e-07 1.39e-15 3.50e-15 | 2.60e-07 1.72e-14 6.88e-14
+  3e-05   41/41   1 | 2.25e-07 8.33e-16 2.39e-15 | 4.79e-07 2.11e-15 7.22e-15 | 7.81e-07 5.15e-14 2.07e-13
+  1e-04   41/41   1 | 7.52e-07 1.33e-15 4.94e-15 | 1.60e-06 4.79e-15 1.91e-14 | 2.60e-06 1.72e-13 6.89e-13
+  3e-04   41/41   1 | 2.25e-06 1.61e-15 4.83e-15 | 4.79e-06 1.45e-14 5.73e-14 | 7.81e-06 5.16e-13 2.07e-12
+  1e-03   41/41   1 | 7.52e-06 1.64e-15 5.38e-15 | 1.60e-05 4.44e-14 1.87e-13 | 2.60e-05 1.72e-12 6.91e-12
+  3e-03   41/41   1 | 2.26e-05 3.62e-15 1.54e-14 | 4.79e-05 1.31e-13 5.50e-13 | 7.81e-05 5.17e-12 2.08e-11
+  1e-02   41/41   1 | 7.52e-05 1.19e-14 4.98e-14 | 1.60e-04 4.41e-13 1.86e-12 | 2.60e-04 1.74e-11 6.98e-11
+  3e-02   41/41   1 | 2.26e-04 3.62e-14 1.52e-13 | 4.80e-04 1.34e-12 5.65e-12 | 7.81e-04 5.32e-11 2.14e-10
+  1e-01   41/41   1 | 7.56e-04 1.25e-13 5.29e-13 | 1.60e-03 4.66e-12 1.97e-11 | 2.60e-03 1.91e-10 7.71e-10
+   rang 2 : pente(dev)=1.000  pente(oos)=0.319  pente(ext)=0.409 | C_dev=dev/eps(eps=1e-05)=7.516e-03  C_oos=1.110e-10
+   rang 3 : pente(dev)=1.000  pente(oos)=0.862  pente(ext)=0.924 | C_dev=dev/eps(eps=1e-05)=1.598e-02  C_oos=1.388e-10
+   rang 4 : pente(dev)=1.000  pente(oos)=1.001  pente(ext)=1.002 | C_dev=dev/eps(eps=1e-05)=2.602e-02  C_oos=1.722e-09
+
+=== lambda seul (lambda=eps, gamma_1=0) ===
+   eps       in-mot  mots |  rang2: dev  oos  ext |  rang3: dev  oos  ext |  rang4: dev  oos  ext
+  1e-05   41/41   1 | 8.38e-09 1.17e-15 5.66e-15 | 4.26e-08 3.61e-15 1.65e-14 | 1.28e-07 1.55e-14 6.21e-14
+  3e-05   41/41   1 | 2.51e-08 1.55e-15 5.11e-15 | 1.28e-07 9.44e-15 3.87e-14 | 3.83e-07 4.63e-14 1.86e-13
+  1e-04   41/41   1 | 8.38e-08 4.72e-15 1.72e-14 | 4.26e-07 3.06e-14 1.21e-13 | 1.28e-06 1.54e-13 6.17e-13
+  3e-04   41/41   1 | 2.51e-07 1.25e-14 4.96e-14 | 1.28e-06 9.20e-14 3.67e-13 | 3.83e-06 4.63e-13 1.85e-12
+  1e-03   41/41   1 | 8.38e-07 4.13e-14 1.65e-13 | 4.26e-06 3.07e-13 1.23e-12 | 1.28e-05 1.54e-12 6.16e-12
+  3e-03   41/41   1 | 2.51e-06 1.24e-13 4.96e-13 | 1.28e-05 9.19e-13 3.67e-12 | 3.83e-05 4.63e-12 1.85e-11
+  1e-02   41/41   1 | 8.37e-06 4.13e-13 1.65e-12 | 4.25e-05 3.06e-12 1.22e-11 | 1.27e-04 1.54e-11 6.15e-11
+  3e-02   41/41   1 | 2.51e-05 1.24e-12 4.95e-12 | 1.27e-04 9.17e-12 3.66e-11 | 3.80e-04 4.61e-11 1.84e-10
+  1e-01   41/41   1 | 8.30e-05 4.11e-12 1.64e-11 | 4.20e-04 3.04e-11 1.21e-10 | 1.25e-03 1.52e-10 6.08e-10
+   rang 2 : pente(dev)=1.000  pente(oos)=0.886  pente(ext)=0.883 | C_dev=dev/eps(eps=1e-05)=8.377e-04  C_oos=1.166e-10
+   rang 3 : pente(dev)=1.000  pente(oos)=0.983  pente(ext)=0.969 | C_dev=dev/eps(eps=1e-05)=4.260e-03  C_oos=3.608e-10
+   rang 4 : pente(dev)=1.000  pente(oos)=1.000  pente(ext)=0.999 | C_dev=dev/eps(eps=1e-05)=1.276e-02  C_oos=1.547e-09
+
+=== couple (gamma_1=eps*1.25, lambda=eps*2) ===
+   eps       in-mot  mots |  rang2: dev  oos  ext |  rang3: dev  oos  ext |  rang4: dev  oos  ext
+  1e-05   41/41   1 | 8.52e-08 1.44e-15 4.36e-15 | 1.52e-07 7.38e-15 2.72e-14 | 1.50e-07 5.18e-14 2.05e-13
+  3e-05   41/41   1 | 2.56e-07 2.71e-15 1.11e-14 | 4.56e-07 2.11e-14 8.17e-14 | 4.51e-07 1.56e-13 6.15e-13
+  1e-04   41/41   1 | 8.52e-07 8.45e-15 3.52e-14 | 1.52e-06 6.66e-14 2.69e-13 | 1.50e-06 5.20e-13 2.05e-12
+  3e-04   41/41   1 | 2.56e-06 2.52e-14 1.01e-13 | 4.56e-06 2.00e-13 8.06e-13 | 4.51e-06 1.56e-12 6.15e-12
+  1e-03   41/41   1 | 8.52e-06 8.41e-14 3.37e-13 | 1.52e-05 6.68e-13 2.68e-12 | 1.50e-05 5.20e-12 2.05e-11
+  3e-03   41/41   1 | 2.56e-05 2.53e-13 1.01e-12 | 4.56e-05 2.00e-12 8.04e-12 | 4.51e-05 1.56e-11 6.15e-11
+  1e-02   41/41   1 | 8.52e-05 8.45e-13 3.38e-12 | 1.52e-04 6.69e-12 2.69e-11 | 1.51e-04 5.21e-11 2.05e-10
+  3e-02   41/41   1 | 2.56e-04 2.55e-12 1.02e-11 | 4.57e-04 2.02e-11 8.11e-11 | 4.54e-04 1.57e-10 6.19e-10
+  1e-01   41/41   1 | 8.58e-04 8.63e-12 3.45e-11 | 1.53e-03 6.88e-11 2.76e-10 | 1.54e-03 5.33e-10 2.10e-09
+   rang 2 : pente(dev)=1.000  pente(oos)=0.946  pente(ext)=0.969 | C_dev=dev/eps(eps=1e-05)=8.518e-03  C_oos=1.443e-10
+   rang 3 : pente(dev)=1.000  pente(oos)=0.988  pente(ext)=0.998 | C_dev=dev/eps(eps=1e-05)=1.520e-02  C_oos=7.383e-10
+   rang 4 : pente(dev)=1.000  pente(oos)=1.001  pente(ext)=1.000 | C_dev=dev/eps(eps=1e-05)=1.502e-02  C_oos=5.185e-09
+
+=== pleine force (Annexe F : gamma_1=1.25, lambda=2) et intermediaires ===
+  g1=0 lam=2 : in-mot 41/41, 1 mots | r2 dev=1.41e-03 oos=7.26e-11 ext=2.90e-10 | r3 dev=6.70e-03 oos=5.31e-10 ext=2.12e-09 | r4 dev=1.79e-02 oos=2.52e-09 ext=1.01e-08
+  g1=1.25 lam=0 : in-mot 41/41, 1 mots | r2 dev=1.01e-02 oos=3.02e-12 ext=1.28e-11 | r3 dev=2.09e-02 oos=1.26e-10 ext=5.32e-10 | r4 dev=3.25e-02 oos=6.88e-09 ext=2.89e-08
+  g1=1.25 lam=2 : in-mot 41/41, 1 mots | r2 dev=9.11e-03 oos=1.09e-10 ext=4.35e-10 | r3 dev=1.58e-02 oos=9.20e-10 ext=3.70e-09 | r4 dev=1.75e-02 oos=7.12e-09 ext=2.83e-08
+  g1=0.125 lam=0.2 : in-mot 41/41, 1 mots | r2 dev=8.58e-04 oos=8.63e-12 ext=3.45e-11 | r3 dev=1.53e-03 oos=6.88e-11 ext=2.76e-10 | r4 dev=1.54e-03 oos=5.33e-10 ext=2.10e-09
+  g1=0.0125 lam=0.02 : in-mot 41/41, 1 mots | r2 dev=8.52e-05 oos=8.45e-13 ext=3.38e-12 | r3 dev=1.52e-04 oos=6.69e-12 ext=2.69e-11 | r4 dev=1.51e-04 oos=5.21e-11 ext=2.05e-10
+
+Total 17s ; resultats : /tmp/claude-0/-home-claude/19a067d9-7990-5feb-b2e1-1f9d9ba72bad/scratchpad/test_pert.json

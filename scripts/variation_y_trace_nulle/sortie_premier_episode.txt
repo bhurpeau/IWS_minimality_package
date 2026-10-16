@@ -1,0 +1,35 @@
+======== Test 0 : le zero de V_0^x precede le premier Kairos (reference eps=0, Theta=2.20)
+s* = 3.701338   T_1 = 4.455195   marge T_1 - s* = 0.7539   v_s = -0.557839   noeud declencheur i* = 0   nb zeros dans [0,T_1] = 1
+min ||H_0|| sur [0.5,T_1] : 0.1180 (non nul ; H_0 -> 0 seulement en t=0, depart au repos)
+
+======== Test 1 : reponse transverse par noeud, eps=1e-02, d=1e-02 : (a(+d)-a(-d))/(2 d eps)
+noeud : (g,l)=(1,0)  (0,1)  (1,1) | formule lineaire (lbar=1) | ecart relatif (0,1)
+  0   : +0.000e+00 +4.945e-01 +4.886e-01 | +4.954740e-01 | 2.06e-03
+  1   : +0.000e+00 +1.261e-02 +1.249e-02 | +1.241264e-02 | 1.56e-02
+  2   : +0.000e+00 +1.230e-05 +1.224e-05 | +1.197049e-05 | 2.78e-02
+  3   : +0.000e+00 +3.296e-05 +3.278e-05 | +3.206490e-05 | 2.78e-02
+  4   : +0.000e+00 +7.951e-03 +7.884e-03 | +7.820832e-03 | 1.67e-02
+  5   : +0.000e+00 +7.144e-03 +7.084e-03 | +7.030151e-03 | 1.62e-02
+
+======== Test 2 : additivite et directions axiales (12 directions du sous-espace cache)
+perturbation axiale aleatoire (6 noeuds, rayon 0.3) : a = 0.000e+00   (attendu 0)
+direction normale h aleatoire : (a(+h)-a(-h))/(2 eps) = +2.606195e-04   somme_j resp_j h_j = +2.606053e-04
+DA(p) (gamma,lambda)=(1,1), 6 composantes normales :  [4.8858e-01 1.2494e-02 1.2237e-05 3.2778e-05 7.8844e-03 7.0838e-03]
+norme de DA(p) = 0.4889  >> 0 : (N) vrai au point axial dans le premier episode
+
+======== Test 3 : D^2 le long de n (noeud 0), eps=0.1, gamma1bar=1, lam=eps*lb
+(eps=0.1, lam=eps) : s*=3.83594  v_s=-0.45167  a'=4.27655e-02  T_1=4.59179  P_t(T_1)=0.21412 ; t_fix=4.00
+pente predite (par decade) :  D2P_0(t_fix) : +6.87140e-03   D2T_1 : -2.38721e-02
+delta     D2P0(t_fix): lam=0   lam=eps  |  D2T_1 (racine) : lam=0   lam=eps  | D2T_1 (evenement solve_ivp) lam=eps
+ 1e-01   -1.4369582e-01 -1.7360115e-01 |  +1.4255183e+00 +9.1805111e-01 | +9.1805111e-01
+ 3e-02   -1.4446117e-01 -1.7091045e-01 |  +1.4234414e+00 +9.0814231e-01 | +9.0814231e-01
+ 1e-02   -1.4452922e-01 -1.6771097e-01 |  +1.4232686e+00 +8.9697970e-01 | +8.9697976e-01
+ 3e-03   -1.4453696e-01 -1.6412694e-01 |  +1.4232490e+00 +8.8452248e-01 | +8.8447825e-01
+ 1e-03   -1.4453765e-01 -1.6084922e-01 |  +1.4232473e+00 +8.7313482e-01 | +8.7208671e-01
+pentes mesurees par decade (lam=eps) :  D2P0(t_fix)  |  D2T_1 racine  |  D2T_1 evenement
+   1e-01 -> 3e-02 : +5.1459e-03  | -1.8950e-02 | -1.8950e-02
+   3e-02 -> 1e-02 : +6.7058e-03  | -2.3396e-02 | -2.3396e-02
+   1e-02 -> 3e-03 : +6.8544e-03  | -2.3824e-02 | -2.3909e-02
+   3e-03 -> 1e-03 : +6.8698e-03  | -2.3867e-02 | -2.5971e-02
+Lecture : D2P0 et D2T_1 (racine) ont la pente predite ; la version 'evenement' derive aux petits delta (bruit de localisation de l'evenement, de l'ordre 1e-9 sur T) ;
+pour lam=0 les deux restent bornees (D2T_1 -> 1.4232473).

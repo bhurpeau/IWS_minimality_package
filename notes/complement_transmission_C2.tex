@@ -1,0 +1,218 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm,booktabs,enumitem,geometry}
+\geometry{margin=2.4cm}
+\newtheorem{theoreme}{Théorème}
+\newtheorem{proposition}[theoreme]{Proposition}
+\newtheorem{lemme}[theoreme]{Lemme}
+\newtheorem{corollaire}[theoreme]{Corollaire}
+\theoremstyle{remark}
+\newtheorem{remarque}[theoreme]{Remarque}
+\newcommand{\R}{\mathbb R}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\vth}{\vartheta}
+\newcommand{\D}{\mathrm D}
+
+\title{Transmission $C^2$ épisode par épisode avec $u\in C^1$ :\\ raccord du théorème~S au noyau IWS\\[2pt]
+\large (complément à la note « ordre du déplacement transverse » et à la note P2)}
+\author{Programme de soustraction --- IWS, Tome II (travail de recherche)}
+\date{octobre 2026}
+\sloppy\setlength{\emergencystretch}{3em}
+\begin{document}
+\maketitle
+
+\noindent\textbf{Statut.} Les théorèmes S et son corollaire (note « ordre du déplacement transverse », V6.2) et la proposition de transmission $T_j\in C^2$ de la note P2 sont pris comme acquis. Le présent texte \emph{propose} (i) un énoncé de transmission qualitative $C^2$ avec $u\in C^1$ en présence de zéros temporels simples des normes visibles (théorème~\ref{thm:T}, étapes A et B), (ii) un lemme de Glaeser avec marge et une estimation quantitative conditionnelle $\lVert\D^2_\vth\cdot\rVert=O(\varepsilon)$ (étape C). Tout ce qui est écrit ici est \textbf{à relire} ; l'étape C est explicitement conditionnelle à des bornes uniformes en $\varepsilon$ qui ne sont pas établies.
+
+\emph{Révision après relecture de Benoit :} (i) l'énoncé de la proposition~\ref{prop:Q} est corrigé (la dérivée pure en $t$ n'est pas $O(\varepsilon)$ ; seuls les blocs $\vth\vth$ et $t\vth$ le sont) ; (ii) le théorème~\ref{thm:T} précise le premier épisode (fenêtre après factorisation, nœuds de $I_1$ forcés) et ne conclut plus que sur les pressions utiles ; (iii) mon esquisse antérieure de l'étape C écrivait $\D z_j^+=O(\varepsilon)$ pour l'état complet : c'est \emph{faux} pour $\tau$ (à $\varepsilon=0$, $\D_\vth\tau=e^{-\beta t}I$), la récurrence est donc réécrite par blocs (section~\ref{sec:rec}) ; (iv) le lemme de Glaeser avec marge est marqué démontré.
+
+\section{Cadre, ce qui change, et la vraie hypothèse}\label{sec:cadre}
+Sur un épisode à graphe fixé, $z=(H,V,\tau)$ vérifie $\dot z=G_{A,\varepsilon}(z)+Bu(t)$ où, tant que les traces $\tau_j$ ne s'annulent pas, $G$ est $C^\infty$ en $z$ (aucune norme de $H$ ou $V$ n'y figure ; la pression $P$ n'y figure pas non plus). Avec $u\in C^1$ le flot $\Phi(s,T,z_0)$ est $C^2$ conjointement en $(s,T,z_0)$. Les pressions sont des \emph{fonctionnelles intégrales} de ce flot :
+\begin{equation}\label{eq:P}
+P_i(t,\vth)=e^{-\kappa_3(t-T_{j}(\vth))}P_i^+(T_j(\vth),\vth)+\int_{T_{j}(\vth)}^{t}e^{-\kappa_3(t-s)}\bigl(\kappa_1\lVert H_i(s,\vth)\rVert+\kappa_2\lVert V_i(s,\vth)\rVert\bigr)ds .
+\end{equation}
+On n'utilise donc plus le flot étendu $\widehat\Phi(t,s,\xi)$, $\xi=(H,V,\tau,P)$, du lemme~W de la note P2, dont la régularité $C^2$ exigeait que les normes visibles ne s'annulent pas : seule la famille d'histoires admissibles (paramétrée par $\vth$) intervient, et chaque intégrale de~\eqref{eq:P} a la structure du théorème~S avec $W=H_i$ ou $V_i$, $g=\kappa e^{-\kappa_3(t-s)}$, bornes $\alpha=T_j(\vth)$, $\beta=t$, et paramètres conjoints $(t,\vth)$ ($t$ est un paramètre indépendant : $a_k$ ne dépend pas de $t$, donc $\D_{(t,\vth)}a_k=(0,\D_\vth a_k)$).
+
+\paragraph{Formulation intrinsèque de la condition de criticité.} Au zéro $(s_k,\vth)$ de $W$, $\D_\vth a_k\,h$ est la composante de $\D_\vth W\,h$ transverse à $\partial_sW$ (note « ordre », preuve de la proposition de nécessité). La condition $\D a_k=0$ sur $Z_k$ équivaut donc à
+\begin{equation}\label{eq:crit}
+\forall(s_k,\vth)\ \text{tel que } W(s_k,\vth)=0,\ \forall h:\quad \D_\vth W(s_k,\vth)h\ \parallel\ \partial_sW(s_k,\vth),
+\end{equation}
+c'est-à-dire : à un zéro, une variation du paramètre déplace la trajectoire \emph{le long d'elle-même} (translation du zéro en temps), jamais transversalement.
+
+\paragraph{La condition est une vraie hypothèse, pas une conséquence.} À $\varepsilon=0$ la dynamique visible ne dépend pas de $\vth$ : un zéro de $W_0$ est alors un zéro de $W_0(\cdot)$ pour tout $\vth$, $a_0\equiv0$ et~\eqref{eq:crit} est trivial. Pour $\varepsilon>0$, $\D a_\varepsilon=O(\varepsilon)$ mais~\eqref{eq:crit} n'a aucune raison de tenir : un zéro régulier de $a_\varepsilon$ (changement de signe transverse) fait perdre $C^2$ (proposition de nécessité de la note « ordre »). Les situations où~\eqref{eq:crit} est assurée sont : $W$ colinéaire à une direction fixe (alors $a\equiv0$) ; $a_\varepsilon\ge0$ avec contact (zéros dans $\operatorname{int}Z$ ou critiques) ; absence de zéro ($P_i$ régulier). Le théorème ci-dessous est donc \emph{conditionnel à~\eqref{eq:crit}}, et il le dit.
+
+\paragraph{Quelles pressions ?} Soit $r$ le nombre de Kairos, $i_j$ le nœud déclencheur du rang $j$. On note $I_j$ l'ensemble des nœuds dont la pression \emph{est utilisée sur l'épisode $j$}, pour le temps $T_j$ ou pour un déclencheur ultérieur. À rebours : $I_r=\{i_r\}$ et $I_{j-1}=I_j\cup\{i_{j-1}\}\cup\{i':\ \text{le reset }R_j\text{ (linéaire) fait intervenir }P_{i'}^-(T_j)\text{ dans }P^+_i(T_j),\ i\in I_j\}$ ; en particulier $I_r\subset\dots\subset I_1$. Lorsque les resets de pression sont diagonaux (noyau de la note P2), $I_j=\{i_j,\dots,i_r\}$. La condition géométrique doit porter sur \emph{toutes} les contributions singulières $\lVert H_i\rVert,\lVert V_i\rVert$ avec $i\in I_j$ pour l'épisode $j$, et pas seulement sur $V_{i_j}$. En revanche la régularité conclue ne porte que sur ces pressions : les autres n'entrent ni dans $(H,V,\tau)$ ni dans les temps $T_j$, n'ont pas à être $C^2$, et peuvent rencontrer un zéro transverse non critique sans conséquence pour la transmission.
+
+\section{Étape A : premier épisode, déclencheur forcé}
+Le nœud forcé démarre au repos : $V_i=s\,v_i$, $H_i=s^2h_i$ avec $v_i(0)=u_i(0)\neq0$ (hypothèse de non-annulation de P2). Avec $u\in C^1$, $V_i\in C^2$ donc $v_i=\int_0^1\partial_sV_i(\theta s)d\theta$ est seulement $C^1$ conjointement, mais $\D^b_\vth v_i=\int_0^1\partial_s\D^b_\vth V_i(\theta s)d\theta$ est continue pour $b=1,2$ (les $\D_\vth^bV_i$, $b\le 2$, sont $C^1$ en temps, voire $C^3$ par les équations variationnelles : note P2). Cela suffit : on découpe $\int_0^t=\int_0^{s_*}+\int_{s_*}^t$ avec $s_*\in\,]0,T_1[$ \emph{fixe}. Sur $[0,s_*]$, $\lVert V_i\rVert=s\lVert v_i\rVert$ avec $v_i\neq0$ est $C^2$ en $\vth$ et le terme est $C^2$ en $(t,\vth)$ (la fenêtre ne dépend pas de $t$). Sur $[s_*,t]$ on applique le théorème~S à $W=V_i$ (resp.\ $H_i$) directement : $\lVert W\rVert>0$ en $s_*$ et en $t\approx T_1$, zéros intérieurs simples, condition~\eqref{eq:crit}. Pour $\lVert H_i\rVert=s^2\lVert h_i\rVert$ idem. Les nœuds non forcés au démarrage (zéro d'ordre supérieur en $s=0$) restent hors champ : c'est pourquoi le théorème~\ref{thm:T} demande (Z0), \emph{tout nœud de $I_1$ est forcé} avec $u_i(0)\ne0$, faute de quoi une hypothèse de régularité spécifique serait nécessaire pour sa pression dès le premier épisode.
+
+\section{Étape B : récurrence qualitative}
+\begin{theoreme}[transmission $C^2$, $u\in C^1$, $d=2$]\label{thm:T}
+Soit $\vth_0$ fixé et un mot régulier fini de $r$ Kairos à déclencheurs forcés, avec $u\in C^1$, traces $\tau_j\neq0$ le long de l'histoire de référence, $\partial_tP_{i_j}(T_j^-,\vth_0)\ge\nu/4>0$, et pour tout $j\le r$, tout $i\in I_j$ et $W\in\{H_i,V_i\}$ :
+\begin{enumerate}[nosep,label=(Z\arabic*)]
+\setcounter{enumi}{-1}
+\item (premier épisode) tout nœud de $I_1$ est forcé, $u_i(0)\ne0$ ; l'intégrale sur $[0,s_*]$, $s_*\in\,]0,T_1[$ fixe, est traitée par la factorisation de l'étape A ;
+\item $W(\cdot,\vth_0)$ a un nombre fini de zéros dans $[T_{j-1},T_j]$ (pour $j=1$ : dans $[s_*,T_1]$), tous simples, intérieurs, et $W(T_{j-1}^+,\vth_0)\ne0\ne W(T_j^-,\vth_0)$ (pour $j=1$ : $W(s_*,\vth_0)\ne0$) ;
+\item la condition~\eqref{eq:crit} est vérifiée pour tout $\vth$ d'un voisinage $B$ de $\vth_0$.
+\end{enumerate}
+Alors, pour un voisinage $B'$ de $\vth_0$ : $T_1,\dots,T_r\in C^2(B')$, $(H,V,\tau)_j^\pm\in C^2(B')$, et $P_i^\pm\in C^2(B')$ pour $i\in I_j$ (au rang $j$). Aucune régularité n'est affirmée pour les pressions hors de $I_j$.
+\end{theoreme}
+\begin{proof}[Démonstration proposée]
+Récurrence sur $j$ ; l'hypothèse $(\mathrm H_j)$ : $T_1,\dots,T_j\in C^2$, $z_j^+\in C^2$ et $P_i^+(T_j(\cdot),\cdot)\in C^2$ pour $i\in I_{j+1}$. L'étape A donne le cas $j=1$ (traité avec la factorisation en $s=0$). Supposons $(\mathrm H_{j})$ et considérons l'épisode $j+1$.
+
+(0) \emph{Persistance du mot.} Les pressions $P_{i'}$, $i'\notin I_{j+1}$, ne servent qu'à vérifier qu'aucun autre nœud ne déclenche avant $i_{j+1}$, avec marges strictes : $P_{i'}(t,\vth_0)\le\theta-\mu$ sur l'épisode (jusqu'au voisinage terminal), $\mu>0$. Les $P_{i'}(t,\vth)$ sont \emph{continues} en $(t,\vth)$ (intégrales de fonctions continues de $(s,\vth)$, bornes et valeurs initiales continues par $(\mathrm H_j)$ et reset diagonal), donc ces inégalités strictes persistent sur un voisinage de $\vth_0$ ; la continuité suffit, ni $C^1$ ni $C^2$ n'est requis. Le mot reste donc le même et $T_{j+1}$ est bien le temps d'atteinte du seuil par $i_{j+1}$.
+
+(1) \emph{Flot.} $W(s,\vth)=\Phi_{i}(s,T_j(\vth),z_j^+(\vth))$ pour $W=H_i$ ou $V_i$ : composition du flot $C^2$ en $(s,T,z_0)$ avec $(T_j,z_j^+)\in C^2$ ; donc $W\in C^2(J\times B)$, et le point crucial est qu'\emph{aucun $\partial_s^3W$ n'est utilisé}. Les poids $g=\kappa e^{-\kappa_3(t-s)}$ sont $C^\infty$.
+
+(2) \emph{Pressions.} Pour $i\in I_{j+1}$, chaque intégrale de~\eqref{eq:P} est $C^2$ en $(t,\vth)$ par le corollaire de caractérisation (théorème~S) : les hypothèses (P$_2$) sont (Z1) plus bornes mobiles $\alpha=T_j\in C^2$, $\beta=t$ ; la condition $\D a_k=0$ sur $Z_k$ est~\eqref{eq:crit}. Les termes de bord (Leibniz) sont $C^2$ car $\lVert W\rVert\ne0$ aux bornes et $T_j\in C^2$. Le terme $e^{-\kappa_3(t-T_j)}P_i^+(T_j,\vth)$ est $C^2$ par $(\mathrm H_j)$ : ainsi $P_i\in C^2(t,\vth)$ pour tout $i\in I_{j+1}$. Pour que $(t,\vth)$ varie dans un véritable ouvert autour de $(T_{j+1}(\vth_0),\vth_0)$, on prolonge virtuellement l'épisode $j+1$ au-delà de l'impact (dynamique du graphe courant sans Kairos), comme dans la note P2 ; (Z1) en $T_{j+1}^-$ assure $\lVert W\rVert\ne0$ pour $t$ voisin de $T_{j+1}(\vth_0)$.
+
+(3) \emph{Impact.} $\partial_tP_{i_{j+1}}\ge\nu/4$ en $(T_{j+1},\vth)$ : le théorème des fonctions implicites donne $T_{j+1}\in C^2$. Puis $z_{j+1}^-=\Phi(T_{j+1},T_j,z_j^+)\in C^2$, $z_{j+1}^+=R_{j+1}z_{j+1}^-$, et $P^+_i(T_{j+1}(\vth),\vth)$, $i\in I_{j+2}\subset I_{j+1}$, s'obtient de $P_i(T_{j+1}(\vth),\vth)\in C^2$ par un reset linéaire : $(\mathrm H_{j+1})$. Il n'y a pas de circularité : la pression ne rétroagit pas sur $(H,V,\tau)$ pendant l'épisode, et son caractère $C^2$ est établi avant l'application du théorème des fonctions implicites. $\square$
+\end{proof}
+
+\begin{remarque}[quel $C^2$ est effectivement consommé]
+$a_k$ n'est que $C^2$ (elle compose $p\in C^2$ avec $\sigma\in C^2$) ; le théorème~S n'en demande pas plus, ce qui est exactement ce qui permet d'enchaîner les rangs avec $T_j$ seulement $C^2$. La voie de Morse aurait exigé $T_j\in C^4$.
+\end{remarque}
+
+\begin{remarque}[limites]
+(a) Aucune nécessité n'est établie pour $T_j$ lui-même : si~\eqref{eq:crit} échoue, $P_i\notin C^2$ (nécessité du théorème~S), donc la \emph{méthode} échoue, mais $T_j\in C^2$ n'est pas pour autant exclu. (b) Zéros multiples ou dégénérés ($\partial_sW=0$, en particulier zéros communs de $H_i$ et $V_i$ au repos), plusieurs Kairos simultanés, nœuds non forcés, $d\ge3$ : hors champ. (c) Les constantes ne sont pas contrôlées en $\varepsilon$ ici.
+\end{remarque}
+
+\section{Étape C : estimation quantitative $O(\varepsilon)$ --- piste, conditionnelle}
+\paragraph{Lemme de Glaeser avec marge.} Pour obtenir $\lVert\D^2P_\varepsilon\rVert\le C\varepsilon$ il faut majorer le terme singulier $\lVert\D a\rVert^2\bigl(1+\ln^+\tfrac1{\lvert a\rvert}\bigr)$ \emph{uniformément}. Le corollaire de Glaeser ($\lVert\D a\rVert^2\le2L\lvert a\rvert$) suppose que la boule de rayon $\lVert\D a(x)\rVert/L$ est dans le domaine ; avec $\lVert\D a\rVert,L=O(\varepsilon)$ ce rayon est $O(1)$ et peut sortir du voisinage : c'est exactement le problème des bords signalé. Il se résout par une marge fixe.
+
+\begin{lemme}[Glaeser avec marge]\label{lem:marge}
+Soit $a\in C^2(U')$, $L>0$ avec $\lVert\D^2a\rVert\le L$ sur $U'$, $\D a=0$ en tout point de $Z\cap U'$, et $x$ avec $\bar B(x,\delta_0)\subset U'$. Alors
+\[
+\lVert\D a(x)\rVert^2\ \le\ 2L\,\lvert a(x)\rvert+\frac{2}{\delta_0}\,\lVert\D a(x)\rVert\,\lvert a(x)\rvert .
+\]
+\end{lemme}
+\begin{proof}
+Soit $\rho=\lVert\D a(x)\rVert/L$. \emph{Cas $\rho\le\delta_0$} : c'est le corollaire de Glaeser, $\lVert\D a\rVert^2\le2L\lvert a\rvert$ (sinon il existerait $z\in Z\cap\bar B(x,\rho)$ avec $\D a(z)\ne0$). \emph{Cas $\rho>\delta_0$}, i.e.\ $L\delta_0<\lVert\D a(x)\rVert$ : supposons $a(x)>0$ (l'autre signe est symétrique) et posons $\psi(t)=a(x-t\,\D a(x)/\lVert\D a(x)\rVert)$, $0\le t\le\delta_0$. Alors $\psi'(t)\le-\lVert\D a\rVert+Lt<0$ et $\psi(\delta_0)\le a(x)-\lVert\D a\rVert\delta_0+L\delta_0^2/2<a(x)-\lVert\D a\rVert\delta_0/2$. Si $a(x)\le\lVert\D a(x)\rVert\delta_0/2$, $\psi$ s'annule en un premier $t_z\le\delta_0$ avec $\psi'(t_z)<0$, donc $\D a(z)\ne0$ au point $z\in Z\cap U'$ : contradiction. Donc $\lvert a(x)\rvert>\lVert\D a(x)\rVert\delta_0/2$, soit $\lVert\D a\rVert\le\frac2{\delta_0}\lvert a\rvert$, et multiplier par $\lVert\D a\rVert$ donne l'inégalité. $\square$
+\end{proof}
+\noindent Conséquence : si $\lVert\D a\rVert\le C_1\varepsilon$ et $L=C_2\varepsilon$, alors $\lVert\D a\rVert^2\le C_\delta\,\varepsilon\lvert a\rvert$ avec $C_\delta=2C_2+2C_1/\delta_0$, et
+\[
+\lVert\D a\rVert^2\Bigl(1+\ln^+\tfrac1{\lvert a\rvert}\Bigr)\le C_\delta\,\varepsilon\,\lvert a\rvert\Bigl(1+\ln^+\tfrac1{\lvert a\rvert}\Bigr)\le C'\varepsilon,
+\]
+car $x\mapsto x(1+\ln^+\frac1x)$ est bornée sur tout $[0,M]$.
+
+\paragraph{Sans marge il n'y a pas de borne $O(\varepsilon)$.} Pour $a=\varepsilon(x-1-d)$ sur $U'=[-1,1]$ (zéro non critique à distance $d$ hors de $U'$), $\lVert\D a\rVert^2\ln\frac1{\lvert a\rvert}/\varepsilon=\varepsilon\ln\frac1{\varepsilon d}$, qui vaut $\sim1/\varepsilon$ si $d=e^{-1/\varepsilon^2}$ : un zéro non critique infiniment proche, juste hors du voisinage, détruit l'uniformité. D'où la marge $\delta_0$ \emph{indépendante de $\varepsilon$} dans l'hypothèse (Z2) quantitative ci-dessous (la condition~\eqref{eq:crit} doit tenir sur $U'\supset\supset B$).
+
+\begin{proposition}[estimation conditionnelle]\label{prop:Q}
+Sous les hypothèses du théorème~\ref{thm:T}, avec (Z2) sur $U'\supset\bar B(\vth,\delta_0)$ pour tout $\vth\in B$, $\delta_0$ indépendante de $\varepsilon$, et sous les bornes uniformes sur le \emph{bloc visible} $W\in\{H_i,V_i\}$ (le bloc $\tau$ n'est pas $O(\varepsilon)$ : $\D_\vth\tau=e^{-\beta t}I+O(\varepsilon)$)
+\[
+\begin{gathered}\textup{(E)}\qquad \lVert\D_\vth W\rVert+\lVert\D_\vth\partial_sW\rVert+\lVert\D^2_\vth W\rVert\le C_E\varepsilon,\\ \lVert W\rVert_{C^2_s}\le C,\qquad q_s\ge m_0,\quad \lVert W\rVert\ge c\sqrt{\tau^2+a^2},
+\end{gathered}\]
+avec $m_0,c$ indépendants de $\varepsilon$, et pour des bornes $\alpha=T_j$ avec $\lVert\D T_j\rVert+\lVert\D^2T_j\rVert\le C\varepsilon$, alors $F(t,\vth)=\int_{\alpha(\vth)}^tg\lVert W\rVert\,ds$ vérifie, pour $\vth\in B'$ et $t$ dans un \emph{voisinage terminal} de l'impact où (Z1) garantit $\lVert W(t,\vth)\rVert\ge c_0>0$ (les bornes en $\vth\vth$ valent aussi pour $t$ quelconque dans la fenêtre),
+\[
+\boxed{\ \lVert\D^2_{\vth\vth}F\rVert\le C\varepsilon,\qquad\lVert\D^2_{t\vth}F\rVert\le C\varepsilon,\qquad\lvert\partial_{tt}F\rvert\le C.\ }
+\]
+\end{proposition}
+\noindent La dérivée pure en $t$ n'est pas petite, même à $\varepsilon=0$ : $W\equiv(1,0)$ et $g=\kappa e^{-\kappa_3(t-s)}$ donnent $F(t)=\frac{\kappa}{\kappa_3}(1-e^{-\kappa_3t})$, $\partial_{tt}F=-\kappa\kappa_3e^{-\kappa_3t}\ne0$. Les conclusions en $t$ ne valent que sur ce voisinage terminal : si $t$ traversait un zéro temporel de $W$, $\partial_{tt}F$ pourrait ne pas exister à cet instant. Ce n'est pas un obstacle puisque c'est exactement là, près de $T_{j+1}$, que ces dérivées sont utilisées. Le bloc $\partial_{tt}$ n'est pas nécessaire à la transmission de $O(\varepsilon)$ : il n'intervient que multiplié par $\D T\otimes\D T=O(\varepsilon^2)$.
+\begin{proof}[Esquisse]
+Dans les coordonnées $\tau=s-\sigma(\vth)$, $\D\sigma=-\D_\vth q/q_s=O(\varepsilon)$, $\D^2\sigma=-(\D^2q+2\partial_s\D q\,\D\sigma+\partial_s^2q\,\D\sigma^{\otimes2})/q_s=O(\varepsilon)$ par (E), d'où $\D a=p_s\D\sigma+\D_\vth p=O(\varepsilon)$ et $\D^2a=O(\varepsilon)$ (les termes $\D\sigma\otimes\D\sigma$ étant $O(\varepsilon^2)$). Dans l'identité du Hessien en coordonnées $\tau$ de la note « ordre » (équation~(hess) de la section « projection fixe ») : $\D^2\tilde g\,\rho$, $\D\tilde g\,\hat w\!\cdot\!\D\tilde W$ et $\tilde g\,\hat w\!\cdot\!\D^2\tilde W$ sont $O(\varepsilon)$ (resp.\ $O(\varepsilon),O(\varepsilon^2),O(\varepsilon)$) ; avec $N=\tilde m\,\D a+E'$ et $\lVert E'\rVert\le C\varepsilon\rho$ (voir l'estimation intermédiaire ci-dessous), le terme $T_2$ est $O(\varepsilon^2)$ et $\int T_1\le C\lVert\D a\rVert^2(1+\ln^+\frac1{\lvert a\rvert})\le C'\varepsilon$ par le lemme~\ref{lem:marge}. \emph{Estimation intermédiaire.} Comme $\tilde m(\tau,\vth)=\int_0^1\partial_sq(\sigma(\vth)+\lambda\tau,\vth)\,d\lambda$, on a $\D_\vth\tilde m=\int_0^1\bigl(\D_\vth\partial_sq+\partial_s^2q\,\D_\vth\sigma\bigr)(\sigma+\lambda\tau,\vth)\,d\lambda$, dont les deux termes sont $O(\varepsilon)$ par (E) ($\D_\vth\partial_sq=O(\varepsilon)$, $\partial_s^2q$ borné, $\D\sigma=O(\varepsilon)$), uniformément si les constantes de (E) le sont ; même calcul pour $\tilde\nu$ avec $p$. On en déduit $N=\tilde m\,\D a+E'$, $E'=-a\,\D\tilde m+\tau(\tilde m\,\D\tilde\nu-\tilde\nu\,\D\tilde m)$, $\lvert E'\rvert\le C\varepsilon(\lvert a\rvert+\lvert\tau\rvert)\le C\varepsilon\rho$ (car $\rho\ge c\sqrt{\tau^2+a^2}$), ce qui contrôle les termes croisés de $T_2$. Hors des fenêtres singulières ($\rho\ge cr_0$) les dérivées secondes sont $O(\varepsilon)$ de même ; les termes de bord de Leibniz font intervenir $\D^2T_j=O(\varepsilon)$ (hypothèse de récurrence) multiplié par $g\lVert W\rVert=O(1)$, et $\D T_j\otimes\D T_j=O(\varepsilon^2)$. Pour les blocs en $t$ : $\D_\vth\partial_tF=g(t,t)\,\hat w\!\cdot\!\D_\vth W(t)+\int\partial_tg\,\hat w\!\cdot\!\D_\vth W\,ds-(\text{terme de bord en }\alpha)=O(\varepsilon)$ (la dérivée première de $\lVert W\rVert$ ne fait intervenir que $\D W$, sans singularité, et $\lVert W(t)\rVert\ne0$), et $\partial_{tt}F$ est borné car $\partial_s\lVert W\rVert$ l'est en $t$. $\square$
+\end{proof}
+
+\section{Récurrence quantitative simultanée, par blocs}\label{sec:rec}
+\paragraph{Les quatre propriétés.} On suppose (D) : pour $\varepsilon=0$ la dynamique visible $(H,V)$ ne dépend pas de $\vth$ ($(\gamma_1,\lambda)=\varepsilon(\bar\gamma,\bar\lambda)$, $\vth$ n'entrant au départ que par $\tau(0)=\vth$) ; (U) toutes les constantes ($m_0,c,\delta_0$, séparation des bornes, $\nu$, $\lvert\partial_{tt}P\rvert\le C$) sont indépendantes de $\varepsilon\in\,]0,\varepsilon_0]$ ; (R) les resets $R_j$ ne transmettent pas de contribution $O(1)$ du bloc $\tau$ vers le bloc $(H,V)$ --- \emph{vérifié sur le noyau de la note P2} : $R_j$ est diagonal, $V_{i_j}\mapsto r_VV_{i_j}$, $P_{i_j}\mapsto r_PP_{i_j}$, identité sur toutes les autres composantes, en particulier sur $\tau$ et $H$ (la propriété (R), $\D_\tau R_j^{(H,V)}=0$, vaut donc même pour $r_V=0$). La non-annulation de $V^+_{i_j}$ est assurée si $r_V>0$ et $V^-_{i_j}\ne0$. Lorsque $r_V=0$ (le noyau autorise $r_V\in[0,1)$), les hypothèses (Z1) peuvent exclure la configuration pour un nœud de $I_{j+1}$ : son traitement éventuel nécessite une analyse spécifique du démarrage post-Kairos, hors champ ici. Au rang $j$ (juste après le $j$-ième Kairos) :
+\[
+\begin{aligned}
+\mathcal A_j&:\ \lVert\D_\vth(H,V)_j^+\rVert+\lVert\D^2_\vth(H,V)_j^+\rVert\le C_j\varepsilon,\\
+\mathcal A^\tau_j&:\ \lVert\D_\vth\tau_j^+\rVert\le C_j,\quad\lVert\D^2_\vth\tau_j^+\rVert\le C_j\varepsilon,\\
+\mathcal B_j&:\ \lVert\D_\vth P_i^+\rVert+\lVert\D^2_\vth P_i^+\rVert\le C_j\varepsilon\quad(i\in I_{j+1}),\\
+\mathcal C_j&:\ \lVert\D_\vth T_j\rVert+\lVert\D^2_\vth T_j\rVert\le C_j\varepsilon .
+\end{aligned}
+\]
+Au rang $0$ : $\D_\vth(H,V)=0$, $\D_\vth\tau=I$, $\D^2\tau=0$, $\D P=0$.
+
+\paragraph{Les flèches.} Chaque implication est vérifiée séparément ; aucune n'utilise une propriété du rang $j+1$ en entrée.
+\begin{enumerate}[label=(\alph*),nosep]
+\item $\mathcal A_j,\mathcal A^\tau_j,\mathcal C_j\Rightarrow$ (E) sur l'épisode $j+1$. Équations variationnelles en $s$, avec départ $W(s,\vth)=\Phi(s,T_j(\vth),z_j^+(\vth))$ : $\D W=D_z\Phi\,\D z^++\partial_T\Phi\,\D T_j$, $\partial_T\Phi=-D_z\Phi\,\dot z(T_j)$, de taille $O(\varepsilon)+O(1)\cdot O(\varepsilon)$ sur le bloc visible. Le bloc $\tau$ agit sur $(H,V)$ uniquement par les coefficients $\gamma_1,\lambda=O(\varepsilon)$ : un $\D\tau=O(1)$ produit un terme source $O(\varepsilon)$. Au second ordre, $D^2_{\tau\tau}G_{(H,V)}[\D\tau,\D\tau]=O(\varepsilon)$ et $D^2_{HH}G[\D H,\D H]=O(\varepsilon^2)$ : $\D^2(H,V)=O(\varepsilon)$ ; $\D_\vth\partial_s(H,V)=O(\varepsilon)$ s'obtient de l'équation elle-même. Pour $\tau$ : $\D\tau(s)=e^{-\beta(s-T_j)}\D\tau_j^++O(\varepsilon)$, $\D^2\tau=O(\varepsilon)$.
+\item (a), $\mathcal B_j$, $\mathcal C_j$, (U), (Z2) uniforme $\Rightarrow$ pour $i\in I_{j+1}$ : $\lVert\D^2_{\vth\vth}P_i\rVert,\lVert\D^2_{t\vth}P_i\rVert,\lVert\D_\vth P_i\rVert\le C\varepsilon$, $\lvert\partial_{tt}P_i\rvert\le C$ : proposition~\ref{prop:Q} (lemme de Glaeser avec marge pour les intégrales), plus le terme $e^{-\kappa_3(t-T_j(\vth))}P_i^+(T_j(\vth),\vth)$ dont les dérivées sont $O(\varepsilon)$ par $\mathcal B_j,\mathcal C_j$.
+\item (b) $\Rightarrow\mathcal C_{j+1}$ : $\D T=-\D_\vth P/\partial_tP=O(\varepsilon)$ et $\D^2T=-\bigl(\D^2_{\vth\vth}P+2\,\D^2_{t\vth}P\otimes_{\rm s}\D T+\partial_{tt}P\,\D T\otimes\D T\bigr)/\partial_tP=O(\varepsilon)+O(\varepsilon^2)+O(\varepsilon^2)$. C'est ici que la borne $\lvert\partial_{tt}P\rvert\le C$ (et non $O(\varepsilon)$) suffit.
+\item (a), (b), (c), (R) $\Rightarrow\mathcal A_{j+1},\mathcal A^\tau_{j+1},\mathcal B_{j+1}$. Pour un état $z$ : $\D z^+=R_{j+1}\bigl[\D_\vth z(T)+\dot z(T)\D T\bigr]$, $\D^2z^+=R_{j+1}\bigl[\D^2_{\vth\vth}z+2\,\partial_t\D_\vth z\otimes_{\rm s}\D T+\partial_{tt}z\,\D T\otimes\D T+\dot z\,\D^2T\bigr]$, avec $\dot z=O(1)$ sur tous les blocs, $\partial_t\D_\vth(H,V)=O(\varepsilon)$ et $\partial_t\D_\vth\tau=O(1)$ : on trouve $\D(H,V)^+=O(\varepsilon)$, $\D^2(H,V)^+=O(\varepsilon)$, $\D\tau^+=O(1)$, $\D^2\tau^+=O(\varepsilon)$ ; de même $\D P_i^+=\D_\vth P_i+\partial_tP_i\D T=O(\varepsilon)$ et $\D^2P_i^+=O(\varepsilon)$ en reportant (b), (c). Le fait que $R_j$ soit diagonal (hypothèse (R)) garantit que les termes $O(1)$ de $\D\tau$ ne contaminent pas le bloc visible.
+\end{enumerate}
+Le graphe des dépendances est acyclique : (a) $\to$ (b) $\to$ (c) $\to$ (d), et (d) alimente (a) du rang suivant.
+
+\begin{proposition}[récurrence quantitative, conditionnelle]\label{prop:R}
+Sous (D), (U), (R) et les hypothèses (Z0)--(Z2) du théorème~\ref{thm:T}, avec (Z1), (Z2) uniformes en $\varepsilon$ et la marge $\delta_0$ fixe, les propriétés $\mathcal A_j,\mathcal A^\tau_j,\mathcal B_j,\mathcal C_j$ valent pour tout $j\le r$ avec des constantes $C_j$ dépendant de $r$ ; en particulier $\lVert\D^2_\vth T_j\rVert\le C_r\varepsilon$.
+\end{proposition}
+\noindent Preuve : récurrence par (a)--(d) ; pour $j=0\to1$ la fenêtre $[0,s_*]$ utilise les bornes $\lVert\D_\vth V_i\rVert\le b\varepsilon s$, $\lVert\D_\vth H_i\rVert\le b\varepsilon s^2$ et leurs analogues d'ordre deux de la note P2, qui donnent $\D^b_\vth v_i=O(\varepsilon)$, $b=1,2$.
+
+\begin{corollaire}[défaut d'affinité, conditionnel à la proposition~\ref{prop:R}]\label{cor:aff}
+Si les bornes de la proposition~\ref{prop:R} valent sur une boule convexe $B'$, alors pour $\vth,\vth+h\in B'$,
+\[
+\bigl\lVert\tau_j^+(\vth+h)-\tau_j^+(\vth)-\D_\vth\tau_j^+(\vth)h\bigr\rVert\le\tfrac12C_j\,\varepsilon\,\lVert h\rVert^2 ,
+\]
+et de même pour $T_j$, $(H,V)_j^+$ et les pressions utiles $P_i^+$ ($i\in I_{j+1}$) : le défaut d'affinité est $O(\varepsilon\delta^2)$ pour $\lVert h\rVert\le\delta$.
+\end{corollaire}
+\begin{proof}
+Taylor avec reste intégral le long du segment $[\vth,\vth+h]\subset B'$ : le reste est $\int_0^1(1-\lambda)\D^2_\vth\tau_j^+(\vth+\lambda h)[h,h]\,d\lambda$, majoré par $\frac12\sup\lVert\D^2\tau_j^+\rVert\,\lVert h\rVert^2$. Il n'y a pas d'autre difficulté analytique : tout le travail est dans les bornes de la proposition~\ref{prop:R}. $\square$
+\end{proof}
+
+\paragraph{Le travail restant se concentre dans (U).} (D) étant posée à partir du découplage à $\varepsilon=0$ et (R) vérifiée sur le noyau, (U) se décompose en trois niveaux de nature différente :
+\begin{enumerate}[label=(U\arabic*),nosep]
+\item flots, traces, marges : par compacité \emph{et} persistance du mot régulier --- marges strictes de déclenchement (étape~(0) de la preuve du théorème~\ref{thm:T}), traces non nulles, bornes de temps sur un compact --- toutes uniformes pour $\varepsilon$ petit, à profondeur fixée sur un voisinage commun ; la compacité seule ne suffit pas, c'est la persistance du mot qui définit la famille d'histoires ;
+\item géométrie temporelle uniforme : \emph{démontrable} par un lemme de perturbation $C^1$ (lemme~\ref{lem:U2}) ;
+\item criticité $\D a_\varepsilon=0$ sur le lieu des zéros, à marge fixe : \emph{hypothèse géométrique}, non déduite du noyau (voir ci-dessous).
+\end{enumerate}
+
+\begin{lemme}[persistance uniforme des fenêtres de zéros]\label{lem:U2}
+Soit $W_0:J\to\R^2$ de classe $C^1$ (indépendante de $\vth$) dont les zéros $s_1,\dots,s_p$ sont simples ($\partial_sW_0(s_k)\ne0$), intérieurs, et $\lVert W_0\rVert>0$ aux bornes de la fenêtre d'intégration. Soit $W_\varepsilon\in C^2(J\times B)$ avec $\sup_{\vth\in B}\lVert W_\varepsilon(\cdot,\vth)-W_0\rVert_{C^1(J)}\to0$. Alors il existe $\varepsilon_0,r_1,m_0,c,C,\mu_0>0$ tels que, pour tout $\varepsilon\le\varepsilon_0$ et tout $\vth\in B$ :
+\begin{enumerate}[nosep,label=(\roman*)]
+\item les fenêtres $I_k=[s_k-r_1,s_k+r_1]$ sont disjointes et à distance $\ge r_1$ des bornes ;
+\item sur $I_k$, avec $e_k=\partial_sW_0(s_k)/\lVert\partial_sW_0(s_k)\rVert$ \emph{fixe}, $q_{\varepsilon,k}=\langle e_k,W_\varepsilon\rangle$ vérifie $\partial_sq_{\varepsilon,k}\ge m_0$ et admet une unique racine $\sigma_{\varepsilon,k}(\vth)\in\mathrm{int}\,I_k$, et
+\[
+\begin{gathered}
+c\sqrt{(s-\sigma_{\varepsilon,k}(\vth))^2+a_{\varepsilon,k}(\vth)^2}\ \le\ \lVert W_\varepsilon(s,\vth)\rVert\ \le\ C\sqrt{(s-\sigma_{\varepsilon,k}(\vth))^2+a_{\varepsilon,k}(\vth)^2},\\
+a_{\varepsilon,k}(\vth)=p_{\varepsilon,k}(\sigma_{\varepsilon,k}(\vth),\vth) ;
+\end{gathered}
+\]
+\item hors des fenêtres, $\lVert W_\varepsilon\rVert\ge\mu_0$.
+\end{enumerate}
+En particulier $W_\varepsilon(\cdot,\vth)$ n'a de zéro que dans $\bigcup_kI_k$, et en $I_k$ si et seulement si $a_{\varepsilon,k}(\vth)=0$. Si de plus $\lVert W_\varepsilon-W_0\rVert_{C^1(J)}\le C_W\varepsilon$, alors $\lvert\sigma_{\varepsilon,k}-s_k\rvert+\lvert a_{\varepsilon,k}\rvert\le C'\varepsilon$.
+\end{lemme}
+\begin{proof}
+Choisir $r_1$ pour (i) puis assez petit pour que $\partial_sq_{0,k}\ge2m_0$ et $\lvert p_{0,k}'\rvert\le m_0/4$ sur $I_k$ (continuité de $\partial_sW_0$, $p_{0,k}'(s_k)=0$ car $\partial_sW_0(s_k)\parallel e_k$). Pour $\varepsilon$ petit, $\lVert W_\varepsilon-W_0\rVert_{C^1}\le\eta\ll m_0r_1$ donne $\partial_sq_{\varepsilon,k}\ge m_0$ et $\lvert p_{\varepsilon,k}'\rvert\le m_0/2$ sur $I_k$ ; comme $q_{0,k}(s_k\pm r_1)=\pm\int\partial_sq_0\ge\pm2m_0r_1$ et $\lvert q_\varepsilon-q_0\rvert\le\eta<m_0r_1$, $q_{\varepsilon,k}$ change de signe sur $I_k$ et, strictement croissante, a une unique racine $\sigma_{\varepsilon,k}(\vth)$ (régulière en $\vth$ par le théorème des fonctions implicites). Avec $\tau=s-\sigma_{\varepsilon,k}$, $q=\tau m$, $m\ge m_0$ et $p=a+\tau\nu$, $\lvert\nu\rvert\le m_0/2$ : on est dans le lemme de projection fixe de la note « ordre », d'où l'encadrement (ii) avec $c$ ne dépendant que de $m_0$ et $C$ de $m_0$ et d'une borne supérieure de $\lVert\partial_sW_0\rVert$. (iii) : $\lVert W_0\rVert\ge2\mu_0$ sur le compact $J\setminus\bigcup\mathrm{int}\,I_k$ (zéros simples, séparés des bornes), donc $\lVert W_\varepsilon\rVert\ge\mu_0$ dès que $\eta<\mu_0$. Un zéro vectoriel de $W_\varepsilon(\cdot,\vth)$ vérifie $q=0$ puis $p=0$ : $s=\sigma_{\varepsilon,k}$ et $a_{\varepsilon,k}(\vth)=0$. Pour la dernière assertion : $\lvert\sigma_{\varepsilon,k}-s_k\rvert\le\lvert q_\varepsilon(s_k)-q_0(s_k)\rvert/m_0\le C_W\varepsilon/m_0$ et $\lvert a_{\varepsilon,k}\rvert\le\lvert p_\varepsilon(\sigma_\varepsilon)-p_0(\sigma_\varepsilon)\rvert+\lvert p_0(\sigma_\varepsilon)-p_0(s_k)\rvert\le C_W\varepsilon+\tfrac{m_0}{4}\lvert\sigma_\varepsilon-s_k\rvert$. $\square$
+\end{proof}
+\noindent Ce lemme ne présuppose \emph{aucun} zéro vectoriel pour $\varepsilon>0$ : ce sont les branches $\sigma_{\varepsilon,k}$ de l'équation scalaire $q_{\varepsilon,k}=0$ qui persistent ; les zéros vectoriels n'existent que sur le lieu $\{a_{\varepsilon,k}=0\}$, dont la criticité est précisément (U3). Il fournit à la proposition~\ref{prop:Q} les constantes $m_0,c$ et la séparation des bornes, indépendamment de $\varepsilon$, et la borne $\lvert a_\varepsilon\rvert\le C\varepsilon$ utilisée ci-dessous.
+
+\begin{proposition}[raffinement logarithmique, conditionnel]\label{prop:log}
+Sous le lemme~\ref{lem:U2} avec taux $C_W\varepsilon$, (E) et (U3) à marge $\delta_0$ fixe, on a $\lvert a_\varepsilon\rvert\le C\varepsilon$, $\lVert\D a_\varepsilon\rVert+\lVert\D^2a_\varepsilon\rVert\le C\varepsilon$ et
+\[
+\lVert\D a_\varepsilon\rVert^2\Bigl(1+\ln^+\tfrac1{\lvert a_\varepsilon\rvert}\Bigr)=O\bigl(\varepsilon^2(1+\lvert\ln\varepsilon\rvert)\bigr).
+\]
+\end{proposition}
+\begin{proof}
+Soit $b_\varepsilon=a_\varepsilon/\varepsilon$ : $\lvert b_\varepsilon\rvert,\lVert\D b_\varepsilon\rVert,\lVert\D^2b_\varepsilon\rVert\le C$, et $Z_b=Z_a$ avec $\D b=0$ dessus. Le lemme de Glaeser avec marge donne $\lVert\D b\rVert^2\le2L_b\lvert b\rvert+\frac2{\delta_0}\lVert\D b\rVert\lvert b\rvert\le C\lvert b\rvert$, soit $\lVert\D a\rVert^2\le C\varepsilon\lvert a\rvert$. Comme $\varphi(x)=x(1+\ln^+\frac1x)$ est croissante sur $[0,\infty[$ ($\varphi'(x)=\ln\frac1x\ge0$ pour $x\le1$) et $\lvert a\rvert\le C\varepsilon$, $\varphi(\lvert a\rvert)\le\varphi(C\varepsilon)\le C'\varepsilon(1+\lvert\ln\varepsilon\rvert)$, d'où $\lVert\D a\rVert^2(1+\ln^+\frac1{\lvert a\rvert})\le C\varepsilon\,\varphi(\lvert a\rvert)\le C''\varepsilon^2(1+\lvert\ln\varepsilon\rvert)$. $\square$
+\end{proof}
+\noindent \textbf{Observation.} Sous (U3), la contribution logarithmique admissible est $T_1=O(\varepsilon^2|\ln\varepsilon|)=o(\varepsilon)$, plus fort que la borne $O(\varepsilon)$ utilisée dans la proposition~\ref{prop:Q}. Elle ne détermine pas l'ordre $O(\varepsilon)$ de la majoration générale du défaut d'affinité, sans préjuger du terme dominant effectif dans une configuration particulière (les autres contributions sont majorées par $O(\varepsilon)$, rien n'assure qu'elles aient un terme non nul d'ordre $\varepsilon$). Je la garde comme observation conditionnelle, hors de la preuve principale.
+
+\emph{Netteté de l'échelle.} Dans le modèle réduit, $a_\varepsilon(\vth)=\varepsilon(1+\vth)$, $\lvert\vth\rvert<\frac12$, n'a aucun zéro (U3 trivialement satisfaite), et $F_\varepsilon=\Phi(a_\varepsilon)$ vérifie $F_\varepsilon''(0)=\Phi''(\varepsilon)\varepsilon^2=2\varepsilon^2\ln\frac1\varepsilon+O(\varepsilon^2)$ : l'ordre $\varepsilon^2|\ln\varepsilon|$ est réalisé. Contrôle numérique (\texttt{verif\_exemple\_log\_eps.py}, 40 chiffres) : $(F''-2\varepsilon^2\ln\frac1\varepsilon)/\varepsilon^2\to2\ln2-2=-0{,}6137$ pour $\varepsilon=10^{-3},10^{-4}$, formule et différences finies concordantes.
+
+\paragraph{Pourquoi (U3) reste une hypothèse.} À $\varepsilon=0$, un zéro simple de référence est partagé par tous les $\vth$. Pour $\varepsilon>0$ il peut disparaître, persister tangentiellement, ou réapparaître sur un lieu de paramètres où $\D a_\varepsilon\ne0$. La proximité $C^1$ contrôle la géométrie \emph{temporelle} (lemme~\ref{lem:U2}), pas la criticité de ce lieu dans l'espace des paramètres.
+
+\paragraph{Ce qui n'est pas fermé.} (i) (D) et (U1) ne sont pas redémontrées contre le noyau complet (seule (R) l'est ; (U2) l'est sous convergence $C^1$ uniforme). (ii) La profondeur : $C_r$ dépend de $r$, rien ne dit qu'elle reste contrôlée pour une famille de mots de profondeur croissante. (iii) (U3).
+
+\section{État après ce complément}
+\begin{center}\small
+\begin{tabular}{p{6.3cm}p{4.2cm}p{3.6cm}}
+\toprule
+Énoncé & Hypothèses & Statut\\\midrule
+Théorème~S, intégrale plane $W\in C^2$, $g\in C^2$ & zéros simples, $\D a=0$ sur $Z$ & Démontré, relu\\
+Étape A : premier épisode forcé & + factorisation en $s=0$, nœuds de $I_1$ forcés & Argument cohérent ; pressions nécessaires à préciser (fait : (Z0))\\
+Théorème~\ref{thm:T} : $T_1,\dots,T_r\in C^2$ avec $u\in C^1$ & (Z0)--(Z2) sur $I_j$ ; conclusion sur les pressions de $I_j$ & Preuve convaincante (relecture), énoncé corrigé\\
+Lemme~\ref{lem:marge} (Glaeser avec marge) & marge $\delta_0$ fixe & Démontré (relu), témoin numérique\\
+Proposition~\ref{prop:Q} (blocs $\vth\vth$, $t\vth$, $tt$) & (E) sur le bloc visible, marge & Conditionnelle ; énoncé corrigé\\
+Proposition~\ref{prop:R} (récurrence par blocs $\mathcal A,\mathcal A^\tau,\mathcal B,\mathcal C$) & (D), (U), (R), (Z) uniformes & Conditionnelle, sans circularité apparente ; (R) vérifiée sur P2, (U2) déchargée par le lemme~\ref{lem:U2}, (U1) à établir, (U3) hypothèse\\
+Lemme~\ref{lem:U2} (persistance uniforme des fenêtres, U2) & convergence $C^1$ uniforme vers une référence à zéros simples & Démontré, à relire\\
+Proposition~\ref{prop:log} (terme logarithmique $O(\varepsilon^2|\ln\varepsilon|)$) & + (U3), $\lvert a_\varepsilon\rvert\le C\varepsilon$ & Observation conditionnelle\\
+Défaut d'affinité $O(\varepsilon\delta^2)$ (corollaire~\ref{cor:aff}) & conséquence directe de la proposition~\ref{prop:R} & Conditionnel à R (Taylor, aucune difficulté nouvelle)\\
+Uniformité en profondeur & --- & Ouverte\\
+Zéros multiples, $d\ge3$, plusieurs Kairos, nœuds non forcés, profondeur & --- & Ouvert\\\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Contrôle numérique.} \texttt{verif\_glaeser\_marge.py} (60 fonctions trigonométriques aléatoires sur $[-1,1]^2$, minimum exact raffiné, $\varepsilon\in\{10^{-1},10^{-2},10^{-3}\}$, $m\in\{0,10^{-6},10^{-2}\}$) : le rapport $\lVert\D a\rVert^2/(2L\lvert a\rvert+\frac2{\delta_0}\lVert\D a\rVert\lvert a\rvert)$ reste $\le0{,}99$ (jamais $>1$). Une première version utilisant le minimum de \emph{grille} donnait des rapports $>1$ : artefact, le vrai minimum était plus bas que celui de la grille, donc la fonction testée avait des zéros non critiques et violait l'hypothèse ; corrigé par raffinement du minimum. Le second bloc de la sortie illustre le contre-exemple sans marge. Ces nombres sont des témoins, pas une preuve.
+
+\end{document}

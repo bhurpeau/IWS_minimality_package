@@ -1,0 +1,8 @@
+zero de reference (eps=0) : s*=0.978024, v_s=-0.330545, noeud declencheur i*=0
+noeud j : formule lineaire  |  noyau complet (Test 2b, lam=1e-2 seul, d=1e-2)
+  0    : +3.699000e-01   |   +3.706914e-01   (ecart relatif 2.13e-03)
+  1    : +6.948299e-03   |   +2.520801e-04   (ecart relatif 2.66e+01)
+  2    : +3.959689e-04   |   +4.144855e-04   (ecart relatif 4.47e-02)
+  3    : +4.419879e-04   |   +4.604598e-04   (ecart relatif 4.01e-02)
+  4    : +4.008012e-04   |   +4.102884e-04   (ecart relatif 2.31e-02)
+  5    : +4.323058e-04   |   +5.197288e-04   (ecart relatif 1.68e-01)

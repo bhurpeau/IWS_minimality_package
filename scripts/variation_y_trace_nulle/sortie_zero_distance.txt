@@ -1,0 +1,7 @@
+
+##### distance d au zero (lambda seul, eps=0.02, Uamp=2.45) : pente en ln(delta) sur delta in [1e-4, 5e-3] #####
+  eta=0e+00 deg : d = 9.20e-11 : pentes (4 directions) = +6.728e-05 +1.568e-06 +4.569e-05 +4.561e-05
+  eta=1e-04 deg : d = 5.35e-07 : pentes (4 directions) = +2.326e-05 -2.418e-07 +1.286e-05 +1.281e-05
+  eta=1e-03 deg : d = 5.35e-06 : pentes (4 directions) = -3.770e-06 -4.259e-08 -2.519e-06 -2.501e-06
+  eta=1e-02 deg : d = 5.35e-05 : pentes (4 directions) = -4.538e-08 +2.519e-08 -1.542e-08 -4.698e-09
+  eta=1e-01 deg : d = 5.35e-04 : pentes (4 directions) = +6.539e-08 +1.013e-07 +9.778e-08 +6.059e-08

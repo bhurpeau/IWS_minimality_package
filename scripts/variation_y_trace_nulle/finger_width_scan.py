@@ -1,0 +1,9 @@
+"""Largeur du doigt {c4 > c1} et distance a la trace nulle d(eta) pour eta -> eta*."""
+import sys, os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'core'))
+sys.argv = ['x', '1500']
+import finger_critical as C
+for e in [0, -0.05, -0.1, -0.12, -0.14, -0.15, -0.16, -0.165, -0.17, -0.18]:
+    m = C.measure(e, half=1.5, n_fine=6000)
+    print("eta=%+.3f dmin=%.5f side=%+d roots=%s width=%.4f" % (e, m['dmin'], m['side'], [round(x, 4) for x in m['roots']], m['width']), flush=True)

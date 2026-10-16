@@ -1,0 +1,10 @@
+node 0 comp 1 eta=-0.30 dmin=0.01040 side=+1 roots=[] width=0.0000 c4max=-0.7872
+node 0 comp 1 eta=-0.15 dmin=0.00479 side=-1 roots=[213.42, 213.659] width=0.2385 c4max=1.0000
+node 0 comp 1 eta=+0.00 dmin=0.01772 side=-1 roots=[218.564] width=0.0000 c4max=1.0000
+node 0 comp 1 eta=+0.15 dmin=0.02788 side=-1 roots=[223.302] width=0.0000 c4max=0.9982
+node 0 comp 1 eta=+0.30 dmin=0.03666 side=-1 roots=[] width=0.0000 c4max=0.9906
+node 3 comp 0 eta=-0.30 dmin=0.01071 side=+1 roots=[] width=0.0000 c4max=-0.6670
+node 3 comp 0 eta=-0.15 dmin=0.00334 side=-1 roots=[221.116, 221.285] width=0.1689 c4max=1.0000
+node 3 comp 0 eta=+0.00 dmin=0.01772 side=-1 roots=[218.564] width=0.0000 c4max=1.0000
+node 3 comp 0 eta=+0.15 dmin=0.03325 side=-1 roots=[216.091] width=0.0000 c4max=0.9998
+node 3 comp 0 eta=+0.30 dmin=0.04881 side=-1 roots=[213.662] width=0.0000 c4max=0.9994

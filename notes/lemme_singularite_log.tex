@@ -1,0 +1,199 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm,booktabs,enumitem,geometry}
+\geometry{margin=2.4cm}
+
+\newtheorem{theoreme}{Théorème}
+\newtheorem{proposition}[theoreme]{Proposition}
+\newtheorem{lemme}[theoreme]{Lemme}
+\newtheorem{corollaire}[theoreme]{Corollaire}
+\theoremstyle{remark}
+\newtheorem{remarque}[theoreme]{Remarque}
+
+\newcommand{\R}{\mathbb R}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\vth}{\vartheta}
+\newcommand{\D}{\mathrm D}
+\newcommand{\dl}{\delta}
+
+\title{Perte de régularité $C^2$ par déplacement transverse\\ d'un zéro de vitesse : un lemme de singularité logarithmique\\[2pt]
+\large (complément à la note sur la régularité des impacts pré-saut)}
+\author{Programme de soustraction --- IWS, Tome II (travail de recherche)}
+\date{octobre 2026}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Statut.} Le lemme~\ref{lem:log} et son corollaire~\ref{cor:T} sont démontrés ci-dessous \emph{sans aucune référence à IWS} ; la section~\ref{sec:app} les applique ensuite au noyau. Les simulations de la note principale (§Témoins numériques) sont des témoins ; ce texte est l'argument analytique correspondant, sous les hypothèses explicitement listées. Ce que ce texte \emph{ne} démontre pas figure à la section~\ref{sec:limites}.
+
+\section{Le lemme local}
+
+Soient $J\subset\R$ un intervalle compact, $m\ge2$ (si $m=1$ le déplacement transverse est nul), $\dl_0>0$, et
+$W\in C^2\bigl(J\times(-\dl_0,\dl_0);\R^m\bigr)$, $g\in C^1(J)$ avec $g\ge0$. On pose
+\[
+F(\dl)=\int_J g(s)\,\lvert W(s,\dl)\rvert\,ds .
+\]
+\begin{description}[nosep]
+\item[(H1)] $W(\cdot,0)$ a un nombre fini $p\ge1$ de zéros $s_1<\dots<s_p$ (si $p=0$ le coefficient ci-dessous est nul et le lemme est faux), tous \emph{intérieurs} à $J$ et \emph{simples} : $w_k:=\partial_sW(s_k,0)\neq0$, $v_k:=\lvert w_k\rvert$.
+\item[(H2)] $g(s_k)>0$.
+\item[(H3)] $a_k>0$ pour \emph{tout} $k$ (déplacement transverse non nul à chaque zéro).
+\end{description}
+Pour chaque zéro, soit $z_k:=\partial_\dl W(s_k,0)$ et
+\[
+a_k:=\bigl\lvert P^\perp_{w_k}z_k\bigr\rvert,\qquad P^\perp_{w}=I-\tfrac{ww^\top}{\lvert w\rvert^2}
+\]
+(composante du déplacement caché \emph{transverse} à la tangente de la courbe $s\mapsto W(s,0)$).
+
+\begin{lemme}[singularité logarithmique]\label{lem:log}
+Sous (H1)--(H3) (donc $p\ge1$), il existe $\dl_1>0$ tel que $F$ soit $C^1$ en $\dl=0$ (avec $F'$ continue), $C^2$ sur $0<\lvert\dl\rvert<\dl_1$, et
+\begin{align}
+F''(\dl)&=\Bigl(\sum_k\frac{2g(s_k)a_k^2}{v_k}\Bigr)\ln\frac1{\lvert\dl\rvert}+O(1),\label{eq:Fpp}\\
+F(\dl)+F(-\dl)-2F(0)&=\Bigl(\sum_k\frac{2g(s_k)a_k^2}{v_k}\Bigr)\dl^2\ln\frac1{\lvert\dl\rvert}+O(\dl^2).\label{eq:Fdiff}
+\end{align}
+En particulier le quotient $\bigl(F(\dl)+F(-\dl)-2F(0)\bigr)/\dl^2$ n'est pas borné : $F$ n'est pas deux fois dérivable en $0$ (au sens de Peano), a fortiori pas $C^2$ ; $F'$ est log-lipschitzienne mais pas lipschitzienne. Les contributions des différents zéros ont toutes le \emph{même signe} ($\ge0$) : elles ne peuvent pas se compenser.
+\end{lemme}
+
+\begin{proof}
+\textit{Étape 0 (développements).} Fixons un zéro $s_k=:s_0$, $\sigma:=s-s_0$, $w=w_k$, $z=z_k$, $e=w/v$, $P^\perp=I-ee^\top$, $a=a_k>0$. Comme $W\in C^2$ et $W(s_0,0)=0$ :
+\begin{equation}\label{eq:dev}
+W=w\sigma+\dl z+O(\sigma^2+\dl^2),\qquad \partial_\dl W=z+O(\lvert\sigma\rvert+\lvert\dl\rvert),\qquad \partial_sW=w+O(\lvert\sigma\rvert+\lvert\dl\rvert).
+\end{equation}
+Comme de plus $P^\perp w=0$, $P^\perp W=\dl P^\perp z+O(\sigma^2+\lvert\sigma\dl\rvert+\dl^2)$, où $\lvert P^\perp z\rvert=a$.
+
+\textit{Étape 1 (minoration).} Il existe $\eta,\dl_1,c>0$ tels que $\lvert W(s,\dl)\rvert\ge c\max(\lvert\sigma\rvert,\lvert\dl\rvert)$ pour $\lvert\sigma\rvert\le\eta$, $\lvert\dl\rvert\le\dl_1$. Soit $K$ grand. Si $\lvert\sigma\rvert\ge K\lvert\dl\rvert$ : $e\cdot W=v\sigma+\dl\,e\cdot z+O(\sigma^2+\dl^2)$, donc $\lvert e\cdot W\rvert\ge(v-C/K-C\eta)\lvert\sigma\rvert\ge\frac v2\lvert\sigma\rvert$ pour $K$ grand, $\eta$ petit. Si $\lvert\sigma\rvert<K\lvert\dl\rvert$ : $\lvert P^\perp W\rvert\ge a\lvert\dl\rvert-C(K^2+K+1)\dl^2\ge\frac a2\lvert\dl\rvert$ pour $\dl_1$ petit. Dans les deux cas $\lvert W\rvert\ge\max(\lvert e\cdot W\rvert,\lvert P^\perp W\rvert)$ donne la minoration. En particulier $W\ne0$ sur ce voisinage sauf en $(s_0,0)$. Hors des voisinages $\lvert\sigma\rvert<\eta$ des zéros, $\lvert W(s,0)\rvert\ge m_0>0$ par compacité, donc $\lvert W(s,\dl)\rvert\ge m_0/2$ pour $\dl_1$ petit.
+
+\textit{Étape 2 (dérivées).} Pour $0<\lvert\dl\rvert<\dl_1$, $W$ ne s'annule pas sur $J$ (étape~1, grâce à (H3)), donc $F\in C^2$ et, en dérivant sous l'intégrale,
+\[
+F'(\dl)=\int_J g\,\frac{W\cdot\partial_\dl W}{\lvert W\rvert}\,ds,\qquad
+F''(\dl)=\int_J g\,\frac{\lvert P_W^\perp\partial_\dl W\rvert^2}{\lvert W\rvert}\,ds+\int_J g\,\frac{W\cdot\partial^2_\dl W}{\lvert W\rvert}\,ds ,
+\]
+où $P_W^\perp=I-WW^\top/\lvert W\rvert^2$. Le second terme est borné par $\int_Jg\,\lvert\partial_\dl^2W\rvert=O(1)$. Il reste $M(\dl):=\int_Jg\,\lvert P_W^\perp\partial_\dl W\rvert^2/\lvert W\rvert\,ds$.
+
+\textit{Étape 3 (asymptotique de $M$).} Découpons $J$ en : $C$ = hors des voisinages $\lvert\sigma\rvert<\eta$ des zéros ; et, autour de chaque zéro, $A=\{\lvert\sigma\rvert\le K\lvert\dl\rvert\}$, $B=\{K\lvert\dl\rvert<\lvert\sigma\rvert<\eta\}$.
+\begin{itemize}[nosep]
+\item Sur $C$, $\lvert W\rvert\ge m_0/2$ : contribution $O(1)$.
+\item Sur $A$, $\lvert W\rvert\ge c\lvert\dl\rvert$ et $\lvert P_W^\perp\partial_\dl W\rvert\le C$ : l'intégrande est $\le C/\lvert\dl\rvert$ sur une longueur $2K\lvert\dl\rvert$ : contribution $O(1)$.
+\item Sur $B$, $\lvert\dl\rvert<\lvert\sigma\rvert/K$. Par \eqref{eq:dev}, $W=v\sigma(e+r)$ avec $\lvert r\rvert\le C(\lvert\dl\rvert/\lvert\sigma\rvert+\lvert\sigma\rvert)$ ; le vecteur unitaire $n=W/\lvert W\rvert$ vérifie $\lvert n-\operatorname{sgn}(\sigma)e\rvert\le2\lvert r\rvert$, donc $\lVert P_n^\perp-P_e^\perp\rVert\le C\lvert r\rvert$ ; avec $\partial_\dl W=z+O(\lvert\sigma\rvert)$ on obtient
+\[
+\lvert P_W^\perp\partial_\dl W\rvert^2=a^2+O\!\Bigl(\tfrac{\lvert\dl\rvert}{\lvert\sigma\rvert}+\lvert\sigma\rvert\Bigr),\quad
+\frac1{\lvert W\rvert}=\frac1{v\lvert\sigma\rvert}\Bigl(1+O\bigl(\tfrac{\lvert\dl\rvert}{\lvert\sigma\rvert}+\lvert\sigma\rvert\bigr)\Bigr),\quad g=g(s_0)+O(\lvert\sigma\rvert).
+\]
+L'intégrande vaut donc $\dfrac{g(s_0)a^2}{v\lvert\sigma\rvert}+O\bigl(1+\lvert\dl\rvert/\sigma^2\bigr)$, et
+\[
+\int_B\frac{g(s_0)a^2}{v\lvert\sigma\rvert}\,d\sigma=\frac{2g(s_0)a^2}{v}\ln\frac{\eta}{K\lvert\dl\rvert}=\frac{2g(s_0)a^2}{v}\ln\frac1{\lvert\dl\rvert}+O(1),\qquad
+\int_{\lvert\sigma\rvert>K\lvert\dl\rvert}\frac{\lvert\dl\rvert}{\sigma^2}\,d\sigma=\frac2K .
+\]
+\end{itemize}
+Sommant sur les zéros, on obtient \eqref{eq:Fpp}.
+
+\textit{Étape 4 (de $F''$ à la différence seconde).} L'intégrande de $F'$ est borné par $g\lvert\partial_\dl W\rvert$ et converge, pour $s$ hors des zéros, vers sa valeur en $\dl=0$ quand $\dl\to0^\pm$ : par convergence dominée, $F'(0^+)=F'(0^-)=\int g\,W\cdot\partial_\dl W/\lvert W\rvert|_{\dl=0}$, et $F$ est lipschitzienne donc $C^1$ en $0$. Comme $F''\in L^1$ près de $0$ par \eqref{eq:Fpp}, $F'(t)-F'(-t)=\int_0^t\bigl(F''(r)+F''(-r)\bigr)dr$ et
+\[
+F(\dl)+F(-\dl)-2F(0)=\int_0^\dl\bigl(F'(t)-F'(-t)\bigr)dt=\int_0^\dl(\dl-r)\bigl(F''(r)+F''(-r)\bigr)dr .
+\]
+Avec $\int_0^\dl(\dl-r)\ln\frac1r\,dr=\frac{\dl^2}2\ln\frac1\dl+\frac34\dl^2$, on obtient \eqref{eq:Fdiff}. Le dernier énoncé est immédiat ; les coefficients $2g(s_k)a_k^2/v_k$ sont $\ge0$. $\square$
+\end{proof}
+
+\begin{remarque}[zéros avec $a_k=0$ : non couverts]\label{rem:ak0}
+Si $a_k=0$ pour un zéro (déplacement colinéaire à la tangente), la courbe $W(\cdot,\dl)$ peut encore passer par $0$ pour certains $\dl\ne0$, ou le terme transverse n'apparaître qu'à l'ordre $\dl^2$ : l'étape~1 ne s'applique plus et le lemme ne dit rien de ce zéro. Sous colinéarité à direction fixe $W=e\,q$ (symétrie de réflexion, témoin $\gamma_1$ seul) la contribution est $C^2$ (lemme~\ref{lem:sym}) ; sans cette structure, c'est un problème ouvert.
+\end{remarque}
+
+\begin{remarque}[test sur un exemple jouet]
+\texttt{verif\_lemme\_log\_abstrait.py} (sans lien avec IWS) calcule $F$ par quadrature adaptative pour deux champs $W$ de classe $C^\infty$ ($m=2$ puis $m=3$, $g$ non constante) : le résidu $\bigl[F(\dl)+F(-\dl)-2F(0)\bigr]/\dl^2-\frac{2g(s_0)a^2}v\ln\frac1\dl$ converge vers une constante ($2{,}2291$ pour $m=2$, $2{,}0094$ pour $m=3$ ; variation inférieure à $10^{-4}$ entre $\dl=3\cdot10^{-3}$ et $3\cdot10^{-4}$) alors que le terme logarithmique varie de $5{,}7$ à $8{,}0$ ($m=2$). À $\dl=10^{-4}$ la quadrature atteint son plancher d'arrondi.
+\end{remarque}
+
+\section{Passage au temps d'impact}
+
+\begin{corollaire}[temps d'impact défini implicitement]\label{cor:T}
+Soit $\Psi\in C^2$ au voisinage de $(T_0,0,\sigma_0)\in\R^3$ avec $\Psi(T_0,0,\sigma_0)=0$, $p:=\partial_\tau\Psi\neq0$, $q:=\partial_\sigma\Psi$. Soit $\sigma(\dl)=\int_{J}g\lvert W\rvert\,ds$ comme au lemme~\ref{lem:log} (donc $\sigma_0=\sigma(0)$), et $T(\dl)$ la solution proche de $T_0$ de $\Psi(T(\dl),\dl,\sigma(\dl))=0$. Alors
+\[
+T(\dl)+T(-\dl)-2T(0)=-\frac qp\Bigl(\sum_k\frac{2g(s_k)a_k^2}{v_k}\Bigr)\dl^2\ln\frac1{\lvert\dl\rvert}+O(\dl^2).
+\]
+\end{corollaire}
+\begin{proof}
+Le théorème des fonctions implicites donne $\mathcal T\in C^2$ avec $T(\dl)=\mathcal T(\dl,\sigma(\dl))$ et $\partial_\sigma\mathcal T=-q/p$. Posons $\Delta(\dl)=\sigma(\dl)-\sigma_0$ ; $\Delta$ est lipschitzienne, $\Delta=O(\dl)$. Taylor à l'ordre deux : $T(\pm\dl)-T(0)=\pm\partial_\dl\mathcal T\,\dl+\partial_\sigma\mathcal T\,\Delta(\pm\dl)+O(\dl^2+\Delta^2)$. En sommant les deux signes, les termes d'ordre un en $\dl$ s'annulent et $\Delta(\dl)+\Delta(-\dl)=\sigma(\dl)+\sigma(-\dl)-2\sigma(0)$ est donné par \eqref{eq:Fdiff}. $\square$
+\end{proof}
+
+\section{Le versant symétrique : $W=e\,q$}
+
+\begin{lemme}[déplacement colinéaire : $C^2$, plusieurs paramètres]\label{lem:sym}
+Soient $U\subset\R^n$ un ouvert, $\vth_0\in U$, $q\in C^2(J\times U;\R)$, $g\in C^1(J)$, et $W=e\,q$ avec $e\in\R^m$ unitaire fixe. On suppose que $q(\cdot,\vth_0)$ a un nombre fini (éventuellement nul) de zéros $s_1<\dots<s_p$, intérieurs à $J$ et simples ($q_s(s_k,\vth_0)\neq0$), et $q(\cdot,\vth_0)\neq0$ aux deux bords de $J$. Alors $F(\vth)=\int_Jg\lvert W\rvert\,ds=\int_Jg\lvert q\rvert\,ds$ est de classe $C^2$ au voisinage de $\vth_0$, et, avec les racines mobiles $s_k(\vth)$ de $q(\cdot,\vth)$ (indices de coordonnées $a,b$),
+\[
+\partial_bF=\int_Jg\,\operatorname{sgn}(q)\,\partial_bq\,ds,\qquad
+\partial_a\partial_bF=\int_Jg\,\operatorname{sgn}(q)\,\partial_a\partial_bq\,ds+\sum_{k=1}^p\frac{2g(s_k)\,\partial_aq(s_k,\vth)\,\partial_bq(s_k,\vth)}{\lvert q_s(s_k,\vth)\rvert}.
+\]
+(Pour $n=1$ et $\vth=\vth_0+\dl$, c'est la formule scalaire de $F''$.)
+\end{lemme}
+\begin{proof}
+Théorème des fonctions implicites ($q\in C^2$, $q_s(s_k,\vth_0)\ne0$) : il existe des racines $s_k(\vth)\in C^2(U')$ sur un voisinage $U'$ de $\vth_0$ ; par compacité et continuité, $q(\cdot,\vth)$ n'a pas d'autre zéro, ne s'annule pas aux bords, et garde un signe constant $\sigma_j\in\{\pm1\}$ sur chaque intervalle $]s_j(\vth),s_{j+1}(\vth)[$ ($s_0=\min J$ et $s_{p+1}=\max J$ fixes). Alors $F(\vth)=\sum_j\sigma_jG\bigl(s_j(\vth),s_{j+1}(\vth),\vth\bigr)$ avec $G(\alpha,\beta,\vth)=\int_\alpha^\beta g\,q(s,\vth)\,ds$. Or $G\in C^2$ : $\partial_bG=\int g\,\partial_bq$ et $\partial_a\partial_bG=\int g\,\partial_a\partial_bq$ (continues car $q\in C^2$) ; $\partial_\beta G=g(\beta)q(\beta,\vth)$, $\partial_\beta^2G=g'q+gq_s$ (continues car $g\in C^1$) ; dérivées mixtes $\partial_\beta\partial_bG=g(\beta)\partial_bq(\beta,\vth)$. Donc $F\in C^2$ par composition. Pour $\partial_bF$ : les termes de bord $g(s_k)q(s_k,\vth)$ sont nuls. Pour $\partial_a\partial_bF$ : en dérivant en $\vth_a$ l'expression $\sigma_j\int g\,\partial_bq$ sur chaque intervalle, il reste, en chaque racine, $(\sigma_{k-1}-\sigma_k)\,g(s_k)\,\partial_bq(s_k)\,\partial_as_k$, avec $\partial_as_k=-\partial_aq/q_s$ et $\sigma_k-\sigma_{k-1}=2\operatorname{sgn}(q_s)$, d'où le terme $2g\,\partial_aq\,\partial_bq/\lvert q_s\rvert$. $\square$
+\end{proof}
+
+\begin{corollaire}[temps d'impact, cas colinéaire]\label{cor:Tsym}
+Dans le cadre du corollaire~\ref{cor:T}, avec $\dl$ remplacé par $\vth\in U$, si $\sigma(\vth)=\int_Jg\lvert W\rvert\,ds$ est $C^2$ (par exemple sous le lemme~\ref{lem:sym}), alors $T(\vth)=\mathcal T(\vth,\sigma(\vth))$ est $C^2$ sur un voisinage de $\vth_0$ (le théorème des fonctions implicites s'applique avec $\vth\in\R^n$ comme paramètre).
+\end{corollaire}
+
+\noindent La contribution $2g\,q_\dl^2/\lvert q_s\rvert$ est la partie bornée, de même nature que $2g\,z_\parallel^2/v$, que le calcul de l'étape~3 laisse dans le $O(1)$ du cas transverse : seule la composante \emph{transverse} de $z$ engendre le logarithme.
+
+\section{Application au noyau}\label{sec:app}
+
+Dans l'épisode $r$, soit $i$ le nœud déclencheur, $s$ le temps local, $\vth=\vth_0+\dl h$ la variation cachée dans la direction $h$. La pression du déclencheur vérifie $P_i(\tau)=e^{-\kappa_3\tau}\bigl[P_i^{\mathrm{dep}}(\dl)+\int_0^\tau e^{\kappa_3s}\bigl(\kappa_1\lvert H_i\rvert+\kappa_2\lvert V_i\rvert\bigr)ds\bigr]$ et l'impact est $P_i(T)=\Theta$.
+
+\begin{proposition}[obstruction à $C^2$ pour $T_r$]\label{prop:app}
+Supposons, dans un voisinage de $\vth_0$ à mot conservé :
+\begin{enumerate}[nosep,label=(\alph*)]
+\item \emph{Régularité de $W$ sans flot étendu.} L'état post-saut de l'épisode précédent est $C^2$ en $\dl$ (transmission de la note principale, jusqu'à l'épisode $r-1$ inclus : $T_{r-1}$, $P_i^{\mathrm{dep}}$ et l'état $(H,V,\tau)$ à l'entrée de l'épisode $r$ sont $C^2$), les traces ne s'annulent pas sur l'épisode $r$ (hypothèse sur les traces de la note principale), et $u\in C^1$. Alors $W(s,\dl)=V_i(s;\vth_0+\dl h)$ est $C^2$ en $(s,\dl)$ : on la construit par le \emph{sous-système régulier} $(H,V,\tau)$, champ $C^1$ en $t$ et $C^\infty$ en l'état tant que les traces ne s'annulent pas, sans invoquer le flot étendu de pression. Il n'y a pas de circularité : la perte de régularité de $P_i$ établie ici a lieu \emph{dans} l'épisode $r$ et n'affecte pas $(H,V,\tau)$ ; elle n'est transmise qu'aux épisodes suivants, hors du cadre de cette proposition. De plus $H_i$ et $P_i^{\mathrm{dep}}$ sont $C^2$ et $\lvert H_i\rvert>0$ sur $[0,T_0]$ ;
+\item $V_i(0,\vth_0)\neq0$, $V_i(T_0,\vth_0)\neq0$ (pas de zéro aux bornes : ceux-ci relèveraient d'un résultat distinct, voir la factorisation $s\cdot v$ du premier épisode dans la note principale), $V_i(\cdot,\vth_0)$ a un nombre fini $p\ge1$ de zéros dans $]0,T_0[$, tous simples, tous avec $a_k>0$ ;
+\item l'impact est transverse : $\dot P_i(T_0)>0$ ;
+\item les autres n\oe uds n'atteignent pas le seuil au voisinage de $T_0$.
+\end{enumerate}
+Alors, avec $g(s)=\kappa_2e^{\kappa_3s}$,
+\[
+T_r(\vth_0+\dl h)+T_r(\vth_0-\dl h)-2T_r(\vth_0)=-\sum_k\frac{2B_ka_k^2}{v_k}\,\dl^2\ln\frac1{\lvert\dl\rvert}+O(\dl^2),\qquad B_k=\frac{\kappa_2\,e^{-\kappa_3(T_0-s_k)}}{\dot P_i(T_0)}>0 ,
+\]
+et $T_r$ n'est pas $C^2$ en $\vth_0$ (et même pas deux fois dérivable en ce point). Les termes de $H_i$ n'ont pas de zéro ; si $H_i$ en avait, ses zéros simples contribueraient avec la même forme et le même signe, avec $\kappa_1$ au lieu de $\kappa_2$.
+\end{proposition}
+\begin{proof}
+Choisir $s_1\in\,]s_{\max},T_0[$ au-dessus du dernier zéro ; on découpe $\int_0^\tau=\int_0^{s_1}+\int_{s_1}^\tau$. Le premier morceau est $\sigma(\dl)=\kappa_2\int_0^{s_1}e^{\kappa_3s}\lvert V_i\rvert\,ds$, de la forme du lemme~\ref{lem:log}. Sur $[s_1,T_0+\eta]$, $\lvert V_i\rvert\ge m>0$ (pas de zéro après $s_1$, continuité), donc le reste est $C^2$ en $(\tau,\dl)$. Ainsi $\Psi(\tau,\dl,\sigma)=e^{-\kappa_3\tau}\bigl[\widehat A(\tau,\dl)+\sigma\bigr]-\Theta$ avec $\widehat A\in C^2$, $p=\dot P_i(T_0)$ et $q=e^{-\kappa_3T_0}$ ; $-q/p\cdot g(s_k)=-B_k$. Le corollaire~\ref{cor:T} conclut. Le dernier point : si le quotient était $C^2$, la limite de la différence seconde divisée par $\dl^2$ existerait. $\square$
+\end{proof}
+
+\begin{proposition}[cas symétrique : $C^2$]\label{prop:sym}
+Sous (a), (c), (d) de la proposition~\ref{prop:app}, supposons que, pour $\vth$ dans un voisinage de $\vth_0$ (tout $\vth$ de la boule si l'on veut $C^2$ sur la boule), $V_i(s;\vth)=e\,q(s,\vth)$ avec $e$ un vecteur unitaire fixe (conséquence, par exemple, d'une symétrie de réflexion du système qui fixe $e$ et laisse invariants le protocole et les conditions initiales ; c'est le cas de $\gamma_1$ seul avec le protocole le long d'un axe), que $V_i(0)\ne0\ne V_i(T_0)$, et que les zéros de $q(\cdot,\vth_0)$ dans $]0,T_0[$ soient simples ($q\in C^2(J\times U)$ avec $U\subset\R^{Nd}$ ouvert, c'est-à-dire tous les paramètres cachés à la fois). Alors $T_r$ est $C^2$ sur un voisinage de $\vth_0$ dans $U$, dans toutes les directions : la non-annulation de $\lvert V_i\rvert$ n'est pas nécessaire à $C^2$.
+\end{proposition}
+\begin{proof}
+Même découpage que pour la proposition~\ref{prop:app} ; le lemme~\ref{lem:sym} donne $\sigma\in C^2$ et le corollaire~\ref{cor:Tsym} conclut. $\square$
+\end{proof}
+
+\section{Précisions de lecture}\label{sec:lecture}
+
+\begin{enumerate}[nosep,label=(\roman*)]
+\item \textbf{Signe.} La différence seconde \emph{signée} de $T_r$ est $-\frac{2Ba^2}{v}\dl^2\ln\frac1\dl+O(\dl^2)$ : $T$ décroît quand la pression augmente. Dans la note principale, $Q_T$ est la valeur \emph{absolue}, et les pentes ajustées en $\ln\dl$ sont celles de la différence seconde signée divisée par $\dl^2$ : elles valent $+\frac{2Ba^2}{v}$, ce qui est la même chose que le coefficient $-\frac{2Ba^2}v$ de $\ln\frac1\dl$.
+\item \textbf{« Déplacement transverse nul » au centre ne suffit pas.} Pour $\vth$ proche de $\vth_0$, $d(\vth)$ désigne la distance à $0$ de la courbe $V_i(\cdot;\vth)$. Dans le cadre \emph{plan} ($m=2$) et non dégénéré du témoin (la distance signée $g(\vth)$ de la courbe à l'origine est $C^1$ de gradient non nul en $\vth_0$, ce qui est précisément $a>0$ dans au moins une direction), le lieu $\{d=0\}=\{g=0\}$ est une hypersurface de l'espace des $\vth$ ; ce n'est pas automatique pour $m\ge3$, où la courbe évite génériquement l'origine, et près de cette hypersurface $\partial^2_\vth T\sim a(\vth)^2\ln\frac1{d(\vth)}$ (calcul de l'étape~3 avec $d$ à la place de $\lvert\dl a\rvert$, non rédigé ; cohérent avec la mesure de la note principale, où la pente s'annule dès $d\gg a\dl$). Une condition qui garantirait $C^2$ \emph{sur la boule} doit donc contrôler $a(\vth)^2\ln\frac1{d(\vth)}$ sur toute la boule, pas seulement $a(\vth_0)=0$ au centre. Le cas $\gamma_1$ seul la satisfait trivialement ($a\equiv0$ par symétrie sur toute la boule). Je ne l'ai pas formulée plus précisément.
+\item \textbf{Zéros construits à $\eps$ fixé et théorème pour $\eps$ petit.} La stabilité d'ordre un reste vraie en présence de zéros (la norme est lipschitzienne). Le lemme concerne $C^2$ à $\eps$ fixé. Un zéro construit à $\eps=0{,}02$ ne réfute pas le théorème~2 pour $\eps\le\eps_1$, où $\eps_1$ dépend de $\min\lVert V_i^0\rVert$ sur la \emph{référence à $\eps=0$} : pour les protocoles testés, ce minimum vaut $2{,}1\cdot10^{-5}$ ($\lambda$, $\eps=0{,}02$ : $\eps/\min\approx970$) et $7{,}1\cdot10^{-3}$ ($\lambda$, $\eps=0{,}05$, minimum atteint au début de l'épisode : $\eps/\min\approx7$), et exactement $0$ pour $\gamma_1$ seul ($\mathrm{ang}=0$ est un zéro à $\eps=0$ déjà). Les zéros testés se trouvent donc \emph{au-delà} du voisinage garanti par la non-annulation de référence ; l'amplitude du phénomène est proportionnelle à $a_h^2$ ; comme $a_h=O(\eps)$ (on applique le lemme~V de la note principale seulement jusqu'au rang $r-1$, qui donne $\D_\vth\zeta^+_{r-1}=O(\eps)$ sur $(w,\pi)$ et $\D_\vth T_{r-1}=O(\eps)$, puis les équations aux variations \emph{régulières} du sous-système $(H,V,\tau)$ pendant l'épisode $r$, dont le forçage est $\partial_\tau G_w=O(\eps)$ : $\D_\vth V_i=O(\eps)$. Le lemme~V n'est donc pas appliqué \emph{à travers} le zéro, qui en viole l'hypothèse de non-annulation), le coefficient logarithmique $2Ba_h^2/v$ est $O(\eps^2)$ si $B/v$ reste borné (et non $\eps^2a_h^2=O(\eps^4)$). Il est donc d'un ordre au-dessus du défaut régulier $O(\eps\delta^2)$ de la note principale : singularité $O(\eps^2\delta^2\ln\frac1\delta)$ contre $O(\eps\delta^2)$. Cela est cohérent avec la dégradation $M_r\propto1/\min\lVert V_i\rVert$ de la note principale.
+\end{enumerate}
+
+\section{Ce qui est démontré, ce qui ne l'est pas}\label{sec:limites}
+
+\begin{center}
+\begin{tabular}{p{0.52\textwidth}p{0.40\textwidth}}
+\toprule
+Énoncé & Statut\\
+\midrule
+Lemme~\ref{lem:log} (singularité de $\int g\lvert W\rvert$) & Démontré, hypothèses (H1)--(H3) avec $p\ge1$ ; vérifié sur un jouet ($m=2,3$)\\
+Lemme~\ref{lem:sym} et corollaire~\ref{cor:Tsym} (versant colinéaire : $C^2$) & Démontrés ; formule de $F''$ \\
+Proposition~\ref{prop:sym} (symétrie $\Rightarrow$ $C^2$ malgré le zéro) & Démontrée sous (a), (c), (d) et la structure $V_i=e\,q$ ; explique le témoin $\gamma_1$ seul\\
+Corollaire~\ref{cor:T} (temps implicite) & Démontré\\
+Proposition~\ref{prop:app} (noyau) & Démontrée \emph{sous} (a)--(d) ; (a) repose sur la transmission de la note principale (établie sous ses hypothèses, jusqu'au rang $r-1$)\\
+Identification d'un zéro exact du système \emph{continu} par les témoins & Numérique seulement : une racine de distance signée à $10^{-18}$ certifie le calcul en double précision, non l'existence d'un zéro du système exact\\
+Mesure : pente $=1{,}04$--$1{,}12\times\frac{2Ba^2}v$ sur le noyau & Témoin numérique (note principale) ; l'écart de quelques pour cent n'est pas expliqué\\
+Cas général $a_k=0$ & Ouvert (remarque~\ref{rem:ak0}). Sous colinéarité à direction fixe $W=e\,q$ : régularité $C^2$ démontrée (lemme~\ref{lem:sym})\\
+Zéro de $\lVert H_i\rVert$, nœud non forcé, zéro tangent (double) & Non traités\\
+Condition suffisante « géométrique » plus faible que la non-annulation & Non formulée (voir (ii))\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent Paire de résultats ainsi obtenue, à hypothèses de régularité fixées : (non-annulation de $\lvert V_i\rvert$ sur la référence) $\Rightarrow$ $C^2$ (note principale, conditionnel) ; (zéro simple de $V_i$ du déclencheur, déplacé transversalement par le caché) $\Rightarrow$ pas $C^2$ (proposition~\ref{prop:app}) ; entre les deux, le cas symétrique, qui montre que la non-annulation est suffisante sans être nécessaire.
+
+\end{document}

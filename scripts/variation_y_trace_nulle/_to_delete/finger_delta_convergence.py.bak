@@ -1,0 +1,23 @@
+"""Convergence en dt de eta*, phi*, Delta'(eta*) et de la pente conique K (variante interpolee), + voisinage en phi5 du point critique."""
+import sys, os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import numpy as np
+dt = float(sys.argv[1])
+os.environ['INTERP'] = '1'
+sys.argv = ['x', str(dt)]
+import finger_delta_check as D          # applique le patch d'interpolation avec ce dt
+import finger_critical as C, finger_y_variation as F
+from scipy.optimize import brentq
+es = brentq(D.Delta, -0.19, -0.14, xtol=1e-8)
+fs = D.affine_fit(es)
+phis = np.degrees(np.arctan2(-fs['b'][1], -fs['b'][0]) % (2 * np.pi))
+h = 2e-3
+dD = (D.Delta(es + h) - D.Delta(es - h)) / (2 * h)
+print("dt=%g  eta*=%.6f  phi*=%.4f deg  Delta'=%.4e  c1=%.6f" % (dt, es, phis, dD, fs['c1']), flush=True)
+# voisinage en phi5 : le mot de reference est-il conserve en (phi4*, 349+delta, eta*) ?
+for d5 in (-2.0, -1.0, -0.5, 0.0, 0.5, 1.0, 2.0):
+    F.PHI5_DEG = 349.0 + d5
+    C.set_window(phis, phis + 1e-9, 2)
+    r = C.traces(es)
+    print("   phi5=%.1f : mot de reference conserve ? %s%s" % (F.PHI5_DEG, r is not None,
+          "" if r is None else "   ||tau_4|| = %.2e" % np.linalg.norm(r[1][0, 4])), flush=True)

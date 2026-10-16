@@ -1,0 +1,382 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm,booktabs,enumitem,geometry}
+\geometry{margin=2.4cm}
+
+\newtheorem{theoreme}{Théorème}
+\newtheorem{proposition}[theoreme]{Proposition}
+\newtheorem{lemme}[theoreme]{Lemme}
+\newtheorem{corollaire}[theoreme]{Corollaire}
+\theoremstyle{remark}
+\newtheorem{remarque}[theoreme]{Remarque}
+\theoremstyle{definition}
+\newtheorem{hyp}{Hypothèse}
+
+\newcommand{\R}{\mathbb R}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\vth}{\vartheta}
+\newcommand{\zt}{\widetilde z}
+\newcommand{\Pt}{\widetilde P}
+\newcommand{\D}{\mathrm D}
+
+\title{Régularité des impacts pré-saut (hypothèse P2) :\\
+transmission à travers un Kairos isolé, cas du n\oe ud forcé\\[2pt]
+\large (complément au texte sur la stabilité perturbative à mot fixé)}
+\author{Programme de soustraction --- IWS, Tome II (travail de recherche)}
+\date{octobre 2026}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Statut.} Texte de travail. Le théorème~1 du texte principal (stabilité à l'ordre un) n'est pas modifié ici. On s'occupe uniquement de l'hypothèse P2 du théorème~2 (défaut d'affinité), en séparant deux difficultés de nature différente :
+
+\begin{enumerate}[nosep,label=(\Alph*)]
+\item la \emph{transmission} de la régularité $C^2$ à travers les réinitialisations des épisodes précédents (instants d'impact mobiles) --- traitée ici (proposition~\ref{prop:T}) ;
+\item la régularité \emph{au voisinage d'un zéro de $H_i$ ou $V_i$} --- traitée ici pour le seul n\oe ud \emph{forcé}, au départ du repos (lemme~\ref{lem:dem}) ; le cas des n\oe uds non forcés est discuté séparément à la section~\ref{sec:nonforce} et reste \emph{ouvert}.
+\end{enumerate}
+
+\noindent Les deux démonstrations sont gardées séparées, jusqu'à ce que l'on sache quelles hypothèses permettent de les réunir. Le résultat principal est la conclusion du théorème~2 sous des hypothèses \emph{contrôlables sur une seule trajectoire visible} (hypothèse~\ref{h:N}) plus la non-nullité des traces (hypothèse~\ref{h:tn}) ; la partie numérique (§\ref{sec:num}) est un témoin, non une preuve.
+
+\paragraph{Corrections de la relecture (v2$\to$v3).} (1) \emph{Saltation du premier ordre} : la formule précédente comptait deux fois le déplacement de l'impact ($R_j\hat g^-\D_xT_j$ déjà contenu dans $R_jX^{\rm tot}_j$) ; on distingue désormais la dérivée à temps fixé $X^{\rm fix}$ et la dérivée totale $X^{\rm tot}$ (lemme~\ref{lem:V}, étape~2). (2) \emph{Démarrage au repos} : le premier épisode est construit sans flot étendu depuis $t=0$ (sous-système $(w,\tau)$ régulier + Duhamel pour les pressions, §3) ; le flot étendu n'est utilisé que sur les épisodes suivants. Cela supprime la dépendance circulaire entre le lemme de démarrage (régularité seulement) et le lemme~\ref{lem:V} (estimations quantitatives). (3) \emph{Second ordre explicité} : formule de $\D^2Z$ en cinq termes, avec le terme $\hat\Phi_{\xi\xi}[\D y,\D y]$ justifié par la structure (lemme~\ref{lem:W}). (4) \emph{Remarque de Leibniz} : $f$ désigne le terme de production $\psi_i$ ; le saut de $P_i$ lui-même est traité par le flot étendu.
+
+\paragraph{Changement par rapport à la version précédente du théorème~2.} L'hypothèse P2 y était formulée en classe $C^2$ en $(t,\vth)$ avec dérivées d'ordre deux $C^1$ en $\eps$. En réfléchissant à la dépendance des instants d'impact en $\eps$, on constate que cette dernière condition, prise littéralement, exige des dérivées \emph{troisièmes} en temps (donc un protocole $C^2$). On la remplace ici par : \emph{$C^2$ en $\vth$ à $\eps$ fixé}, plus une estimation $O(\eps)$ des variations première et seconde en $\vth$, obtenue directement par Grönwall sur les équations aux variations (lemme~\ref{lem:V}). Le protocole $u\in C^1$ suffit alors. C'est une amélioration de l'énoncé, pas un affaiblissement : la conclusion $\norm{\D^2_\vth\tau^{(r)}_\eps}\le M_r\eps$ est la même.
+
+\section{Cadre et hypothèses}
+
+On reprend les notations du texte principal : $\vth=\tau(0)\in\R^{N\times d}$, mot $w$ de profondeur $k$ (impacts $i_1,\dots,i_k$, recâblages $S_1,\dots,S_{k-1}$), graphes $A_0,\dots,A_{k-1}$, instants $t_r^0$ de référence, $(\gamma_1,\lambda)=\eps(\bar\gamma,\bar\lambda)$, $\Pt_r^\eps(t;\vth)$ = composante $P_{i_r}$ du prolongement virtuel pré-impact. On fixe $r\le k$ et une boule \emph{ouverte} $B\subset K$ de $\R^{N\times d}$ dont la fermeture est contenue dans la chambre ; $x:=\vth$ désigne la variable dérivée. Le paramètre $\eps\in[0,\eps_1]$ est un paramètre : on ne le dérive jamais.
+
+On note $\mathcal J=\{i_1,\dots,i_r\}$ l'ensemble des n\oe uds déclencheurs du mot jusqu'au rang $r$.
+
+\begin{hyp}[protocole]\label{h:u} $u\in C^1([0,T])$.\end{hyp}
+\begin{hyp}[traces non nulles]\label{h:tn} Pour $\eps=0$ : $\min_{t\le t_r^0+\rho,\,j,\,x\in\bar B}\norm{\tau_{0,j}(t;x)}>0$ ($\tau_0(t;x)=b_{t}+e^{-\beta t}x$). Pour $\eps_1$ assez petit, les traces restent non nulles pour tout $\eps\le\eps_1$ le long de toute trajectoire de la famille, de sorte que $\Gamma_\eps(\tau)=\gamma_0+\eps\bar\gamma\norm{\tau_j}$ est $C^\infty$ au voisinage de ces trajectoires.\end{hyp}
+\begin{hyp}[n\oe uds déclencheurs forcés, au départ du repos]\label{h:F} Pour chaque $i\in\mathcal J$ : $i$ est un n\oe ud forcé avec $u_i(0)\ne0$ et $H_i(0)=V_i(0)=0$.\end{hyp}
+\begin{hyp}[non-annulation des normes sur la trajectoire visible de référence]\label{h:N}
+Soit $(H^0,V^0)$ la trajectoire visible hybride de référence ($\eps=0$ ; elle ne dépend pas de $\vth$ par le lemme de structure du texte principal). Pour tout $i\in\mathcal J$ :
+\[
+\inf_{0<s\le t_r^0+\rho}\frac{\norm{H^0_i(s)}}{s^2}>0,\qquad \inf_{0<s\le t_r^0+\rho}\frac{\norm{V^0_i(s)}}{s}>0 ,
+\]
+où, comme dans l'hypothèse de traces, on a réduit si nécessaire $\rho$ pour que ces conditions (ouvertes) portent sur le prolongement virtuel de référence sur $J_r$.
+\end{hyp}
+
+On suppose de plus acquises les hypothèses du théorème~1 sur $\bar B$ (chambre, transversalité $\nu>0$, séparation, écart, marges) : pour $\eps\le\eps_0$ le mot est conservé et les instants d'impact sont les uniques racines de $\Pt^\eps_j(\cdot;x)=\Theta$ dans $J_j$ avec $\partial_t\Pt_j^\eps\ge\nu/4$.
+
+\paragraph{Choix de la fenêtre $\rho$ et domaine des prolongements virtuels.} La non-annulation des normes sur la trajectoire \emph{exécutée} ne garantit pas, à elle seule, la non-annulation sur un prolongement virtuel arbitrairement long. Les prolongements ne sont utilisés que sur $[t_j^0-\text{(épisode)},t_j^0+\rho]$ : jusqu'en $t_j^0$ ils coïncident avec la trajectoire exécutée (pour $\eps\le\eps_0$, théorème~1) ; il suffit donc de contrôler le dépassement au-delà de l'impact. À chaque Kairos $j\le r$, $\norm{H^0_i(t_j^0)},\norm{V^0_i(t_j^0)}>0$ pour $i\in\mathcal J$ (hypothèse~\ref{h:N}) et $\min_j\norm{\tau^0_{\cdot}(t_j^0;x)}>0$ sur $\bar B$ (hypothèse~\ref{h:tn}) : par continuité du flot pré-impact (de référence, qui ne dépend pas de $\vth$ pour $(H,V)$), il existe $\rho_j>0$ tel que ces minorations (à un facteur $1/2$ près) valent encore sur le prolongement virtuel de référence jusqu'en $t_j^0+\rho_j$. Comme le nombre d'événements est fini,
+\[
+\rho:=\min\bigl(\rho_{\rm Th.1},\ \min_{1\le j\le r}\rho_j\bigr)>0 ,
+\]
+où $\rho_{\rm Th.1}$ est la fenêtre des conditions du théorème~1 ($\rho\le g/4$, $\rho\le\nu/(2L_P)$, $\rho\le\delta_{\rm post}/(4\dot P_{\max})$) : les deux choix sont faits \emph{conjointement}, avec le même $\rho$. Par continuité uniforme en $(x,\eps)\in\bar B\times[0,\eps_1]$ (réduire $\eps_1$ si besoin), les prolongements virtuels des systèmes couplés restent dans $\mathcal D$ sur ces fenêtres : les flots étendus invoqués restent bien dans leur domaine.
+
+\begin{remarque}[pourquoi l'hypothèse~\ref{h:N} est une condition sur \emph{une seule} trajectoire]
+À $\eps=0$ le visible est indépendant de $\vth$ : $\norm{H^0_i(s)},\norm{V^0_i(s)}$ ne dépendent pas de $x\in B$. Un zéro de $V_i$ à l'intérieur de la boule $B$ ne peut donc apparaître, pour $\eps>0$ petit, que si $\min\norm{V^0_i}$ est lui-même $O(\eps)$. La difficulté de la fonction $J(h)=\int\sqrt{s^2+h^2}\,ds\sim h^2\log\frac1{|h|}$ n'est pas ici une question de taille $\delta$ de boule, mais de distance de la trajectoire de référence à l'origine, \emph{indépendamment de $\delta$}. (La question de la taille de boule se pose pour les traces $\tau$, hypothèse~\ref{h:tn}, dont la valeur à $\eps=0$ dépend de $\vth$.)
+\end{remarque}
+
+\section{Régularité des flots d'épisode}
+
+À graphe $A$ fixé, notons $\zeta=(w,\tau,\pi)$ l'\emph{état étendu} : $w=(H,V)$, $\tau$, et $\pi=(P_i)_{i\in\mathcal J}$. Son équation est $\dot\zeta=\hat g_{A,\eps}(t,\zeta)=G_{A,\eps}(\zeta)+(0,u(t),0,0)$, avec
+\[
+\dot P_i=\psi_i(w)-\kappa_3P_i,\qquad \psi_i(w)=\kappa_1\norm{H_i}+\kappa_2\norm{V_i}.
+\]
+Le champ $G$ est $C^\infty$ en $(\zeta,\eps)$ sur $\mathcal D=\{\tau_j\ne0\ \forall j;\ H_i\ne0,V_i\ne0\ \forall i\in\mathcal J\}$ (hypothèse~\ref{h:tn} et non-annulation) ; la dépendance en $t$ est celle de $u$, de classe $C^1$ (hypothèse~\ref{h:u}), et additive.
+
+\begin{lemme}[flot d'épisode]\label{lem:flot}
+Le flot $\hat\Phi_A(t,s,\xi)$ de $\hat g_{A,\eps}$ est défini sur un ouvert de $\R\times\R\times\mathcal D$, et il est de classe $C^2$ jointement en $(t,s,\xi)$, ses dérivées d'ordre $\le2$ étant continues en $(t,s,\xi,\eps)$. De plus
+\[
+\partial_t\hat\Phi=\hat g(t,\hat\Phi),\qquad
+\partial_s\hat\Phi=-\D_\xi\hat\Phi\cdot\hat g(s,\xi),\qquad
+\partial^2_t\hat\Phi=\partial_t\hat g+\D_\zeta\hat g\,\hat g,
+\]
+et les dérivées secondes en $(t,s)$ s'expriment par les mêmes formules.
+\end{lemme}
+\begin{proof}
+Dépendance classique des conditions initiales pour un champ $C^2$ en $\zeta$, $C^1$ en $t$ ; les dérivées temporelles se lisent sur l'équation et sur $\partial_s\hat\Phi=-\D_\xi\hat\Phi\,\hat g(s,\xi)$ (conséquence de la propriété de groupe). Les dérivées d'ordre deux en $t$ et en $s$ exigent seulement $\partial_t\hat g=(0,u'(t),0,0)$, continu.
+\end{proof}
+
+\section{Premier épisode : démarrage au repos du n\oe ud forcé}
+
+L'état initial $(H(0),V(0))=(0,0)$ n'appartient pas à $\mathcal D$ : $\psi_i$ y est non différentiable, et le flot étendu $\hat\Phi$ du lemme~\ref{lem:flot} \emph{ne doit pas être utilisé} depuis $t=0$. On exploite que les pressions ne rétroagissent pas sur $(H,V,\tau)$ : le premier épisode se construit en deux temps.
+
+\paragraph{(1) Le sous-système $(w,\tau)$.} Son champ $G_{w,\tau}$ ne contient pas $\pi$ ; il est $C^\infty$ en $(w,\tau,\eps)$ dès que les traces sont non nulles, \emph{y compris en $w=0$} (les normes de $H,V$ n'y interviennent pas). Il se traite par le lemme~\ref{lem:flot} sans restriction sur $w$. On obtient $\eta(t;x)=(w,\tau)(t;x)$, de classe $C^2$ en $(t,x)$ sur $[0,t_1^0+\rho]\times B$.
+
+\paragraph{(2) Les pressions utiles, par Duhamel.} Pour $i\in\mathcal J$,
+\[
+P_i(t;x)=e^{-\kappa_3t}P_i(0)+\int_0^te^{-\kappa_3(t-s)}\psi_i(s;x)\,ds,\qquad \psi_i(s;x)=\kappa_1\norm{H_i(s;x)}+\kappa_2\norm{V_i(s;x)}.
+\]
+Il suffit donc d'établir que $\psi_i$ est $C^1$ en $s$ et $C^2$ en $x$ \emph{jusqu'en $s=0$} : c'est le lemme suivant. Le flot étendu n'est utilisé qu'à partir de l'instant $T_1(x)>0$ (épisodes suivants), où les normes sont strictement positives.
+
+\begin{lemme}[démarrage factorisé --- régularité seulement]\label{lem:dem}
+Sous les hypothèses~\ref{h:u}, \ref{h:tn}, \ref{h:F} et~\ref{h:N}, pour $i\in\mathcal J$ et $\eps\le\eps_1$ (réduit si nécessaire), il existe des fonctions $v_i(s;x),h_i(s;x)$, $C^1$ en $s\in[0,t_1^0+\rho]$, $C^2$ en $x\in B$ (dérivées continues en $(s,x,\eps)$), telles que
+\[
+V_i(s;x)=s\,v_i(s;x),\qquad H_i(s;x)=s^2h_i(s;x),\qquad v_i(0)=u_i(0),\ h_i(0)=u_i(0)/2,
+\]
+avec $\norm{v_i}\ge c_0>0$ et $\norm{h_i}\ge c_0>0$. Par conséquent $\psi_i=\kappa_2s\norm{v_i}+\kappa_1s^2\norm{h_i}$ est $C^1$ en $s$ et $C^2$ en $x$ sur $[0,t_1^0+\rho]$, valeurs en $s=0$ comprises, et $P_i(\cdot;\cdot)$ est de classe $C^2$ en $(t,x)$.
+\end{lemme}
+\begin{proof}
+$V_i(s)=s\int_0^1\dot V_i(\sigma s)d\sigma=:s\,v_i(s)$ et $H_i(s)=s^2\int_0^1(1-\sigma)\dot V_i(\sigma s)\,d\sigma=:s^2h_i(s)$ (car $H_i(0)=V_i(0)=0$ et $\dot H_i=V_i$). Comme $\dot V_i(t;x)=-\Gamma V_i-MH_i+\zeta\tanh(\tilde AH)_i+u_i(t)$ est $C^1$ en $t$ (hyp.~\ref{h:u} et régularité de $\eta$ établie en~(1)) et $C^2$ en $x$ avec dérivées continues, les intégrales à paramètre $v_i,h_i$ sont $C^1$ en $s$ et $C^2$ en $x$. En $s=0$ : $\dot V_i(0)=u_i(0)$, d'où $v_i(0)=u_i(0)$ et $h_i(0)=u_i(0)/2$ \emph{indépendamment de $(x,\eps)$}. À $\eps=0$, $\norm{v_i}=\norm{V^0_i}/s$ et $\norm{h_i}=\norm{H^0_i}/s^2$ ne dépendent pas de $x$ et sont minorés par l'hypothèse~\ref{h:N} ; pour $\eps\le\eps_1$ ils restent $\ge c_0/2$ par continuité uniforme sur le compact $[0,t_1^0+\rho]\times\bar B$. Les normes de vecteurs non nuls sont lisses ; donc $\norm{V_i}=s\norm{v_i}$, $\norm{H_i}=s^2\norm{h_i}$ et $\psi_i$ ont la régularité annoncée. Enfin, avec $\psi_i\in C^{1,2}$ la formule de Duhamel donne $P_i\in C^2$ en $(t,x)$ : $\partial_tP_i=\psi_i-\kappa_3P_i$, $\partial_t^2P_i=\partial_s\psi_i-\kappa_3\partial_tP_i$, $\partial_x^\alpha P_i=\int_0^te^{-\kappa_3(t-s)}\partial_x^\alpha\psi_i\,ds$, et la dérivée mixte $\partial_t\partial_xP_i=\partial_x\psi_i-\kappa_3\partial_xP_i$ est continue. $\square$
+\end{proof}
+
+Les estimations \emph{quantitatives} en $\eps$ des dérivées en $x$ de $\psi_i$ (par exemple $\partial_x\psi_i=O(\eps\, s)$) ne sont pas utilisées ici : elles relèvent du lemme~\ref{lem:V}, qui les établit après ce lemme.
+
+Pourquoi $u\in C^1$ suffit : $\partial_s\norm{V_i}=\frac{V_i\cdot\dot V_i}{\norm{V_i}}=\frac{v_i\cdot\dot V_i}{\norm{v_i}}$ est continue en $s=0$, ce qui donne $\ddot P_i$ ; et, pour la dérivée seconde, $\partial_s^2\norm{V_i}=\frac{1}{s}\frac{\norm{(\dot V_i)_\perp}^2}{\norm{v_i}}+\bigl(\text{termes bornés}\bigr)$ où $(\dot V_i)_\perp$ est la composante de $\dot V_i$ orthogonale à $v_i$, qui est $O(s)$ puisque $\dot V_i(0)=v_i(0)$ : le premier terme est donc $O(s)$.
+
+\section{Transmission de la régularité $C^2$ à travers un Kairos isolé}
+
+\paragraph{Notations.} L'état étendu $\zeta=(w,\tau,\pi)$ est défini sur chaque épisode. Pour $j\ge2$, $\hat\Phi_j:=\hat\Phi_{A_{j-1}}$. Pour $j=1$, on utilise la construction du premier épisode (§3) : $\zt_1(t;x)=(\eta(t;x),\pi(t;x))$ pour $t\in[0,t_1^0+\rho]$. Les états étendus avant et après le saut $j$ sont $\zeta^-_j(x)=\zt_j(T_j(x);x)$ et $\zeta^+_j(x)=R_j\zeta^-_j(x)$, où $R_j$ est la réinitialisation \emph{linéaire} sur l'état étendu complet
+\[
+R_j:\ V_{i_j}\mapsto r_VV_{i_j},\ \ P_{i_j}\mapsto r_PP_{i_j},\ \text{identité sur les autres composantes}.
+\]
+Pour $j\ge2$ le prolongement virtuel pré-impact est $\zt_j(t;x)=\hat\Phi_j\bigl(t,T_{j-1}(x),\zeta^+_{j-1}(x)\bigr)$ et $\Pt_j$ sa composante $P_{i_j}$. Les instants sont définis par $\Pt_j(T_j(x);x)=\Theta$.
+
+\begin{proposition}[transmission du caractère $C^2$]\label{prop:T}
+Sous les hypothèses~\ref{h:u}--\ref{h:N} et celles du théorème~1 sur $\bar B$, pour tout $\eps\in[0,\min(\eps_0,\eps_1)]$ et $1\le j\le r$ :
+\begin{enumerate}[label=(\roman*)]
+\item $\Pt_j$ est de classe $C^2$ en $(t,x)$ sur $(t_j^0-\rho,t_j^0+\rho)\times B$ ;
+\item $T_j$ est de classe $C^2$ sur $B$ ;
+\item $\zeta_j^\pm$ sont de classe $C^2$ sur $B$.
+\end{enumerate}
+Les dérivées d'ordre $\le2$ sont continues en $(t,x,\eps)$.
+\end{proposition}
+
+\begin{proof}
+Récurrence sur $j$.
+
+\emph{Rang $j=1$ (aucun flot étendu depuis $t=0$).} Par le §3 (sous-système $(w,\tau)$ et formule de Duhamel pour les pressions, lemme~\ref{lem:dem}), $\zt_1(t;x)$ est de classe $C^2$ en $(t,x)$ : c'est (i)$_1$. Puis (ii)$_1$ et (iii)$_1$ comme aux étapes~2 et~3 ci-dessous.
+
+\emph{Rang $j\ge2$, hypothèses de récurrence (ii)$_{j-1}$, (iii)$_{j-1}$.}
+
+\emph{Étape 1 : $\Pt_j\in C^2$.} Par le lemme~\ref{lem:flot}, $(t,s,\xi)\mapsto\hat\Phi_j(t,s,\xi)$ est $C^2$ ; $\zt_j(t;x)=\hat\Phi_j(t,T_{j-1}(x),\zeta^+_{j-1}(x))$ est la composée de $\hat\Phi_j$ avec les applications $C^2$ de (ii)$_{j-1}$, (iii)$_{j-1}$. Il reste à vérifier que l'état $\zeta^+_{j-1}(x)$ et la trajectoire du prolongement sont dans $\mathcal D$ : pour $i\in\mathcal J$, $\norm{H_i},\norm{V_i}\ne0$. À $\eps=0$ ces normes sont celles de la trajectoire de référence, strictement positives pour $s>0$ (hypothèse~\ref{h:N}) --- y compris juste après un saut sur $V_{i_{j-1}}$, car $\norm{V^+}=r_V\norm{V^-}>0$ --- et elles le restent pour $\eps\le\eps_1$ par continuité uniforme sur un compact qui ne contient pas $s=0$ (les instants $T_{j-1}\ge g/2>0$). Le facteur linéaire $R_j$ ne crée aucune singularité de norme.
+
+\emph{Étape 2 : $T_j\in C^2$.} $T_j(x)$ est défini par $F(t,x):=\Pt_j(t;x)-\Theta=0$ avec $F\in C^2$ et $\partial_tF\ge\nu/4>0$ (théorème~1). Le théorème des fonctions implicites donne $T_j\in C^2(B)$ et, évalués en $(T_j(x),x)$,
+\[
+\D_xT_j=-\frac{\D_xF}{\partial_tF},\qquad
+\D^2_xT_j=-\frac{\D^2_xF+2\,\partial_t\D_xF\,\D_xT_j+\partial_t^2F\,\D_xT_j^{\otimes2}}{\partial_tF}.
+\]
+
+\emph{Étape 3 : $\zeta^\pm_j\in C^2$.} $\zeta^-_j(x)=\zt_j(T_j(x);x)$ est la composée de $(t,x)\mapsto\zt_j(t;x)$ ($C^2$) avec $x\mapsto(T_j(x),x)$ ($C^2$) ; puis $\zeta^+_j=R_j\zeta^-_j$ avec $R_j$ linéaire. $\square$
+\end{proof}
+
+\begin{remarque}[retour sur la formule de Leibniz --- ce que représente $f$]\label{rem:leibniz}
+Écrivons la \emph{production} de pression sous forme intégrale,
+\[
+I(x)=\int_a^{T(x)}f^-(s,x)\,ds+\int_{T(x)}^bf^+(s,x)\,ds,\qquad f^\pm=\psi_i^\pm=\kappa_1\norm{H_i^\pm}+\kappa_2\norm{V_i^\pm},
+\]
+où $f^\pm$ sont les prolongements (par flots d'EDO) de part et d'autre de l'impact. Avec $[f]=f^--f^+$ évalué en $s=T(x)$, les dérivées croisées en deux directions $a,b$ de $x$ sont
+\[
+\partial_{ab}I=\int_a^T\partial_{ab}f^-+\int_T^b\partial_{ab}f^+ +[\partial_af]T_b+[\partial_bf]T_a+[\partial_sf]T_aT_b+[f]T_{ab}.
+\]
+Pour le n\oe ud réinitialisé, $[f]=(1-r_V)\kappa_2\norm{V_i^-}$ ; pour un n\oe ud non réinitialisé $[f]=0$ mais $[\partial_sf]$ peut être non nul (changement de graphe). Ces termes sont continus dès que les $f^\pm$ sont $C^1$ en $s$ et $C^2$ en $x$ \emph{des deux côtés}. \textbf{Précision.} Cette formule concerne le terme de production $\psi_i$. Pour l'évolution complète de $P_i$, de dérivée $\dot P_i=\psi_i-\kappa_3P_i$, le saut de $P_i$ lui-même s'ajoute : $-\kappa_3(1-r_P)P_i^-$ dans la vitesse, et la valeur $P_i^+=r_PP_i^-$ doit être reportée comme condition initiale de l'épisode suivant. La formulation par flot étendu et réinitialisation linéaire $R_j$ évite de tenir ce compte à la main ; c'est elle qui sert dans la proposition~\ref{prop:T} et le lemme~\ref{lem:V}.
+\end{remarque}
+
+\section{Estimation des variations en $\eps$}
+
+\paragraph{Notations de dérivation.} Pour $j\ge1$ et le prolongement virtuel $\zt_j(t;x)$, on note $X_j(t;x):=\D_x\zt_j(t;x)$ et $Y_j:=\D_x^2\zt_j$ les dérivées \emph{partielles à $t$ fixé}. À l'impact, on distingue la dérivée à temps fixé et la dérivée totale de l'état pré-saut :
+\[
+X^{\rm fix}_j:=X_j(T_j(x);x),\qquad
+X^{\rm tot}_j:=\D_x\zeta^-_j=X^{\rm fix}_j+\hat g^-_j\,\D_xT_j,\qquad \hat g^-_j:=\partial_t\zt_j(T_j),
+\]
+et $\hat g^+_j$ désigne la vitesse juste après le saut, calculée avec le graphe $A_j$ sur l'état $\zeta^+_j$. \emph{On ne doit pas mélanger $X^{\rm fix}$ et $X^{\rm tot}$ :} le terme $\hat g^-\D_xT_j$ est déjà dans $X^{\rm tot}$.
+
+\begin{lemme}[estimation des coefficients dépendant de $\tau$]\label{lem:coef}
+Soit $\bar\tau$ une borne sur $\norm{\tau_j}$ le long des trajectoires (Annexe~A) et $\nu'_\tau:=\min\norm{\tau_j}>0$ le minimum des normes de traces (hypothèse~\ref{h:tn}). Avec
+\[
+M_{\eps\bar\lambda}(\tau)-I=-\frac{\eps\bar\lambda}{1+(1+\eps\bar\lambda)\norm\tau^2}\,\tau\tau^\top,\qquad
+\Gamma_\eps(\tau_j)-\gamma_0=\eps\bar\gamma\norm{\tau_j},
+\]
+il existe $C_{\rm coef}$ (dépendant de $\bar\tau,\bar\lambda,\bar\gamma,\nu'_\tau$) tel que, pour $\eps\le\eps_1$ (et $\eps_1\bar\lambda\le1$) et $\norm{\tau}\le\bar\tau$, $\norm{\tau_j}\ge\nu'_\tau$ :
+\[
+\max_{0\le q\le2}\bigl\lVert\D_\tau^q\bigl(M_{\eps\bar\lambda}(\tau)-I\bigr)\bigr\rVert\le C_{\rm coef}\,\eps,\qquad
+\max_{0\le q\le2}\bigl\lVert\D_\tau^q\bigl(\Gamma_\eps(\tau_j)-\gamma_0\bigr)\bigr\rVert\le C_{\rm coef}\,\eps .
+\]
+\end{lemme}
+\begin{proof}
+$M_{\eps\bar\lambda}-I=-\eps\,\bar\lambda\,\phi_\eps(\norm\tau^2)\,\tau\tau^\top$ avec $\phi_\eps(\sigma)=\bigl(1+(1+\eps\bar\lambda)\sigma\bigr)^{-1}\in]0,1]$, de classe $C^\infty$ en $\sigma\ge0$, dont les dérivées en $\sigma$ sont bornées uniformément en $\eps\le\eps_1$ ($\phi_\eps^{(k)}$ est de la forme $k!\,(-(1+\eps\bar\lambda))^k\phi_\eps^{k+1}$, donc $\le k!\,2^k$). La fonction $\tau\mapsto\phi_\eps(\norm\tau^2)\tau\tau^\top$ est $C^\infty$ (polynôme en $\tau$ composé avec $\phi_\eps(\norm\tau^2)$) et ses dérivées d'ordre $\le2$ sont bornées sur $\{\norm\tau\le\bar\tau\}$ uniformément en $\eps$ : le facteur $\eps$ est extrait exactement. Pour la friction, $\D_\tau\norm{\tau_j}=\tau_j/\norm{\tau_j}$ (norme $1$) et $\D_\tau^2\norm{\tau_j}=\bigl(I-\tau_j\tau_j^\top/\norm{\tau_j}^2\bigr)/\norm{\tau_j}$ (norme $\le1/\nu'_\tau$) ; le facteur $\eps\bar\gamma$ est extrait exactement. $\square$
+\end{proof}
+
+\begin{lemme}[structure des blocs du flot d'épisode]\label{lem:W}
+Soit $j\ge2$, $\hat\Phi=\hat\Phi_j$ sur une fenêtre de longueur $\ell\le\ell_{\max}$, avec $\xi=(\xi_w,\xi_\tau,\xi_\pi)$ l'état initial, les normes $\norm{H_i},\norm{V_i}$ ($i\in\mathcal J$) étant minorées par $c_*>0$ sur la fenêtre. Il existe $C_W$ (dépendant de $\ell_{\max},c_*$ et des bornes a priori) tel que, pour $\eps\le\eps_1$ :
+\begin{enumerate}[label=(W\arabic*)]
+\item $\norm{\D_\xi\hat\Phi}+\norm{\D_\xi^2\hat\Phi}+\norm{\partial_s\D_\xi\hat\Phi}+\norm{\partial_s^2\hat\Phi}\le C_W$ ;
+\item $\norm{\D_{\xi_\tau}\hat\Phi_w}+\norm{\D_{\xi_\tau}\hat\Phi_\pi}\le C_W\eps$, et $\D_{\xi_\tau}\hat\Phi_\tau=e^{-\beta(t-s)}I+O(\eps)$ ;
+\item $\norm{\D^2_{\xi_\tau\xi_\tau}\hat\Phi}\le C_W\eps$, \emph{toutes composantes comprises ($w$, $\tau$, $\pi$)}.
+\end{enumerate}
+\end{lemme}
+\begin{proof}
+(W1) est le lemme~\ref{lem:flot} sur un compact. Pour (W2) : $a:=\D_{\xi_\tau}\hat\Phi$ résout $\dot a_w=\partial_wG_w\,a_w+\partial_\tau G_w\,a_\tau$, $a_w(s)=0$, $a_\tau(s)=I$ ; or $\partial_\tau G_w=O(\eps)$ (voir ci-dessous) donc $a_w=O(\eps)$ par Grönwall ; $\dot a_\tau=-\beta a_\tau+\alpha\,\partial_w\tanh\,a_w$ donne $a_\tau=e^{-\beta(t-s)}I+O(\eps)$, et $\dot a_\pi=\partial_w\psi\,a_w-\kappa_3a_\pi$ avec $\norm{\partial_w\psi}\le\kappa_1+\kappa_2$ donne $a_\pi=O(\eps)$. Pour (W3) : $b:=\D^2_{\xi_\tau\xi_\tau}\hat\Phi$ résout $\dot b_w=\partial_wG_w\,b_w+\partial_\tau G_w\,b_\tau+\partial^2G_w[a,a]$, avec condition initiale nulle. Les trois contributions sont $O(\eps)$ : $\partial_\tau G_w=O(\eps)$ ; dans $\partial^2G_w[a,a]$ les blocs faisant intervenir une direction $\tau$ portent un facteur $\eps\bar\gamma$ ou $\eps\bar\lambda$, et le bloc $(w,w)$ agit sur $a_w\otimes a_w=O(\eps^2)$. Ensuite $\dot b_\tau=-\beta b_\tau+\alpha\,\partial_w\tanh\,b_w+\alpha\,\partial_w^2\tanh[a_w,a_w]=O(\eps)$ et $\dot b_\pi=\partial_w\psi\,b_w+\partial_w^2\psi[a_w,a_w]-\kappa_3b_\pi$ avec $\partial_w^2\psi[a_w,a_w]\le(\kappa_1+\kappa_2)\norm{a_w}^2/c_*=O(\eps^2/c_*)$. Grönwall conclut.
+
+Le point-clé, utilisé trois fois : $\partial_\tau G_w=O(\eps)$ \emph{et} $\partial^2_{\tau\tau}G_w=O(\eps)$, c'est-à-dire le lemme~\ref{lem:coef}. En effet $G_w=\bigl(V,\ -(\gamma_0+\eps\bar\gamma\norm{\tau_j})V_j-M_{\eps\bar\lambda}(\tau_j)H_j+\zeta\tanh(\tilde AH)_j\bigr)$, où $\tau$ n'intervient que dans $\Gamma_\eps-\gamma_0$ et $M_{\eps\bar\lambda}-I$, dont les dérivées en $\tau$ jusqu'à l'ordre deux sont $\le C_{\rm coef}\eps$ (lemme~\ref{lem:coef}) ; ce ne sont pas des hypothèses nouvelles, mais des conséquences calculables des formules du noyau (la constante pour la friction dépend de la distance à $\tau=0$). (Structurellement : à $\eps=0$ le flot visible est indépendant de la trace, et la trace dépend de sa condition initiale de façon affine ; tous les blocs de dérivée seconde faisant intervenir une direction $\tau$ s'annulent donc à $\eps=0$.)
+\end{proof}
+
+\begin{lemme}[variations d'ordre un et deux : $O(\eps)$]\label{lem:V}
+Sous les hypothèses de la proposition~\ref{prop:T}, il existe $a,b,c$ ne dépendant que de $(r,\nu,c_0,c_*,C_W,\ldots)$ tels que, pour $\eps\le\eps_1$, $x\in B$, $j\le r$ :
+\[
+\norm{X_{j,w}}+\norm{X_{j,\pi}}+|\D_xT_j|\le a\,\eps,\qquad
+\norm{Y_{j,w}}+\norm{Y_{j,\pi}}+\norm{Y_{j,\tau}}+|\D_x^2T_j|\le b\,\eps,\qquad
+\norm{X_{j,\tau}-e^{-\beta t}I}\le c\,\eps,
+\]
+et, sur le premier épisode et pour $i\in\mathcal J$ : $\norm{X_{V_i}}\le a\eps s$, $\norm{X_{H_i}}\le a\eps s^2$.
+\end{lemme}
+
+\begin{proof}
+Récurrence sur $j$. Le point de départ est le lemme de structure du texte principal : à $\eps=0$, $w$ et $\pi$ ne dépendent pas de $x$ (donc $X_w=X_\pi=0$, $Y_w=Y_\pi=0$, $\D_xT_j=\D^2_xT_j=0$), et $\tau_0(t;x)=b_t+e^{-\beta t}x$ est affine ($X_\tau=e^{-\beta t}I$, $Y_\tau=0$).
+
+\emph{Étape 0 : premier épisode (équations aux variations directes, sans flot étendu).} Pour $t\in[0,t_1^0+\rho]$, $X=\D_x(w,\tau)$ et $Y=\D_x^2(w,\tau)$ résolvent
+\begin{align*}
+\dot X_w&=\partial_wG_w\,X_w+\partial_\tau G_w\,X_\tau, & X_w(0)&=0,\ X_\tau(0)=I,\\
+\dot X_\tau&=-\beta X_\tau+\alpha\,\partial_w\tanh(\tilde AH)\,X_w ,\\
+\dot Y_w&=\partial_wG_w\,Y_w+\partial_\tau G_w\,Y_\tau+\partial^2G_w[X,X], & Y(0)&=0,\\
+\dot Y_\tau&=-\beta Y_\tau+\alpha\,\partial_w\tanh\,Y_w+\alpha\,\partial_w^2\tanh[X_w,X_w] .
+\end{align*}
+Comme $\partial_\tau G_w=O(\eps)$ (lemme~\ref{lem:W}), $X_w(s)\le c\eps s$ par Grönwall depuis $X_w(0)=0$ : $\norm{X_{V_i}}\le a\eps s$ et, en intégrant, $\norm{X_{H_i}}\le a\eps s^2$. Dans $\partial^2G_w[X,X]$ les blocs avec une direction $\tau$ sont $O(\eps)$ et le bloc $(w,w)$ agit sur $O(\eps^2)$ : $Y_w=O(\eps)$, puis $Y_\tau=O(\eps)$. Pour les pressions $X_{\pi_i}$, $Y_{\pi_i}$ (formule de Duhamel dérivée) :
+\[
+\partial_x^\alpha P_i=\int_0^te^{-\kappa_3(t-s)}\partial_x^\alpha\psi_i\,ds,\quad \partial_x\psi_i=\kappa_1\tfrac{H_i}{\norm{H_i}}\!\cdot\! X_{H_i}+\kappa_2\tfrac{V_i}{\norm{V_i}}\!\cdot\! X_{V_i},
+\]
+\[
+\partial_x^2\psi_i=\kappa_1\tfrac{H_i}{\norm{H_i}}\!\cdot\! Y_{H_i}+\kappa_2\tfrac{V_i}{\norm{V_i}}\!\cdot\! Y_{V_i}+O\!\Bigl(\tfrac{\kappa_1\norm{X_{H_i}}^2}{\norm{H_i}}+\tfrac{\kappa_2\norm{X_{V_i}}^2}{\norm{V_i}}\Bigr).
+\]
+Avec $\norm{V_i}\ge c_0s$, $\norm{H_i}\ge c_0s^2$ (lemme~\ref{lem:dem}) et les bornes sur $X$ : le dernier terme est $O(\eps^2s/c_0)$ --- pas de singularité en $s=0$. Donc $X_\pi,Y_\pi=O(\eps)$ sur l'épisode. Précisons les bornes du second ordre qui entrent dans ce calcul : les équations aux variations secondes ont des conditions initiales nulles et un forçage $\partial^2G_w[X,X]+\partial_\tau G_w\,Y_\tau$ dont tous les termes portent un facteur $\eps$ (blocs $(\tau,\cdot)$) ou agissent sur $X_w\otimes X_w=O(\eps^2s^2)$ ; comme $\partial_\tau G_V$ et $\partial^2_{\tau\tau}G_V$ sont proportionnels à $\norm{V_j}$ et $\norm{H_j}$, ce forçage est $O(\eps s)$ ; par Grönwall puis $\dot H_i=V_i$,
+\[
+\boxed{\ \norm{Y_{V_i}(s)}\le b\,\eps\,s,\qquad \norm{Y_{H_i}(s)}\le b\,\eps\,s^2\ }
+\]
+(bornes non optimales, mais suffisantes). Les termes linéaires en $Y$ de $\partial_x^2\psi_i$, $\kappa_1\hat H_i\!\cdot\!Y_{H_i}+\kappa_2\hat V_i\!\cdot\!Y_{V_i}$, sont donc $O(\eps s)$, et les termes quadratiques en $X$ sont $O(\eps^2s)$ : tous sont bornés, donc intégrables, au voisinage de $s=0$. (Les estimations quantitatives de $X$ utilisent ici la régularité de $v_i,h_i$ seulement à travers les minorations $c_0$ ; il n'y a pas de dépendance circulaire avec le lemme~\ref{lem:dem}.)
+
+\emph{Étape 1 : instant d'impact.} $\D_xT_j=-\partial_xF/\partial_tF$ avec $\partial_xF=X_{j,\pi_{i_j}}=O(\eps)$ et $\partial_tF\ge\nu/4$ : $|\D_xT_j|\le4a\eps/\nu$. Pour la dérivée seconde (étape~2 de la proposition~\ref{prop:T}) : $\D_x^2F=Y_{j,\pi_{i_j}}=O(\eps)$ ; $\partial_t\D_xF=\D_x(\psi_i-\kappa_3P_i)=\partial_w\psi\,X_w-\kappa_3X_\pi=O(\eps)$ ; $\D_xT_j=O(\eps)$ ; $\partial_t^2F$ borné. Donc $|\D_x^2T_j|=O(\eps)$.
+
+\emph{Étape 2 : saltation du premier ordre.} Posons $q(x)=T_j(x)$ et $y(x)=R_j\zeta^-_j(x)$, de sorte que $\zt_{j+1}(t;x)=\hat\Phi(t,q(x),y(x))$ (flot du graphe $A_j$). Puisque $\partial_s\hat\Phi=-\D_\xi\hat\Phi\,\hat g^+$ (lemme~\ref{lem:flot}),
+\[
+X_{j+1}(t)=\D_\xi\hat\Phi\,\D y+\partial_s\hat\Phi\,\D q
+=\D_\xi\hat\Phi\Bigl[R_jX^{\rm tot}_j-\hat g^+\D_xT_j\Bigr]
+=\D_\xi\hat\Phi\Bigl[R_jX^{\rm fix}_j+\bigl(R_j\hat g^--\hat g^+\bigr)\D_xT_j\Bigr],
+\]
+les deux écritures étant équivalentes puisque $X^{\rm tot}_j=X^{\rm fix}_j+\hat g^-_j\D_xT_j$ (le terme $R_j\hat g^-\D_xT_j$ n'apparaît donc qu'\emph{une fois}, soit dans $R_jX^{\rm tot}_j$, soit explicitement dans la seconde écriture). Par (W2), les composantes $(w,\pi)$ de $X_{j+1}$ sont $O(\eps)$ : elles reçoivent $\D_{\xi_w}\hat\Phi\cdot O(\eps)$, $\D_{\xi_\pi}\hat\Phi\cdot O(\eps)$, $\D_{\xi_\tau}\hat\Phi_{w,\pi}\cdot O(1)=O(\eps)$, et la saltation $O(1)\cdot\D_xT_j=O(\eps)$. La composante $\tau$ vaut $e^{-\beta t}I+O(\eps)$ ($R_j$ est l'identité sur $\tau$ et $\D_{\xi_\tau}\hat\Phi_\tau=e^{-\beta(t-q)}I+O(\eps)$, $q=T_j=t_j^0+O(\eps)$).
+
+\emph{Étape 3 : saltation du second ordre, explicitée.} Pour deux directions $h_1,h_2$ de $x$,
+\[
+\begin{aligned}
+\D^2Z[h_1,h_2]={}&\ \hat\Phi_\xi\,\D^2y[h_1,h_2]+\hat\Phi_s\,\D^2q[h_1,h_2] &&(\mathrm{E}_1,\mathrm{E}_2)\\
+&+\hat\Phi_{\xi\xi}[\D y\,h_1,\D y\,h_2] &&(\mathrm{E}_3)\\
+&+\hat\Phi_{s\xi}[\D q\,h_1,\D y\,h_2]+\hat\Phi_{s\xi}[\D q\,h_2,\D y\,h_1] &&(\mathrm{E}_4)\\
+&+\hat\Phi_{ss}\,\D q\,h_1\,\D q\,h_2, &&(\mathrm{E}_5)
+\end{aligned}
+\]
+avec $Z=\zt_{j+1}(t;\cdot)$, et où, par la règle de dérivation de $y=R_j\bigl[\zt_j(q(x);x)\bigr]$,
+\[
+\D^2y[h_1,h_2]=R_j\Bigl(Y^{\rm fix}_j[h_1,h_2]+\partial_tX_j\,[\D q\,h_1,h_2]+\partial_tX_j\,[\D q\,h_2,h_1]+\partial_t^2\zt_j\,\D q\,h_1\D q\,h_2+\hat g^-_j\,\D^2q[h_1,h_2]\Bigr).
+\]
+Ordres de grandeur, avec $\D q=\D_xT_j=O(\eps)$, $\D^2q=O(\eps)$ (étape~1) et $\D y=R_j\bigl(X^{\rm fix}_j+\hat g^-\D q\bigr)$, dont les composantes $(w,\pi)$ sont $O(\eps)$ et dont la composante $\tau$ est $O(1)$ ($=e^{-\beta t}I+O(\eps)$) :
+\begin{itemize}[nosep]
+\item $(\mathrm E_1)$ : $\hat\Phi_\xi$ est borné (W1) ; dans $\D^2y$, $Y^{\rm fix}_j=O(\eps)$ (récurrence ; étape~0 pour $j=1$), $\partial_tX_j=\D_\zeta\hat g\,X_j$ a une composante $\tau$ en $O(1)$ mais est multiplié par $\D q=O(\eps)$, $\partial_t^2\zt_j\,\D q\D q=O(\eps^2)$, $\hat g^-\D^2q=O(\eps)$ : donc $O(\eps)$.
+\item $(\mathrm E_2)$ : $\hat\Phi_s=-\hat\Phi_\xi\hat g^+$ borné, $\D^2q=O(\eps)$ : $O(\eps)$.
+\item $(\mathrm E_3)$ : c'est \emph{le} terme qui n'est pas petit par la seule petitesse des variables visibles, car $\D y_\tau=O(1)$. On décompose $\D y=(\D y_{w,\pi},\D y_\tau)$ : $\hat\Phi_{\tau\tau}[\D y_\tau,\D y_\tau]=O(\eps)$ par (W3) ; les termes croisés $\hat\Phi_{\tau\cdot}[\D y_\tau,\D y_{w,\pi}]$ sont $O(1)\cdot O(\eps)$ par (W1) ; $\hat\Phi_{\cdot\cdot}[\D y_{w,\pi},\D y_{w,\pi}]=O(\eps^2)$. Total $O(\eps)$.
+\item $(\mathrm E_4)$ : $\hat\Phi_{s\xi}$ borné (W1) et $\D q=O(\eps)$ : $O(\eps)$.
+\item $(\mathrm E_5)$ : $O(\eps^2)$.
+\end{itemize}
+D'où $\norm{Y_{j+1}}=O(\eps)$ sur toutes les composantes $(w,\tau,\pi)$. La justification repose donc sur la structure (W3) --- les blocs de dérivée seconde du flot faisant intervenir deux directions $\tau$ s'annulent à $\eps=0$ puis sont $O(\eps)$ par les équations aux variations --- et non sur la seule affirmation « tous les termes sont $O(\eps)$ ». $\square$
+\end{proof}
+
+\begin{theoreme}[défaut d'affinité $O(\eps\delta^2)$ --- version~2]\label{thm:aff}
+Sous les hypothèses~\ref{h:u}--\ref{h:N} et celles du théorème~1 sur $\bar B=\bar B(\vth_0,\delta_0)$ : pour $\eps$ assez petit, $\vth\mapsto\tau^{(r)}_\eps(\vth)$ est de classe $C^2$ sur $B$ et
+\[
+\norm{\D_\vth\tau^{(r)}_\eps(\vth)-e^{-\beta t_r^0}I}\le M'_r\eps,\qquad \norm{\D^2_\vth\tau^{(r)}_\eps(\vth)}\le M_r\eps,
+\]
+d'où, pour $\norm h\le\delta\le\delta_0$, un reste de Taylor $\sup\norm{\mathcal R_\eps(h)}\le\tfrac12M_r\,\eps\,\delta^2$.
+\end{theoreme}
+\begin{proof}
+$\tau^{(r)}_\eps(x)=\tau(\zt_r(T_r(x);x))$ est la composante $\tau$ de $\zeta^-_r$ : de classe $C^2$ par la proposition~\ref{prop:T}(iii). Avec le lemme~\ref{lem:V} : $\D_x\tau^{(r)}_\eps=X_\tau+\partial_s\tau\,\D_xT_r=e^{-\beta t_r^0}I+O(\eps)$, et $\D_x^2\tau^{(r)}_\eps=Y_\tau+2\,\partial_s X_\tau\otimes\D_xT_r+\partial_s^2\tau\,\D_xT_r^{\otimes2}+\partial_s\tau\,\D_x^2T_r=O(\eps)$. Le reste de Taylor sur la boule convexe est alors $\le\frac12\sup\norm{\D^2}\,\delta^2$. $\square$
+\end{proof}
+
+\begin{remarque}[la constante $M_r$ ne se dégrade pas seulement avec $1/\nu_\tau'$]
+Dans la preuve, $M_r$ dépend de : (a) $1/\nu$ (transversalité, par $\D_xT_j$) ; (b) $1/\min\norm{\tau_j}$ (dérivées secondes de $\norm{\tau_j}$, hypothèse~\ref{h:tn}) ; (c) $1/\min_s\norm{V_i}/s$ et $1/\min\norm{H_i}/s^2$ (dérivées secondes de $\norm{V_i},\norm{H_i}$, hypothèse~\ref{h:N}) ; (d) des produits de ces facteurs le long des $r$ épisodes. Les mesures du texte principal montrent que (c) se dégrade avec la profondeur sur le témoin ($\min\norm{V_0}$ par épisode décroît d'un facteur $\simeq0{,}55$ par Kairos). L'uniformité en $k$ n'est donc pas à attendre sans un mécanisme supplémentaire.
+\end{remarque}
+
+\section{N\oe uds non forcés : ce qui est établi, ce qui ne l'est pas}\label{sec:nonforce}
+
+Cette partie est volontairement séparée de la précédente et \emph{n'est pas démontrée}. Dans le témoin $N=6$ le déclencheur est toujours le n\oe ud forcé $0$ (sept Kairos consécutifs), de sorte que la section ne sert pas à lever P2 sur ce témoin ; elle concerne d'autres chambres.
+
+\paragraph{Ce qui est acquis.} (1) À $\eps=0$ la trajectoire visible est indépendante de $\vth$ (lemme de structure) : les ordres d'annulation en $s=0$ de $H_i,V_i$ pour un n\oe ud quelconque, définis par le développement de Taylor de la trajectoire de référence, \emph{ne dépendent pas de $\vth$ à $\eps=0$}. Le risque « ordre qui change avec $\vth$ » ne peut donc venir que de $\eps>0$.
+
+(2) Pour un n\oe ud $j$ non forcé qui part du repos, les coefficients de $\Gamma_\eps V_j$ et $M_\eps H_j$ sont des produits de fonctions lisses de $\tau$ par $V_j$, $H_j$ : tant que $V_j,H_j$ s'annulent à un ordre donné en $s=0$, ces termes ne contribuent pas au coefficient dominant de $V_j$ ni de $H_j$. Le coefficient dominant d'un n\oe ud ne dépend donc, à cet ordre, que de $u$ et du couplage $\zeta\tanh(\tilde AH)_j$ aux n\oe uds voisins, c'est-à-dire des coefficients dominants de ceux-ci (récurrence sur la distance au n\oe ud forcé) : en particulier, \emph{en l'absence d'annulation accidentelle des coefficients dominants, ordre et coefficient dominant sont indépendants de $(\vth,\eps)$}. On aurait alors $V_j=s^{m_j}v_j$, $H_j=s^{m_j+1}h_j$ avec $m_j$ fixé.
+
+\paragraph{Ce qui manque.} (a) \emph{Régularité du protocole.} Pour factoriser $V_j=s^{m_j}v_j(s)$ avec $v_j\in C^1$, il faut $\dot V_j\in C^{m_j}$, c'est-à-dire $u\in C^{m_j}$ au moins (et on ne dispose d'aucune garantie avec $u$ seulement $C^1$ dès que $m_j\ge2$). Il faut distinguer les ordres accessibles avec la régularité de $u$ disponible. (b) \emph{Annulations accidentelles.} Si la somme des contributions dominantes de plusieurs voisins se compense à $\eps=0$ (c'est plausible dans les graphes symétriques : n\oe uds jumeaux dans le témoin $N=6$, $N=9$), l'ordre effectif est plus élevé et dépend de coefficients sous-dominants, eux $\vth,\eps$-dépendants. L'ordre pourrait alors changer avec $\vth$ pour $\eps>0$ ; c'est la situation où P2 pourrait échouer, \emph{même si chaque exécution reste bien définie}. (c) \emph{Constantes.} Même à ordre fixe, les dérivées secondes de $\norm{V_j}=s^{m_j}\norm{v_j}$ fournissent des facteurs en $1/s$ qu'il faut contrôler comme dans le lemme~\ref{lem:V} (estimation de $\norm{X_{V_j}}\le a\eps s^{m_j}$, à établir).
+
+\paragraph{Résultat attendu, non démontré.} Si (a) la régularité du protocole est suffisante pour les ordres $m_j$ et (b) il n'y a pas d'annulation accidentelle, la proposition~\ref{prop:T} et le lemme~\ref{lem:V} s'étendent verbatim à des n\oe uds non forcés, avec le lemme de démarrage remplacé par la factorisation $s^{m_j}$. Un contre-exemple potentiel est à chercher du côté (b), avec un mot dont le déclencheur est un n\oe ud dont le coefficient dominant se compense.
+
+\section{Témoins numériques}\label{sec:num}
+
+\paragraph{Portée.} Témoins, non preuves ; $\delta$ désigne ici la distance de déplacement le long d'une direction unitaire de $\R^{12}$ (différences secondes centrées $\vth_0\pm\delta h$), non un écart-type.
+
+\paragraph{Temps d'impact $T_r(\vth,\eps)$ (\texttt{verif\_temps\_impact\_C2.py}).} Différences secondes $Q_T(\delta,h)=\lvert T_r(\vth_0+\delta h)-2T_r(\vth_0)+T_r(\vth_0-\delta h)\rvert/\delta^2$ en 6 directions unitaires, $\delta\in\{5\cdot10^{-4};10^{-3};2\cdot10^{-3};4\cdot10^{-3}\}$, rangs $r=1$ à $7$, mot périodique à 6 recâblages (49 points, mot conservé en tous). Instants $T_r=\sum$ durées d'épisode, chaque durée résolue par interpolation linéaire de $P_{i^*}=\Theta$ ($\mathrm{dt}=2\cdot10^{-3}$).
+\begin{itemize}[nosep]
+\item \emph{Autonomie conditionnelle} : à $\eps=0$, $\max\lvert T_r(\vth)-T_r(\vth_0)\rvert=0$ aux sept rangs (à l'arrondi machine) ; c'est le fait $\D_xT_j=0$ de la preuve du lemme~\ref{lem:V}.
+\item $Q_T/\eps$ \emph{constant à quatre chiffres} en $\delta$ pour les trois balayages ($\gamma_1$ seul, $\lambda$ seul, couple $(1{,}25\eps,2\eps)$) et aux deux valeurs $\eps=0{,}02$ et $\eps=0{,}1$, aux rangs $1$ à $7$ : aucun facteur $\log(1/\delta)$, $T_r$ est quadratique à cette échelle ; $\D^2_\vth T_r=O(\eps)$ est donc compatible avec la forme $b\eps$ du lemme~\ref{lem:V}.
+\item \emph{Une exception, qui est un artefact de pas de temps} : pour $\gamma_1$ seul et $\eps=0{,}1$, le rang~$1$ présente $Q_T/\eps=3{,}31\cdot10^{-2}$ pour $\delta\le2\cdot10^{-3}$ mais $2{,}34\cdot10^{-2}$ pour $\delta=4\cdot10^{-3}$ (écart $30\,\%$ ; plus faible aux rangs $2$ et $3$). J'avais d'abord pensé à la proximité d'un zéro de trace ; ce n'est pas le cas au rang~$1$ (sur la trajectoire de référence, $\min\norm{\tau_j}=0{,}176$ sur l'épisode~1). Le contrôle en $\mathrm{dt}$ tranche : l'écart à $3{,}306\cdot10^{-2}$ vaut $0{,}96$, $0{,}50$, $0{,}25\;(\times10^{-2})$ pour $\mathrm{dt}=2\cdot10^{-3},10^{-3},5\cdot10^{-4}$, soit une erreur $O(\mathrm{dt})$ d'interpolation (la correction d'interpolation linéaire a une dérivée seconde $P''/P'$ d'ordre un et un saut de dérivée de taille $\mathrm{dt}\,P''/P'$ quand le triplet franchit une frontière de pas ; elle contamine les différences secondes à $\delta$ grand). Lecture : les différences secondes de $T_r$ ne sont fiables que pour $\delta$ petit devant le pas de temps efficace, et la valeur de référence est $\lim_{\mathrm{dt}\to0}$.
+\item \emph{Linéarité en $\eps$} : $Q_T(0{,}1)/Q_T(0{,}02)/5\in[0{,}99;1{,}03]$ pour $\gamma_1$ seul et pour le couple (écart $\le3\,\%$) ; pour $\lambda$ seul le rapport décroît de $0{,}96$ (rang~1) à $0{,}81$ (rang~7) : saturation en $\eps$ plus marquée en profondeur (terme d'ordre $\eps^2$ croissant avec $r$).
+\end{itemize}
+(Sortie du contrôle en $\mathrm{dt}$ : \texttt{sortie\_temps\_impact\_C2\_dt.txt}.) Ces résultats complètent le test des différences secondes de $\tau^{(r)}_\eps$ (texte principal, \S\ref{sec:num}) : $\tau^{(r)}_\eps(\vth)$ dépend de $\vth$ à travers $T_1,\dots,T_r$ et les états de saut ; $T_r$ a maintenant été testé directement.
+
+\paragraph{Test d'une annulation intérieure de $V_0$ (\texttt{verif\_zero\_interieur\_V0.py}, \texttt{verif\_zero\_pente\_log.py}, \texttt{zero\_V0\_lib.py}).} \emph{Prédiction.} Près d'un zéro intérieur de $V_0$ en $s=s_0$, on a localement $\norm{V_0(s;\vth_0+\delta h)}\simeq\bigl(v^2(s-s_0)^2+(d+a_h\delta)^2\bigr)^{1/2}$, où $v=\norm{\dot V_0(s_0)}$, $d$ est la distance de la courbe à l'origine, et $a_h$ le taux de déplacement de la courbe \emph{transversalement} à sa tangente. D'où $\D^2_\delta\!\int\!\norm{V_0}=\frac{2a_h^2}{v}\ln\frac{C}{d+a_h\delta}+\text{lisse}$ et, via $P_0(T)=\Theta$,
+\[
+\frac{T(\vth_0+\delta h)-2T(\vth_0)+T(\vth_0-\delta h)}{\delta^2}=\underbrace{\frac{2Ba_h^2}{v}}_{\text{pente en }\ln\delta}\ln\delta+\text{lisse},\qquad B=\frac{\kappa_2e^{-\kappa_3(T-s_0)}}{\dot P_0(T)}\quad(d=0),
+\]
+sans paramètre libre (avec $a_h=O(\eps)$, le terme singulier est $O(\eps^2\ln\frac1\delta)$). Si $d\gg a_h\delta$ la fonction est $C^2$, avec une constante croissant comme $\ln\frac1d$ ; si $a_h=0$ (déplacement colinéaire à la tangente) il n'y a pas de terme logarithmique.
+
+\emph{Construction du zéro (une racine, pas un minimum).} Sur l'épisode~7 du mot périodique ($N=6$, protocole $u$ constant d'amplitude $U_{\rm amp}$ et d'angle $\mathrm{ang}$ sur le n\oe ud~$0$), on calcule la distance \emph{signée} $g(\mathrm{ang})=V_0(t_c)\times\dot V_0(t_c)/\norm{\dot V_0(t_c)}$ de la courbe $t\mapsto V_0(t)$ à l'origine ($t_c$ = minimum intérieur de $\norm{V_0}$), qui change de signe quand la courbe traverse l'origine, puis on cherche sa racine en $\mathrm{ang}$ (\texttt{brentq}, tolérance $10^{-16}$), au centre $\vth_0$ et pour le noyau couple exact à chaque $\eps$. On obtient $g\simeq10^{-18}$ (vérification indépendante : $\min_t\norm{V_0}\lesssim10^{-10}$, limité par la localisation de $t_c$), $\norm{\dot V_0}\in[0{,}03;0{,}06]$ (traversée transverse) et le mot est conservé en tous les points. Zéros obtenus : $\gamma_1$ seul ($\eps=0{,}02;0{,}05;0{,}1$, $\mathrm{ang}=0$, $U_{\rm amp}=2{,}45$), $\lambda$ seul ($\eps=0{,}02$ : $\mathrm{ang}=-5{,}6\cdot10^{-3\,\circ}$ ; $\eps=0{,}05$ : $U_{\rm amp}=2{,}31$, $\mathrm{ang}=-1{,}94\cdot10^{-2\,\circ}$), couple $(1{,}25\eps,2\eps)$ à $\eps=0{,}02$. Aucun zéro intérieur n'a été trouvé dans le domaine balayé ($U_{\rm amp}\in[2{,}25;2{,}49]$, $\lvert\mathrm{ang}\rvert\le1{,}5^\circ$) pour $\lambda$ à $\eps=0{,}1$ et pour le couple à $\eps=0{,}05;0{,}1$ : ce n'est pas une preuve d'inexistence.
+
+\emph{Intégrateur.} Un schéma adaptatif ordinaire (DOP853, $\mathrm{rtol}=10^{-12}$, événement exact $P_{\max}=\Theta$) produit, au zéro exact, un \emph{faux} signal : $Q_T/\eps$ diverge quand $\delta\to0$ (de $0{,}15$ à $3{,}2$ pour $\gamma_1$ seul, $\eps=0{,}02$, de $\delta=10^{-2}$ à $3\cdot10^{-5}$), y compris dans le cas symétrique où la théorie n'en prévoit aucun, et ce signal change avec $\mathrm{rtol}$ (un excès constant de l'ordre de $10^{-10}$ dans $T$, $\simeq d^2/v$ : le coude de largeur $d/v$ de $\norm{V_0}$ est enjambé entre deux points intermédiaires). Le contrôle par variation de la tolérance l'a démasqué. Correction : relocaliser le minimum $t_c$ de $\norm{V_0}$ sur la sortie dense, puis \emph{réintégrer depuis $t=0$} en coupant en $t_c\pm W$ ($W=60\,d/v+3\cdot10^{-5}$) avec un pas maximal $W/300$ dans la fenêtre. Avec cette version, $T_7$ ne dépend plus de $\mathrm{rtol}\in[10^{-11};10^{-13}]$ à quatre chiffres sur $Q_T/\eps$ pour $\delta=10^{-4}$ ($\gamma_1$), à quelques pour cent près pour $\lambda$ à $\delta=10^{-4}$ et à trois chiffres dès $\delta=10^{-3}$. Il reste un plancher d'arrondi : les différences secondes de $T$ valent $\sim\delta^2Q\simeq10^{-13}$ à $\delta=10^{-5}$ ; les pentes ne sont ajustées que sur $\delta\in[10^{-4};5\cdot10^{-3}]$.
+
+\emph{Résultats.}
+\begin{itemize}[nosep]
+\item \emph{Avant le zéro (rang~6)} : $Q_{T_6}/\eps$ est constant à quatre chiffres en $\delta$, avec ou sans zéro au rang suivant ($0{,}0729$ pour $\gamma_1$ à $\eps=0{,}02;0{,}05;0{,}1$ : $0{,}07285$, $0{,}07279$, $0{,}07268$).
+\item \emph{Zéro symétrique, $\gamma_1$ seul} ($\mathrm{ang}=0$) : la friction multiplie $V$ par un scalaire, donc la symétrie $y\mapsto-y$ subsiste à tout $\eps$ et pour tout $\vth$ ; $V_0$ reste sur l'axe, la traversée est un changement de signe unidimensionnel, et $\int\norm{V_0}$ reste $C^2$. Mesuré : $Q_{T_7}/\eps$ \emph{constant} en $\delta\in[3\cdot10^{-4};10^{-2}]$ (quatre chiffres, $0{,}07656$ à $\eps=0{,}02$ ; $0{,}07274$ à $0{,}05$ ; $0{,}07106$ à $0{,}1$) ; pentes en $\ln\delta$ de l'ordre de $10^{-7}$ (douze directions, $\eps=0{,}05$), à comparer à $10^{-5}$--$10^{-4}$ ci-dessous. \emph{La non-annulation n'est donc pas nécessaire : $V_0$ s'annule à l'intérieur de l'épisode et $T_7$ reste $C^2$ avec $\D^2T_7=O(\eps)$.}
+\item \emph{Zéro non symétrique, $\lambda$ seul} : $Q_{T_7}/\eps$ croît \emph{sans limite apparente} quand $\delta\downarrow$ (à $\eps=0{,}05$, la médiane sur six directions passe de $8{,}7\cdot10^{-3}$ à $\delta=10^{-2}$ à $3{,}6\cdot10^{-2}$ à $10^{-4}$ puis $5{,}2\cdot10^{-2}$ à $10^{-5}$, ce dernier point étant au plancher d'arrondi). La pente en $\ln\delta$ de la différence seconde signée est positive dans les douze directions et \emph{suit la prédiction sans paramètre libre} $2Ba_h^2/v$ : rapport mesure/prédiction $1{,}04$--$1{,}07$ pour les sept directions avec $\lvert a_h\rvert\ge1{,}5\cdot10^{-3}$ ($\eps=0{,}02$, médiane générale $1{,}06$ ; $B=0{,}29$, $v=0{,}038$), $1{,}07$--$1{,}18$ pour les quatre autres sauf $1{,}6$ pour la plus petite ($\lvert a_h\rvert=2{,}5\cdot10^{-4}$) ; à $\eps=0{,}05$, $1{,}06$--$1{,}12$ pour les huit directions avec $\lvert a_h\rvert\ge3\cdot10^{-3}$ (médiane générale $1{,}11$), $1{,}13$--$1{,}34$ pour les autres (pente alors plus sensible aux corrections lisses, que je n'ai pas isolées). Dans la direction~0 ($\eps=0{,}02$) la pente locale tend vers $6{,}45\cdot10^{-5}$ pour $\delta\ge10^{-3}$, la valeur prédite à $0{,}2\,\%$. Le signe, la loi en $a_h^2$ et l'amplitude sont donc ceux du mécanisme ; l'écart résiduel de quelques pour cent n'est pas expliqué.
+\item \emph{Distance au zéro} ($\lambda$, $\eps=0{,}02$, direction~0) : la pente passe de $6{,}7\cdot10^{-5}$ ($d=10^{-10}$) à $2{,}3\cdot10^{-5}$ ($d=5\cdot10^{-7}$), change de signe vers $d=5\cdot10^{-6}$ ($-3{,}8\cdot10^{-6}$), puis tombe à $\lvert\cdot\rvert\le10^{-7}$ dès $d=5\cdot10^{-5}\gg a_h\delta_{\max}\simeq10^{-5}$ : retour à une fonction $C^2$ dès que le zéro est manqué de plus que le déplacement. (Le changement de signe, prédit par la loi $\ln\frac1{d+a_h\delta}$ comme croisement entre régimes, n'a pas été isolé.)
+\end{itemize}
+\emph{Lecture.} (i) À une traversée exacte \emph{transverse et non symétrique}, $T_r$ n'est pas $C^2$ en $\vth$ à $\eps$ fixé : la différence seconde diverge comme $\eps^2\ln\frac1\delta$. Dans le théorème~\ref{thm:aff}, l'estimation $\tfrac12M_r\eps\delta^2$ du reste de Taylor devient alors, heuristiquement, $O\bigl(\eps\delta^2(1+\eps\ln\frac1{\eps\delta})\bigr)$ : le défaut reste $o(\delta)$ mais l'hypothèse $C^2$ est perdue. (ii) La non-annulation n'est pas nécessaire en présence d'une symétrie qui rend le déplacement colinéaire à la tangente ($a_h\equiv0$). (iii) La condition suffisante naturelle, plus fine que « $V_0\neq0$ », serait donc « tout zéro intérieur a un déplacement transverse nul » ; je ne l'ai ni formulée comme hypothèse ni démontrée, elle est suggérée par $a_h$ dans la prédiction. (iv) \emph{Argument analytique.} La prédiction ci-dessus est démontrée dans la note \texttt{lemme\_singularite\_log.tex} (lemme local sans référence à IWS, corollaire sur le temps implicite, proposition d'application sous (a)--(d)) : un zéro simple de $V_i$ du déclencheur avec $a_h>0$ interdit $C^2$ ; la différence seconde \emph{signée} de $T_r$ vaut $-\frac{2Ba_h^2}{v}\delta^2\ln\frac1\delta+O(\delta^2)$, et $Q_T$ en est la valeur absolue (les pentes positives en $\ln\delta$ ajustées plus haut sont celles de la différence seconde signée divisée par $\delta^2$). Le versant symétrique est démontré dans la même note (lemme~2 : $V_i=e\,q$ avec $e$ fixe $\Rightarrow$ $\int g\lvert q\rvert$ et $T_r$ sont $C^2$, ce qui explique le témoin $\gamma_1$ seul) ; la proposition d'application suppose $V_i(0)\ne0\ne V_i(T_0)$, la régularité de $W$ étant obtenue par le sous-système $(H,V,\tau)$ sans flot étendu (pas de circularité). Les zéros testés (ici $\eps=0{,}02;0{,}05$) sont au-delà du voisinage $\eps_1$ garanti par la non-annulation de référence ($\min\lVert V^0_i\rVert=2{,}1\cdot10^{-5}$ et $7{,}1\cdot10^{-3}$, cf.\ cette note) : ils ne contredisent pas le théorème~\ref{thm:aff}. La condition « déplacement transverse nul au centre » ne suffit pas à garantir $C^2$ sur la boule : il faut contrôler $a(\vth)^2\ln\frac1{d(\vth)}$ sur toute la boule. (v) Ces tests ne portent que sur l'épisode~7, le n\oe ud forcé, un zéro obtenu en réglant l'angle du protocole (zéro isolé), et non sur $H_0$.
+
+\paragraph{Ce qui n'est pas testé.} Les dérivées mixtes explicites de la formule de Leibniz (les termes $[\partial_sf]T_aT_b$, $[f]T_{ab}$ ne sont pas isolés) ; un point où $\norm{H_0}$ s'annule ; un n\oe ud déclencheur non forcé ; l'effet de $\mathrm{dt}$ sur les rangs $\ge4$ dans les tests RK4 (le contrôle en $\mathrm{dt}$ n'a été fait que pour les rangs $1$ à $3$ ; les tests de zéro utilisent DOP853) ; des zéros de $V_0$ aux rangs $\le6$, à $\eps\ge0{,}05$ pour le couple, ou obtenus en variant l'état initial $y$ plutôt que le protocole.
+
+\section{Bilan}
+
+\begin{center}
+\begin{tabular}{p{0.52\textwidth}p{0.4\textwidth}}
+\toprule
+Résultat & Statut\\
+\midrule
+Transmission $C^2$ à travers un Kairos isolé (prop.~\ref{prop:T}) & Établie sous~\ref{h:u}--\ref{h:N}, n\oe ud forcé, profondeur $r$ finie\\
+Variations $O(\eps)$ d'ordre un et deux (lemme~\ref{lem:V}) & Démontré sous les hypothèses énoncées, à profondeur finie (relecture de la v7 : saltations d'ordre un et deux cohérentes)\\
+Défaut d'affinité $\norm{\D^2\tau_\eps}\le M_r\eps$ (th.~\ref{thm:aff}) & Démontré sous les hypothèses énoncées (mot régulier à profondeur finie, déclencheurs forcés, $u\in C^1$, non-annulation de la référence et des traces), suit du lemme~\ref{lem:V}\\
+Cas des n\oe uds déclencheurs non forcés & Ouvert (§\ref{sec:nonforce})\\
+Uniformité de $M_r$ en $r$ & Non à attendre (dégradation $1/\min\norm{V_i}$, mesurée)\\
+Protocole $u$ de classe $C^2$ nécessaire ? & Non, $C^1$ suffit pour le n\oe ud forcé\\
+Non-annulation de $\norm{V_0}$ (hyp.~\ref{h:N}) nécessaire ? & Témoin : non sous symétrie (traversée 1D, $T_7$ reste $C^2$) ; oui sans symétrie (zéro transverse exact : $\D^2T_7\sim\eps^2\ln\frac1\delta$, pente mesurée $=1{,}04$--$1{,}25\times$ prédite) ; pas de théorème\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Énoncé d'ensemble.} Il s'agit d'un résultat sous hypothèses \emph{suffisantes}, non d'une caractérisation de toutes les situations où l'affinité perturbative persiste :
+\[
+\boxed{\ \begin{gathered}
+\text{mot régulier à profondeur finie}\ +\ \text{déclencheurs forcés}\ +\ u\in C^1\\
++\ \text{non-annulation de la référence et des traces}\\
+\Downarrow\\
+\norm{\D_\vth^2\tau_\eps^{(r)}}\le M_r\,\eps .
+\end{gathered}\ }
+\]
+
+\paragraph{Trois régimes locaux, à ne pas confondre.} Avec la note \texttt{lemme\_singularite\_log} (lemmes logarithmique et colinéaire), la situation locale se classe ainsi.
+\begin{center}\small
+\begin{tabular}{p{4.2cm}p{5.2cm}p{4.6cm}}
+\hline
+Régime & Énoncé & Statut\\\hline
+Régularité transmise & $\lVert V_0\rVert$ ne s'annule pas (hyp.~\ref{h:N}) $\Rightarrow$ $T_r\in C^2$, défaut $O(\eps\delta^2)$ & Proposition~\ref{prop:T} et lemme~\ref{lem:V} : établis sous les hypothèses énoncées\\
+Singularité transverse & zéro intérieur simple, déplacement transverse $a_h\ne0$ $\Rightarrow$ $T_r\notin C^2$, terme $-\frac{2Ba_h^2}{v}\delta^2\ln\frac1\delta$ ; $a_h=O(\eps)$ donc coefficient $O(\eps^2)$ si le lemme~\ref{lem:V} tient & Lemme abstrait démontré ; application conditionnelle à la transmission et au lemme~\ref{lem:V}\\
+Zéros dégénérés & $a_k=0$ hors colinéarité, zéros de $\lVert H\rVert$, zéros doubles, n\oe uds non forcés & Ouvert (colinéarité à direction fixe : $C^2$ démontré)\\\hline
+\end{tabular}
+\end{center}
+
+\paragraph{Réserve sur la notion de minimalité.} L'hypothèse de non-annulation est ici \emph{suffisante}, non démontrée \emph{nécessaire} à la régularité $C^2$. Le test de traversée exacte de $V_0=0$ (§\ref{sec:num}) a donné les deux réponses annoncées comme possibles : une compensation par symétrie préserve $C^2$ (cas $\gamma_1$ seul), et sans compensation la régularité est perdue avec la loi logarithmique prédite (cas $\lambda$ seul). Cela établit que la condition n'est ni superflue ni nécessaire en général, sur des témoins d'un seul épisode et d'un seul n\oe ud ; la formulation exacte de la condition suffisante la plus fine (déplacement transverse nul aux zéros) reste à étudier.
+
+La condition de non-annulation (hypothèse~\ref{h:N}) est une condition sur une trajectoire, vérifiable ; elle remplace une hypothèse de régularité sur un objet dépendant de la boule. P2 n'est donc pas remplacée par une hypothèse plus forte : elle est \emph{réduite} à (i) la non-nullité des traces sur la boule (hypothèse~\ref{h:tn}, dépendante de $\delta_0$) et (ii) la non-annulation des normes d'un n\oe ud sur la trajectoire de référence (hypothèse~\ref{h:N}, indépendante de $\delta_0$).
+
+\end{document}

@@ -1,0 +1,28 @@
+Conditions initiales : H = V = 0 ; tau_i(0) = 3/5 e ; P_0(0) = r_P Theta = 7/20 * 11/5 = 77/100 ; P_i(0) = 0 (i >= 1) ; Theta = 11/5.
+largeur max de la boite finale (t = 4.6) : 7.714268434461785e-36
+(4a) [verifie] tau_i^x >= 0.46 pour tout i sur [0, 4.6] (min calcule : 0.460104)
+(4b) [verifie] v_0(s)/s >= 0.993 sur ]0, 1/20] : [1.0 +/- 6.56e-3]
+(4c) [verifie] h_0(s)/s^2 >= 0.497 sur ]0, 1/20] : [0.50 +/- 2.17e-3]
+(4d) [verifie] h_0 >= 0.000626 sur [0.05, 4.6] (min calcule 0.000626) ; h_0 >= 0.117 sur [0.5, 4.6] (min calcule 0.117485)
+(2a) v_0 > 0 certifie sur ]0, 3.70] ; premier pas ou le signe n'est plus garanti : k = 74  (t in [3.70, 3.75])
+(2b) [verifie] v_0' sur le pas du zero : [-0.55 +/- 8.59e-3]   < 0 (monotone) ; sup < -0.546370951056561
+(2c) s_* dans [3.70133761238468 +/- 2.64e-15]   (v_0 change de signe, unique : monotone sur le pas ; v_0 > 0 avant)
+(2d) [verifie] pente en s_* : v_s = [-0.5578391252 +/- 3.05e-11]  dans ]-0.55784, -0.5578[
+(3)  [verifie] X_V,0(s_*) = DA(p).e_n0  (lbar = 1) = [0.495473971795 +/- 2.10e-13]
+     encadrement RIGOUREUX (arrondis vers l'exterieur, 12 decimales) : 0.495473971794 <= X_V,0(s_*) <= 0.495473971795
+     et en particulier 0.49547397 < X_V,0(s_*) < 0.49547398
+     h_0(s_*) = [2.139784399 +/- 1.47e-12]   tau_0(s_*) = [0.8855301791 +/- 3.41e-11]
+(2e) [verifie] v_0 < 0 sur les pas k > 74 jusqu'a t = 4.6
+(5-) pas de pression traites par la borne grossiere (signe de h_i ou v_i non certifie sur le pas) : 17 sur 552
+(5a) [verifie] P_i < 2.131 < Theta pour t <= 4.0 et tout i ; bornes calculees : [2.13005, 0.56477, 0.08051, 0.10581, 0.39746, 0.36367]   Theta = 2.2
+(5b) marge min : Theta - max_i sup P_i = 0.06995
+     t = 4.35 : P_0 = [2.1743127 +/- 3.27e-8] ; max_{i>0} P_i <= 0.65203
+     t = 4.40 : P_0 = [2.1867749 +/- 3.28e-8] ; max_{i>0} P_i <= 0.66563
+     t = 4.45 : P_0 = [2.1987802 +/- 1.19e-8] ; max_{i>0} P_i <= 0.67896
+     t = 4.50 : P_0 = [2.2102958 +/- 4.86e-8] ; max_{i>0} P_i <= 0.69199
+     t = 4.55 : P_0 = [2.2212912 +/- 4.57e-8] ; max_{i>0} P_i <= 0.70471
+(5c) sur [4.0, 4.6] : g = k1 h_0 + k2 |v_0| verifie g - k3 Theta >= 0.21407 > 0 ;
+     donc tant que P_0 <= Theta, P_0' = g - k3 P_0 >= 0.21407 > 0 : P_0 croit strictement jusqu'a son premier passage par Theta,
+     lequel est unique ; avec P_0(4.45) < Theta < P_0(4.50) :  T_1(p, eps=0) dans ]4.45, 4.50[ ; sup_{t<=4.0} P_0 < Theta (5a).
+(5d) [verifie] P_i < 0.74 (i = 1..5) sur [0, 4.6] ; bornes calculees : [0.73526, 0.14881, 0.19314, 0.54389, 0.49137]  << Theta : le noeud 0 est l'unique candidat au declenchement.
+TOUS LES CONTROLES CERTIFIES ONT REUSSI (comparaisons de boules Arb ; un echec leve AssertionError).

@@ -1,0 +1,31 @@
+delta=0.003 : mot le plus peuple (548/600 tirages), 6 sauts : [(0, [1, 2, 3]), (0, [1, 4, 5]), (0, [1, 2, 3]), (0, [1, 4, 5]), (0, [1, 2, 3]), (0, [1, 4, 5])]
+
+ r | t_r     g_r    | nu_r    sigma_r | min|tau_j|@Kairos | marge retrait (min/med) | marge ajout (min/med) | min|H_i*|  min|V_i*|
+ 1 | 1.3533  1.3533 | 1.3571  1.2130  | 0.1705           | 5.588e-05 / 4.915e-03   | inf / inf   | 3.112e-03  1.242e-01   (i*=0, etalement de t* = 0.0e+00)
+ 2 | 1.9345  0.5812 | 1.4613  1.1134  | 0.1382           | 4.876e-02 / 5.630e-02   | inf / inf   | 1.876e+00  1.150e+00   (i*=0, etalement de t* = 0.0e+00)
+ 3 | 2.4669  0.5324 | 1.4594  0.9516  | 0.0181           | 1.178e-02 / 1.466e-02   | inf / inf   | 2.595e+00  7.027e-01   (i*=0, etalement de t* = 0.0e+00)
+ 4 | 2.9840  0.5171 | 1.4410  0.7425  | 0.0907           | 1.307e-02 / 1.540e-02   | inf / inf   | 2.977e+00  3.930e-01   (i*=0, etalement de t* = 0.0e+00)
+ 5 | 3.4955  0.5115 | 1.4260  0.5133  | 0.2845           | 3.743e-04 / 2.077e-03   | inf / inf   | 3.177e+00  2.088e-01   (i*=0, etalement de t* = 0.0e+00)
+ 6 | 4.0037  0.5082 | 1.4239  0.2968  | 0.4123           | 4.329e-03 / 5.187e-03   | inf / inf   | 3.281e+00  1.088e-01   (i*=0, etalement de t* = 0.0e+00)
+ 7 | 4.5093  0.5056 | 1.4247  0.1222  | 0.6185           | inf / inf   | inf / inf   | 3.336e+00  6.268e-02   (i*=0, etalement de t* = 0.0e+00)
+min_{t,i,theta} |tau_i(t)| sur l'horizon et tout K : 0.0099
+marge de selection minimale par echantillon : min 5.588e-05, mediane 1.956e-03, max 4.222e-03
+derivee de la marge en eps (par saut) : |h| mediane [0.0001 0.0052 0.0007 0.0006 0.0031 0.0024], max [0.0004 0.0059 0.0009 0.0007 0.0034 0.0028]
+  eps=0.01 : 0/548 echantillons ont perdu le mot (30s)
+  eps=0.02 : 0/548 echantillons ont perdu le mot (37s)
+  eps=0.03 : 0/548 echantillons ont perdu le mot (44s)
+  eps=0.05 : 0/548 echantillons ont perdu le mot (51s)
+  eps=0.08 : 0/548 echantillons ont perdu le mot (57s)
+  eps=0.12 : 0/548 echantillons ont perdu le mot (65s)
+  eps=0.18 : 1/548 echantillons ont perdu le mot (72s)
+  eps=0.25 : 1/548 echantillons ont perdu le mot (79s)
+  eps=0.35 : 3/548 echantillons ont perdu le mot (86s)
+  eps=0.50 : 20/548 echantillons ont perdu le mot (93s)
+  eps=0.70 : 67/548 echantillons ont perdu le mot (100s)
+  eps=1.00 : 195/548 echantillons ont perdu le mot (106s)
+  eps=1.40 : 387/548 echantillons ont perdu le mot (113s)
+
+Prediction lineaire eps* = marge/|h| (h<0) : 547 echantillons predits perdus avant eps=1.4 (observe : 387)
+  parmi les 387 echantillons perdus ET predits : Spearman(eps*, premier eps observe) = 0.916 (p=7.2e-155) ; rapport observe/predit : mediane 1.92, quartiles 1.72 - 2.06
+  perdus mais non predits (h>=0 sur tous les sauts) : 0 ; predits mais non perdus avant 1.4 : 160
+Total 114s

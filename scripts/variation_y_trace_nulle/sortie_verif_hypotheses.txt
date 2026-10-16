@@ -1,0 +1,29 @@
+delta=0.03 : mot le plus peuple (323/600 tirages), 4 sauts : [(0, [1, 2, 3]), (0, [1, 4, 5]), (0, [1, 2, 3]), (0, [1, 4, 5])]
+
+ r | t_r     g_r    | nu_r    sigma_r | min|tau_j|@Kairos | marge retrait (min/med) | marge ajout (min/med) | min|H_i*|  min|V_i*|
+ 1 | 1.3533  1.3533 | 1.3571  1.2130  | 0.1230           | 4.693e-06 / 2.042e-02   | inf / inf   | 3.112e-03  1.242e-01   (i*=0, etalement de t* = 0.0e+00)
+ 2 | 1.9345  0.5812 | 1.4613  1.1134  | 0.0938           | 8.556e-03 / 5.066e-02   | inf / inf   | 1.876e+00  1.150e+00   (i*=0, etalement de t* = 0.0e+00)
+ 3 | 2.4669  0.5324 | 1.4594  0.9516  | 0.0002           | 3.789e-05 / 2.128e-02   | inf / inf   | 2.595e+00  7.027e-01   (i*=0, etalement de t* = 0.0e+00)
+ 4 | 2.9840  0.5171 | 1.4410  0.7425  | 0.0384           | 1.686e-03 / 1.406e-02   | inf / inf   | 2.977e+00  3.930e-01   (i*=0, etalement de t* = 0.0e+00)
+ 5 | 3.4955  0.5115 | 1.4260  0.5133  | 0.2363           | inf / inf   | inf / inf   | 3.177e+00  2.088e-01   (i*=0, etalement de t* = 0.0e+00)
+min_{t,i,theta} |tau_i(t)| sur l'horizon et tout K : 0.0001
+marge de selection minimale par echantillon : min 4.693e-06, mediane 1.098e-02, max 3.550e-02
+derivee de la marge en eps (par saut) : |h| mediane [0.0007 0.0045 0.001  0.0006], max [0.0054 0.012  0.0953 0.0021]
+  eps=0.01 : 0/323 echantillons ont perdu le mot (17s)
+  eps=0.02 : 0/323 echantillons ont perdu le mot (21s)
+  eps=0.03 : 0/323 echantillons ont perdu le mot (24s)
+  eps=0.05 : 0/323 echantillons ont perdu le mot (27s)
+  eps=0.08 : 0/323 echantillons ont perdu le mot (30s)
+  eps=0.12 : 0/323 echantillons ont perdu le mot (34s)
+  eps=0.18 : 0/323 echantillons ont perdu le mot (38s)
+  eps=0.25 : 1/323 echantillons ont perdu le mot (41s)
+  eps=0.35 : 3/323 echantillons ont perdu le mot (44s)
+  eps=0.50 : 6/323 echantillons ont perdu le mot (48s)
+  eps=0.70 : 8/323 echantillons ont perdu le mot (51s)
+  eps=1.00 : 13/323 echantillons ont perdu le mot (55s)
+  eps=1.40 : 16/323 echantillons ont perdu le mot (59s)
+
+Prediction lineaire eps* = marge/|h| (h<0) : 13 echantillons predits perdus avant eps=1.4 (observe : 16)
+  parmi les 16 echantillons perdus ET predits : Spearman(eps*, premier eps observe) = 0.579 (p=1.9e-02) ; rapport observe/predit : mediane 0.15, quartiles 0.08 - 2.12
+  perdus mais non predits (h>=0 sur tous les sauts) : 0 ; predits mais non perdus avant 1.4 : 6
+Total 59s
