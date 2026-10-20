@@ -1,0 +1,4 @@
+== Partie C : rang de divergence du mot (eps = 0), 12 tirages gaussiens ; KC-1 = 59 signifie jamais
+amplitude 0.0001 : [59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59]
+amplitude 0.001 : [59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59]
+amplitude 0.003 : [0, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59]

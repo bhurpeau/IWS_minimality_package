@@ -1,0 +1,6 @@
+(gb,lb)=(1,0) eps=0.01 : 8 episodes, min ||tau_j|| par episode = [0.176 0.143 0.018 0.026 0.097 0.291 0.418 0.624] ; global 0.0182
+(gb,lb)=(1,0) eps=0.001 : 8 episodes, min ||tau_j|| par episode = [0.176 0.143 0.018 0.026 0.097 0.29  0.418 0.624] ; global 0.0182
+(gb,lb)=(1,1) eps=0.01 : 8 episodes, min ||tau_j|| par episode = [0.176 0.143 0.018 0.026 0.097 0.29  0.417 0.622] ; global 0.0182
+(gb,lb)=(1,1) eps=0.001 : 8 episodes, min ||tau_j|| par episode = [0.176 0.143 0.018 0.025 0.097 0.29  0.418 0.623] ; global 0.0182
+(gb,lb)=(0,1) eps=0.01 : 8 episodes, min ||tau_j|| par episode = [0.176 0.143 0.018 0.025 0.097 0.29  0.417 0.622] ; global 0.0182
+(gb,lb)=(0,1) eps=0.001 : 8 episodes, min ||tau_j|| par episode = [0.176 0.143 0.018 0.025 0.097 0.29  0.418 0.623] ; global 0.0182

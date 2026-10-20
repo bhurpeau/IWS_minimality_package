@@ -1,0 +1,30 @@
+== chaine variationnelle : (gamma_bar, lambda_bar) = (0, 1), eps = 0.001, rangs 1..14
+ 1  Td=1.3533 trig=0 conc=1  ndot=1.3571  nu=1.2130  nu'_eps=+0.0003  eps_c(decl)=inf  rec=0.0045 rec'_eps=-0.0000 eps_c(rec)=2.98e+02 | |Phi|=1.801 |S_loc|=1.992 |S_glob|=1.645  prod|S_loc Phi|=3.588e+00 prod|S_glob Phi|=2.961e+00 | eff(V-bloc)/eps=0.1477  G_chaine=0.3284
+ 2  Td=0.5812 trig=0 conc=1  ndot=1.4614  nu=1.1134  nu'_eps=+0.0025  eps_c(decl)=inf  rec=0.0565 rec'_eps=+0.0011 eps_c(rec)=inf | |Phi|=1.279 |S_loc|=1.573 |S_glob|=1.556  prod|S_loc Phi|=7.220e+00 prod|S_glob Phi|=5.893e+00 | eff(V-bloc)/eps=0.3075  G_chaine=0.6834
+ 3  Td=0.5324 trig=0 conc=1  ndot=1.4596  nu=0.9516  nu'_eps=+0.0079  eps_c(decl)=inf  rec=0.0145 rec'_eps=+0.0005 eps_c(rec)=inf | |Phi|=1.256 |S_loc|=1.387 |S_glob|=1.546  prod|S_loc Phi|=1.258e+01 prod|S_glob Phi|=1.145e+01 | eff(V-bloc)/eps=0.4068  G_chaine=0.9158
+ 4  Td=0.5170 trig=0 conc=1  ndot=1.4413  nu=0.7425  nu'_eps=+0.0130  eps_c(decl)=inf  rec=0.0154 rec'_eps=+0.0018 eps_c(rec)=inf | |Phi|=1.213 |S_loc|=1.410 |S_glob|=1.530  prod|S_loc Phi|=2.153e+01 prod|S_glob Phi|=2.125e+01 | eff(V-bloc)/eps=0.4193  G_chaine=0.9503
+ 5  Td=0.5114 trig=0 conc=1  ndot=1.4266  nu=0.5133  nu'_eps=-0.0004  eps_c(decl)=1.30e+03  rec=0.0021 rec'_eps=-0.0014 eps_c(rec)=1.51e+00 | |Phi|=1.218 |S_loc|=1.400 |S_glob|=1.498  prod|S_loc Phi|=3.670e+01 prod|S_glob Phi|=3.876e+01 | eff(V-bloc)/eps=0.4305  G_chaine=0.7936
+ 6  Td=0.5080 trig=0 conc=1  ndot=1.4247  nu=0.2967  nu'_eps=-0.0689  eps_c(decl)=4.31e+00  rec=0.0052 rec'_eps=+0.0017 eps_c(rec)=inf | |Phi|=1.180 |S_loc|=1.390 |S_glob|=1.456  prod|S_loc Phi|=6.019e+01 prod|S_glob Phi|=6.659e+01 | eff(V-bloc)/eps=0.5145  G_chaine=0.5251
+ 7  Td=0.5054 trig=0 conc=1  ndot=1.4257  nu=0.1220  nu'_eps=-0.2325  eps_c(decl)=5.25e-01  rec=0.0016 rec'_eps=-0.0001 eps_c(rec)=1.15e+01 | |Phi|=1.185 |S_loc|=1.352 |S_glob|=1.421  prod|S_loc Phi|=9.639e+01 prod|S_glob Phi|=1.121e+02 | eff(V-bloc)/eps=0.6361  G_chaine=0.2757
+ 8  Td=0.4932 trig=1 conc=0  ndot=0.2265  nu=0.0136  nu'_eps=+2.1329  eps_c(decl)=inf  rec=0.0141 rec'_eps=+0.0327 eps_c(rec)=inf | |Phi|=1.152 |S_loc|=8.101 |S_glob|=3.473  prod|S_loc Phi|=8.999e+02 prod|S_glob Phi|=4.486e+02 | eff(V-bloc)/eps=0.8387  G_chaine=0.1759
+ 9  Td=0.0095 trig=0 conc=2  ndot=1.4324  nu=0.4235  nu'_eps=-0.0633  eps_c(decl)=6.69e+00  rec=0.0010 rec'_eps=+0.0017 eps_c(rec)=inf | |Phi|=1.003 |S_loc|=1.388 |S_glob|=1.387  prod|S_loc Phi|=1.253e+03 prod|S_glob Phi|=6.241e+02 | eff(V-bloc)/eps=1.0510  G_chaine=0.1836
+10  Td=0.4985 trig=0 conc=2  ndot=1.4493  nu=0.3223  nu'_eps=-0.2175  eps_c(decl)=1.48e+00  rec=0.0156 rec'_eps=+0.0123 eps_c(rec)=inf | |Phi|=1.158 |S_loc|=1.284 |S_glob|=1.359  prod|S_loc Phi|=1.862e+03 prod|S_glob Phi|=9.821e+02 | eff(V-bloc)/eps=0.9696  G_chaine=0.2636
+11  Td=0.4956 trig=0 conc=2  ndot=1.4534  nu=0.2491  nu'_eps=-0.2749  eps_c(decl)=9.06e-01  rec=0.0117 rec'_eps=+0.0101 eps_c(rec)=inf | |Phi|=1.148 |S_loc|=1.248 |S_glob|=1.367  prod|S_loc Phi|=2.669e+03 prod|S_glob Phi|=1.541e+03 | eff(V-bloc)/eps=0.7269  G_chaine=0.3262
+12  Td=0.4938 trig=0 conc=1  ndot=1.4567  nu=0.1755  nu'_eps=-0.9031  eps_c(decl)=1.94e-01  rec=0.0084 rec'_eps=+0.0068 eps_c(rec)=inf | |Phi|=1.125 |S_loc|=1.200 |S_glob|=1.385  prod|S_loc Phi|=3.603e+03 prod|S_glob Phi|=2.402e+03 | eff(V-bloc)/eps=0.5159  G_chaine=0.3295
+13  Td=0.4933 trig=0 conc=1  ndot=1.4546  nu=0.1261  nu'_eps=-1.1226  eps_c(decl)=1.12e-01  rec=0.0068 rec'_eps=+0.0041 eps_c(rec)=inf | |Phi|=1.134 |S_loc|=1.165 |S_glob|=1.415  prod|S_loc Phi|=4.763e+03 prod|S_glob Phi|=3.855e+03 | eff(V-bloc)/eps=0.4602  G_chaine=0.3205
+14  Td=0.4940 trig=0 conc=2  ndot=1.4507  nu=0.1328  nu'_eps=-0.9455  eps_c(decl)=1.40e-01  rec=0.0055 rec'_eps=+0.0011 eps_c(rec)=inf | |Phi|=1.134 |S_loc|=1.182 |S_glob|=1.452  prod|S_loc Phi|=6.380e+03 prod|S_glob Phi|=6.344e+03 | eff(V-bloc)/eps=0.5932  G_chaine=0.2829
+== G_r : chaine vs direct
+ 1  G_chaine=0.3284  G_direct=0.3284  rapport=1.0000
+ 2  G_chaine=0.6834  G_direct=0.6834  rapport=1.0000
+ 3  G_chaine=0.9158  G_direct=0.9158  rapport=1.0000
+ 4  G_chaine=0.9503  G_direct=0.9503  rapport=1.0000
+ 5  G_chaine=0.7936  G_direct=0.7936  rapport=1.0000
+ 6  G_chaine=0.5251  G_direct=0.5251  rapport=1.0000
+ 7  G_chaine=0.2757  G_direct=0.2757  rapport=1.0000
+ 8  G_chaine=0.1759  G_direct=0.1759  rapport=1.0000
+ 9  G_chaine=0.1836  G_direct=0.1836  rapport=1.0000
+10  G_chaine=0.2636  G_direct=0.2635  rapport=1.0000
+11  G_chaine=0.3262  G_direct=0.3262  rapport=1.0000
+12  G_chaine=0.3295  G_direct=0.3295  rapport=1.0000
+13  G_chaine=0.3205  G_direct=0.3205  rapport=1.0000
+14  G_chaine=0.2829  G_direct=0.2829  rapport=1.0000

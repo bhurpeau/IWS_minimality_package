@@ -1,0 +1,108 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm,booktabs,enumitem,geometry}
+\geometry{margin=2.4cm}
+\newtheorem{theoreme}{Th\'eor\`eme}
+\newtheorem{lemme}{Lemme}
+\renewcommand{\thelemme}{\Alph{lemme}}
+\theoremstyle{remark}
+\newtheorem{remarque}{Remarque}
+\newcommand{\R}{\mathbb R}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\vth}{\vartheta}
+\sloppy\setlength{\emergencystretch}{3em}
+
+\title{Transmission de la r\'egularit\'e $C^2$ \`a travers un nombre fini d'impacts :\\ \'enonc\'e et d\'emonstration}
+\author{Programme de soustraction --- IWS, Tome II (travail de recherche)}
+\date{octobre 2026 --- compl\'ement \`a la note \og profondeur \fg{} V2.5/V2.6}
+\begin{document}
+\maketitle
+
+\noindent\textbf{Objet et statut.} La proposition de transmission \`a profondeur finie de la note V2.5 y \'etait \emph{esquiss\'ee}. On la r\'edige ici enti\`erement, sans aucune valeur num\'erique : c'est un th\'eor\`eme d\'emontr\'e \emph{sous ses hypoth\`eses} (H1)--(H5). Les hypoth\`eses elles-m\^emes ne sont qu'\emph{\'etay\'ees par des t\'emoins num\'eriques} au point de base (note V2.5) et ne sont pas certifi\'ees. La preuve est de la th\'eorie standard des EDO et du th\'eor\`eme des fonctions implicites, appliqu\'ee avec soin ; elle n'a pas \'et\'e relue par un tiers. \emph{Rien ici ne dit comment le voisinage de r\'egularit\'e se comporte quand le nombre d'impacts $R$ cro\^{\i}t} : l'uniformit\'e en profondeur reste ouverte (remarque~\ref{rem:unif}).
+
+\section{Cadre}
+\paragraph{\'Etat.} $x'=(H,V,\tau)\in\R^{36}$ ($N=6$ n\oe uds, $d=2$), $P\in\R^6$. Constantes du mod\`ele : $\zeta,\alpha,\beta,\gamma_0,\kappa_1,\kappa_2,\kappa_3>0$, $0<r_P,r_V<1$, $\Theta>0$ (protocole : $\zeta=\frac45$) ; la stricte positivit\'e de $\zeta$ sert au lemme~E, o\`u elle assure $c_k>0$. Param\`etre $q=(\vth,\varepsilon)\in\R^{12}\times\R$ ; donn\'ee initiale $x'(0)=(0,0,\tau_{\rm ref}+\vth)$, $P(0)=P^0$ fix\'e ; $(\gamma_1,\lambda)=\varepsilon(\bar\gamma,\bar\lambda)$.
+
+\paragraph{\'Episode $r$ (graphe $A_r$, horloge locale $t$).}
+\[ \dot H_i=V_i,\quad \dot V_i=-(\gamma_0+\gamma_1\norm{\tau_i})V_i-M_\lambda(\tau_i)H_i+\zeta\tanh\bigl((\tilde A_rH)_i\bigr)+u_i(t),\quad \dot\tau_i=\alpha\tanh\bigl((\tilde A_rH)_i\bigr)-\beta\tau_i, \tag{1}\]
+\[ \dot P_j=\kappa_1\norm{H_j}+\kappa_2\norm{V_j}-\kappa_3P_j, \tag{2}\]
+avec $M_\lambda(\tau)H=H-c(\tau\!\cdot\!H)\tau$, $c=\lambda/(1+(1+\lambda)\norm\tau^2)$. Le syst\`eme (1) est \emph{autonome en $P$} : $P$ n'y intervient pas.
+
+\paragraph{Graphe.} $\tilde A_r=D_r^{-1}(A_r+I)$ est la normalisation par lignes de $A_r+I$ : $\tilde A_r\ge0$, ses entr\'ees sont strictement positives exactement sur la diagonale et sur les ar\^etes de $A_r$. On suppose le graphe initial $A_1$ \emph{connexe}, de sorte que $d(k,0)<\infty$ pour tout n\oe ud $k$ (le graphe \texttt{kept1} v\'erifie ces propri\'et\'es). Les graphes $A_r$ ult\'erieurs n'ont besoin de v\'erifier aucune propri\'et\'e de connexit\'e : seule la distance dans $A_1$ intervient, au premier \'episode.
+
+\paragraph{Impact.} $T_r(q)=\inf\{t>0:\max_jP_j(t)=\Theta\}$, $i_r$ l'indice atteignant $\Theta$. Saut : $H,\tau$ inchang\'es ; $V_{i_r}\leftarrow r_VV_{i_r}$, $P_{i_r}\leftarrow r_PP_{i_r}$ (lin\'eaire) ; $A_{r+1}=\mathrm{Rew}(A_r,\tau(T_r))$ par similarit\'es cosinus des traces (retrait des deux voisins les moins similaires, ajout des deux non-voisins les plus similaires). On note $y_r^+(q)\in\R^{42}$ l'\'etat juste apr\`es le $r$-i\`eme saut, $y_0^+(q)=(0,0,\tau_{\rm ref}+\vth,P^0)$.
+
+\section{Hypoth\`eses au point de base $q_0$}
+On fixe $q_0$ et $R\ge1$. On note $\bar x(\cdot)$ les objets en $q_0$. Les hypoth\`eses portent sur les \'episodes $r=1,\dots,R$.
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+\item \textbf{(H1) Recâblages stricts.} Les traces $\bar\tau_j(\bar T_r)$ sont non nulles (les cosinus sont d\'efinis), et la s\'election de $\mathrm{Rew}$ se fait par in\'egalit\'es strictes : parmi les voisins, les deux moins similaires sont strictement s\'epar\'es des autres ; parmi les non-voisins, les deux plus similaires aussi. Ainsi $\mathrm{Rew}(A_r,\cdot)$ est localement constante au voisinage de $\bar\tau(\bar T_r)$.
+\item \textbf{(H2) Non-annulation des normes visibles.} \'Episode~1 : pour chaque n\oe ud $j$, $m=d(j,0)$, $V_j(t)\neq0$ et $H_j(t)\ne0$ sur $(0,\bar T_1]$ (les quotients $\hat V_j=V_j/t^{2m+1}$, $\hat H_j=H_j/t^{2m+2}$ du lemme~\ref{lem:fact} ne s'annulent alors pas sur $[0,\bar T_1]$). \'Episodes $2\le r\le R$ : $V_j(t)\neq0$ et $H_j(t)\neq0$ sur $[0,\bar T_r]$, pour tout~$j$.
+\item \textbf{(H3) Franchissement simple, unique, premier.} \`A chaque rang : $P_{i_r}(\bar T_r)=\Theta$, $\dot P_{i_r}(\bar T_r)>0$, $P_j(\bar T_r)<\Theta$ pour $j\neq i_r$, et $\max_jP_j(t)<\Theta$ pour $0\le t<\bar T_r$. (Au d\'ebut de chaque \'episode, $P_j(0)<\Theta$ pour tout $j$ : c'est automatique apr\`es un saut, $r_P<1$.)
+\item \textbf{(H4) For\c{c}age.} \'Episode~1 : $u_i(t)=\delta_{i0}\,u_0(t)$, o\`u $u_0$ est $C^1$ sur $[0,\infty)$, analytique au voisinage de $t=0$, avec $u_0(0)=U\neq0$ ; seul le n\oe ud~0 est forc\'e. \'Episodes suivants : $u$ est $C^1$ en horloge locale (ou $C^2$ en horloge globale, remarque~\ref{rem:horloge}). Le protocole \'etudi\'e correspond \`a $u_0\equiv U$. (Un for\c{c}age analytique sur un autre n\oe ud, par exemple $u_1\equiv W\neq0$, donnerait $V_1=Wt+O(t^2)$ : le lemme~\ref{lem:fact} ne s'y applique pas.)
+\item \textbf{(H5) Traces non nulles.} Si $\bar\gamma\ne0$ : $\min_{1\le r\le R}\min_{0\le t\le\bar T_r}\min_j\norm{\bar\tau_j(t)}>0$. Sans objet si $\bar\gamma=0$.
+\end{itemize}
+
+\begin{theoreme}[transmission $C^2$ en profondeur finie]\label{thm:main}
+Sous (H1)--(H5), il existe un voisinage ouvert $\mathcal N$ de $q_0$ tel que, pour $r=1,\dots,R$ : le franchissement a lieu sur $\mathcal N$ pour le m\^eme indice $i_r$, le graphe $A_{r+1}$ est constant sur $\mathcal N$, et
+\[ q\mapsto T_r(q)\quad\text{et}\quad q\mapsto y_r^+(q)\in\R^{42}\quad\text{sont de classe }C^2\text{ sur }\mathcal N. \]
+De plus, $(t,q)\mapsto(x',P)(t;q)$ est de classe $C^2$ sur $\{(t,q):q\in\mathcal N,\ 0\le t\le T_r(q)\}$ pour chaque \'episode $r\le R$ ; en particulier les d\'eriv\'ees $\partial_qV_0$, $\partial_q^2V_0$ y sont continues.
+\end{theoreme}
+
+\section{Lemmes}
+\begin{lemme}[flot]\label{lem:A}Soit $\Omega=\{x'\in\R^{36}:\tau_i\neq0\ \forall i\}$ si $\bar\gamma\neq0$ et $\Omega=\R^{36}$ sinon. Pour $A$ fix\'e, le champ $F(x',\varepsilon,t)$ de (1) est $C^2$ en $(x',\varepsilon)$ sur $\Omega\times\{\varepsilon:\ 1+\varepsilon\bar\lambda>0\}$ (tanh, polyn\^omes, $c$ rationnel \`a d\'enominateur $1+(1+\lambda)\norm\tau^2>0$) et $C^1$ en $t$ par (H4). Alors le flot $\varphi(t;x_0,\varepsilon)$ est de classe $C^2$ \emph{conjointement} en $(t,x_0,\varepsilon)$ sur son ouvert de d\'efinition.\end{lemme}
+
+\emph{Preuve.} $C^2$ en $(x_0,\varepsilon)$ : th\'eor\`eme classique de d\'ependance diff\'erentiable (les d\'eriv\'ees premi\`eres et secondes v\'erifient les \'equations variationnelles, continues en $t$). Pour les d\'eriv\'ees en $t$ : $\partial_t\varphi=F(\varphi,\varepsilon,t)$ est $C^1$ en $(t,x_0,\varepsilon)$ (car $F\in C^1$ en $t$), donc $\partial_t\partial_{x_0}\varphi=F_x\partial_{x_0}\varphi$, $\partial_t^2\varphi=F_xF+F_t$ sont continues. Toutes les d\'eriv\'ees partielles d'ordre $\le2$ sont continues. $\square$
+
+\begin{lemme}[pression]\label{lem:B}Soient $\varphi$ comme au lemme~A et $I=[0,\bar T+\delta]$. Si $V_j(t;q_0)\neq0$ et $H_j(t;q_0)\ne0$ sur $I$ (ou, \`a l'\'episode~1, si (H2) donne la factorisation), alors, pour $q$ proche de $q_0$ et de donn\'ee initiale $C^2$ en $q$, $(t,q)\mapsto P_j(t;q)$ est $C^2$ sur $I\times\mathcal N'$ et
+\[ P_j(t;q)=e^{-\kappa_3t}P_j(0;q)+\int_0^te^{-\kappa_3(t-s)}g_j(s;q)\,ds,\qquad g_j=\kappa_1\norm{H_j}+\kappa_2\norm{V_j}. \]
+\end{lemme}
+\emph{Preuve.} La norme est $C^\infty$ hors de~$0$ ; la non-annulation sur $[0,\bar T_r]$ se prolonge \`a $I=[0,\bar T_r+\delta]$ pour $\delta$ petit (continuit\'e) ; par compacit\'e de $I$ et continuit\'e, $\norm{V_j}$, $\norm{H_j}$ restent minor\'es sur $I\times\mathcal N'$ (rappel : $V_j(\cdot;q)$ d\'epend continument de $q$). Donc $g_j=\kappa_1\norm{H_j\circ\varphi}+\kappa_2\norm{V_j\circ\varphi}$ est $C^2$ conjointement par composition avec le lemme~A. La formule de Duhamel donne alors $P_j\in C^2$ conjointement (d\'erivation sous l'int\'egrale ; $\partial_tP_j=g_j-\kappa_3P_j$ et $\partial_t^2P_j=\partial_tg_j-\kappa_3\partial_tP_j$ sont continues). \`A l'\'episode~1, au voisinage de $s=0$ on utilise la factorisation du lemme~\ref{lem:fact} : $g_j(s;q)=\kappa_1s^{2m+2}\norm{\hat H_j}+\kappa_2s^{2m+1}\norm{\hat V_j}$ avec $\hat H_j,\hat V_j$ analytiques non nuls ; c'est $C^\infty$ conjointement sur $[0,t_0]\times\mathcal N'$ (polyn\^ome en $s$ fois une fonction lisse), et hors de $s\in[0,t_0)$ on revient au cas pr\'ec\'edent. $\square$
+
+\begin{lemme}[franchissement]\label{lem:C}Soit $\Pi(t,q)=P_{i_r}(t;q)-\Theta$, $C^2$ conjointement (lemme~B), avec $\Pi(\bar T_r,q_0)=0$ et $\partial_t\Pi(\bar T_r,q_0)>0$ (H3). Alors il existe $\mathcal N''\ni q_0$ et une fonction $C^2$ unique $T_r:\mathcal N''\to\R$ telle que $\Pi(T_r(q),q)=0$ ; et, quitte \`a r\'etr\'ecir $\mathcal N''$, $T_r(q)$ est \emph{le premier} instant o\`u $\max_jP_j=\Theta$, atteint seulement par $i_r$.\end{lemme}
+
+\emph{Preuve.} Th\'eor\`eme des fonctions implicites ($C^2$). Pour le caract\`ere \og premier \fg{} : par (H3) et compacit\'e, il existe $\eta,\delta_1>0$ tels que $\max_jP_j(t;q_0)\le\Theta-\eta$ sur $[0,\bar T_r-\delta_1]$, $P_j(t;q_0)\le\Theta-\eta$ pour $j\neq i_r$ sur $[\bar T_r-\delta_1,\bar T_r+\delta_1]$, et $\partial_tP_{i_r}\ge\eta$ sur cette fen\^etre. La continuit\'e conjointe de $P$ en $(t,q)$ conserve ces trois in\'egalit\'es pour $q$ voisin (avec $\eta/2$), donc l'unique racine de $\Pi$ dans la fen\^etre est le premier franchissement. $\square$
+
+\begin{lemme}[saut et graphe]\label{lem:D}Soient $r\le R$, un voisinage de $q_0$ sur lequel le graphe $A_r$ et l'indice d\'eclencheur $i_r$ sont constants (lemme~C), $T_r\in C^2$ et $(t,q)\mapsto(x',P)(t;q)$ de classe $C^2$ conjointement. Sous (H1) (traces non nulles en $\bar T_r$, s\'election stricte des ar\^etes), le graphe $A_{r+1}$ est constant sur un voisinage de $q_0$ et $y_r^+\in C^2$ au voisinage de $q_0$.\end{lemme}
+\emph{Preuve.} $q\mapsto(x',P)(T_r(q);q)$ est $C^2$ par composition. Le saut est lin\'eaire (matrice $D_{i_r}$ constante, $i_r$ constant par le lemme~C). Enfin $q\mapsto\tau(T_r(q);q)$ est continue et, par (H1), $\mathrm{Rew}(A_r,\cdot)$ est localement constante en $\bar\tau(\bar T_r)$ : $A_{r+1}$ est constant sur un voisinage. Donc $y_r^+=D_{i_r}(x',P)(T_r(q);q)$ est $C^2$. $\square$
+
+\begin{lemme}[d\'epart au repos, \'episode~1]\label{lem:fact}Pour $k$ avec $m=d(k,0)$ (distance dans $A_1$) et tout $q$ de l'ouvert d'analyticit\'e du sous-syst\`eme (1) ((H4) au premier \'episode, (H5) si $\bar\gamma\neq0$) : $V_k=t^{2m+1}\hat V_k$, $H_k=t^{2m+2}\hat H_k$ avec $\hat V_k,\hat H_k$ analytiques en $(t,q)$,
+\[ \hat V_k(0)=\frac{\zeta^m(\tilde A^m)_{k0}}{(2m+1)!}\,U,\qquad \hat H_k(0)=\frac{\hat V_k(0)}{2m+2}, \]
+ind\'ependants de $q$ et non nuls.\end{lemme}
+\emph{Preuve (rappel de la note V2.5, \S fact).} Les ordres d'annulation en $t=0$ se d\'eduisent par r\'ecurrence sur la distance $d$ : si $\operatorname{ord}V_k=q$ alors $\operatorname{ord}\dot V_k=q-1\ge\min(q,2d)$, d'o\`u $q\ge2d+1$ (les voisins sont \`a distance $\ge d-1$ donc $\operatorname{ord}H_j\ge2d$). Le coefficient de t\^ete vient du seul terme $\zeta(\tilde AH)_k$ restreint aux voisins \`a distance $d-1$ ; la friction et $M_\lambda$ interviennent \`a un ordre sup\'erieur ; $\tilde A\ge0$ \'evite toute compensation. Le reste int\'egral donne les facteurs. Cette preuve vaut en tout $q$ de l'ouvert d'analyticit\'e (sous-syst\`eme (1) analytique, for\c{c}age satisfaisant (H4), (H5)) ; seule la minoration de $\hat V_k,\hat H_k$ au voisinage de $t=0$ d\'epend localement de $q$. $\square$
+
+\section{D\'emonstration du th\'eor\`eme}
+R\'ecurrence sur $r\in\{0,\dots,R\}$ : \textbf{$I(r)$} : il existe un voisinage $\mathcal N_r\ni q_0$ sur lequel $A_1,\dots,A_{r+1}$ sont constants (les $A_{r+1}$ pour $r\ge1$ par (H1)), $T_1,\dots,T_r$ sont $C^2$ et $y_r^+\in C^2(\mathcal N_r;\R^{42})$. $I(0)$ est vraie ($y_0^+$ est affine en $\vth$, $A_1$ donn\'e).
+
+Supposons $I(r-1)$, $1\le r\le R$. Sur $\mathcal N_{r-1}$, la donn\'ee initiale $y_{r-1}^+(q)$ de l'\'episode~$r$ est $C^2$ et le graphe est $A_r$. \emph{Flot :} par (H5) (si $\bar\gamma\neq0$) la trajectoire de base $\bar x'([0,\bar T_r+\delta])$ reste dans $\Omega$ ; le flot de (1) partant de $x'$-part de $y_{r-1}^+(q)$ est $C^2$ conjointement en $(t,q)$ (lemme~A, composition). \emph{Pression :} par (H2), $\norm{V_j}$, $\norm{H_j}$ sont minor\'es sur $[0,\bar T_r+\delta]$ au point de base (\'episode~1 : on utilise le lemme~E), donc $P_j\in C^2$ conjointement (lemme~B). \emph{Franchissement :} lemme~C, avec (H3), donne $T_r\in C^2$ et l'unicit\'e du premier franchissement sur un voisinage $\mathcal N_r\subset\mathcal N_{r-1}$. \emph{Saut :} lemme~D avec (H1) donne $A_{r+1}$ constant et $y_r^+\in C^2$. D'o\`u $I(r)$. En prenant $\mathcal N=\mathcal N_R$ on obtient le th\'eor\`eme ; la r\'egularit\'e conjointe sur $\{0\le t\le T_r(q)\}$ est celle des lemmes A et B. $\square$
+
+\section{Remarques}
+\begin{remarque}[ce que la preuve n'utilise pas]\label{rem:nonum}
+Aucune valeur num\'erique. Les hypoth\`eses (H1)--(H5) sont des conditions \emph{ouvertes} (in\'egalit\'es strictes, non-annulations sur des compacts) au point de base : c'est ce qui donne un voisinage, non quantifi\'e.
+\end{remarque}
+\begin{remarque}[for\c{c}age et horloge]\label{rem:horloge}
+Les hypoth\`eses sur $u$ d\'ependent de l'horloge : en horloge locale (le for\c{c}age ne d\'epend que du temps depuis le dernier saut), $u\in C^1$ suffit, car $\partial_t^2\varphi=F_xF+F_t$. En horloge globale, la date de d\'epart $\sum_{k<r}T_k(q)$ d\'epend de $q$ et la d\'eriv\'ee seconde fait intervenir $\partial_t^2u$ : il faut alors $u\in C^2$. Le protocole (for\c{c}age constant sur le n\oe ud~0) satisfait toutes ces conditions.
+\end{remarque}
+\begin{remarque}[r\^ole de chaque hypoth\`ese]
+(H1) rend le graphe localement constant (pas de discontinuit\'e du champ) ; (H2) rend la pression $C^2$ (les normes ne sont lisses que hors de~$0$) ; (H3) donne le temps d'impact par fonctions implicites et exclut un franchissement ant\'erieur ou simultan\'e ; (H4) fournit la r\'egularit\'e du flot et la factorisation du d\'epart au repos ; (H5) rend le champ (1) $C^2$ sur le domaine visit\'e quand $\gamma_1\neq0$. Elles sont logiquement ind\'ependantes.
+\end{remarque}
+\begin{remarque}[uniformit\'e en profondeur]\label{rem:unif}
+Le voisinage $\mathcal N_R$ est construit en r\'etr\'ecissant \`a chaque rang : son rayon est born\'e par les rayons des fonctions implicites, par la distance aux murs de franchissement et de recâblage (\S~murs de la note V2.5), par les marges de non-annulation. Le th\'eor\`eme ne dit rien du comportement de ce rayon, ni des normes $C^2$, quand $R\to\infty$. Une version uniforme demanderait des estimations ind\'ependantes de $r$ de ces trois familles de marges et de $\norm{\partial_q^2y_r^+}$ ; c'est un probl\`eme distinct, ouvert.
+\end{remarque}
+
+\section{Statut}
+\begin{center}\small
+\begin{tabular}{p{7.4cm}p{7.4cm}}
+\toprule
+\'Enonc\'e & Statut\\
+\midrule
+Lemmes A--D, th\'eor\`eme~\ref{thm:main} & d\'emontr\'es sous (H1)--(H5) ; preuve r\'edig\'ee, standard, non relue par un tiers\\
+Lemme E (factorisation) & preuve analytique locale (note V2.5), qualitative\\
+(H1)--(H5) au point de base $R=8$ & \'etay\'ees par des t\'emoins num\'eriques (grille), non certifi\'ees\\
+Application \emph{d\'emontr\'ee} aux huit premiers \'episodes & non acquise : demande la certification de (H1)--(H5)\\
+Uniformit\'e quand $R\to\infty$ & ouverte\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{document}

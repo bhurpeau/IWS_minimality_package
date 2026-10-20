@@ -1,0 +1,154 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm,booktabs,enumitem,geometry,array}
+\geometry{margin=2.4cm}
+\newtheorem{theoreme}{Théorème}
+\newtheorem{proposition}[theoreme]{Proposition}
+\newtheorem{lemme}[theoreme]{Lemme}
+\newtheorem{corollaire}[theoreme]{Corollaire}
+\theoremstyle{remark}
+\newtheorem{remarque}[theoreme]{Remarque}
+\newcommand{\R}{\mathbb R}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\vth}{\vartheta}
+\sloppy\setlength{\emergencystretch}{3em}
+
+\title{Certification assistée par ordinateur des hypothèses (H1)--(H5)\\ sur les huit premiers épisodes du protocole \texttt{kept1}\\[2pt]
+\large (complément à la note « transmission $C^2$ à profondeur finie »)}
+\author{Programme de soustraction --- IWS, Tome II (travail de recherche)}
+\date{octobre 2026}
+\begin{document}
+\maketitle
+
+\noindent\textbf{Statut.} Le théorème de transmission $C^2$ à profondeur finie (note « transmission à profondeur finie », théorème~1 ; hypothèses (H1)--(H5)) est pris comme acquis : il est \emph{démontré sous ses hypothèses}, par de la théorie standard des EDO et le théorème des fonctions implicites. Le présent texte ne reprouve rien de cela. Il établit, par \emph{calcul à erreurs encadrées}, que (H1)--(H5) sont satisfaites au point de base $q_0=(\vth,\varepsilon)=(0,0)$ du protocole \texttt{kept1} pour $R=8$ épisodes. Les inégalités sont certifiées par une première méthode (Taylor--Picard) ; une seconde méthode, de nature différente, \emph{reproduit les événements} (instants d'impact, déclencheurs, pentes, écarts de pression, recâblages et marges) ainsi que les non-annulations de (H2) et (H5) aux rangs $2$ à $8$, \textbf{à l'exception de (H2) au rang~1} (quotients de factorisation du départ au repos), certifié par la première méthode seule. Le résultat est \textbf{assisté par ordinateur}, \textbf{reproduit par une seconde méthode sauf (H2) au rang~1}, et \textbf{n'a pas été relu par un tiers}. Il ne dit rien de la taille du voisinage de $q_0$, ni de l'uniformité en $R$.
+
+\section{Ce qui est démontré à la main, ce qui est calculé}\label{sec:distinction}
+Deux niveaux ne doivent pas être confondus.
+\begin{center}
+\begin{tabular}{p{0.44\textwidth}p{0.46\textwidth}}
+\toprule
+\textbf{Preuve théorique (à la main)} & \textbf{Certification informatique (trajectoire de base)}\\
+\midrule
+Théorème de transmission : sous (H1)--(H5) en $q_0$, il existe un voisinage $\mathcal N$ de $q_0$ où les $R$ premiers événements gardent leur mot hybride et où les $T_r$ sont $C^2$. Les hypothèses sont des conditions \emph{ouvertes}. &
+Les inégalités strictes (H1)--(H5) sont vérifiées en $q_0$ pour $R=8$, par arithmétique de boules (python-flint/Arb), avec des bornes exactes sous forme de fractions.\\[4pt]
+Lemme de Cauchy (§\ref{sec:cauchy}) : borne explicite du reste d'un polynôme de Taylor de $s^a\sqrt{q(s)}$ et de la pression. &
+Le lemme est \emph{utilisé} dans l'implémentation~1 ; il est audité à la main et testé numériquement (§\ref{sec:audit}).\\
+\bottomrule
+\end{tabular}
+\end{center}
+La conclusion « il existe un voisinage de $q_0$ » découle du théorème dès que (H1)--(H5) tiennent en $q_0$ ; seule manque son \emph{taille} quantitative.
+
+\section{Énoncé principal (conditionnel)}
+\paragraph{Données.} $N=6$, $d=2$, graphe initial \texttt{kept1}, $\zeta=\tfrac45$, $\alpha=\tfrac9{20}$, $\beta=\tfrac3{25}$, $\gamma_0=\tfrac14$, $(\kappa_1,\kappa_2,\kappa_3)=(\tfrac35,\tfrac25,\tfrac12)$, $\Theta=\tfrac54$, $r_P=\tfrac7{20}$, $r_V=\tfrac12$ ; forçage constant $u_0\equiv U=\tfrac52(\cos37^\circ,\sin37^\circ)$ sur le nœud~0 ; traces initiales $\tau_{\rm ref}$ (nombres à virgule flottante lus comme rationnels exacts, $\cos$ et $\sin$ évalués en boules). Les « entrées » du calcul sont ces valeurs exactes.
+
+\begin{proposition}[certifiée, conditionnelle à la validité des enclosures]\label{prop:cert}
+Supposons que les enclosures calculées (fichiers \texttt{certificat\_episodes.json} et \texttt{certificat\_independant.json}) contiennent bien les objets qu'elles désignent --- c'est-à-dire que les programmes et la bibliothèque Arb/FLINT sont corrects. Alors, au point de base $q_0$ et pour $R=8$ :
+\begin{enumerate}[nosep,label=(\roman*)]
+\item \textbf{(H3)} les huit déclencheurs sont $i_1=\dots=i_7=0$, $i_8=1$ ; chaque franchissement est simple ($\dot P_{i_r}(\bar T_r)>0$, minorants du tableau~\ref{tab:huit}), unique ($\Theta-\max_{j\ne i_r}\sup P_j>0$) et premier ($\forall t\in[0,\bar T_r)$, $\max_jP_j(t)<\Theta$ ; le supremum sur $[0,\bar T_r)$ vaut $\Theta$, atteint à l'impact, et ne peut donc être strict) ;
+\item \textbf{(H1)} les recâblages sont stricts : à chaque rang la sélection des arêtes à retirer (rangs 1--7) ou à ajouter (rang~8) a une marge de similarité cosinus strictement positive (tableau~\ref{tab:huit}) ; les mots sont ceux du tableau ;
+\item \textbf{(H5)} $\min_{1\le r\le8}\min_{t\le\bar T_r}\min_j\norm{\bar\tau_j(t)}\ge 0{,}0166$ ;
+\item \textbf{(H2)} aux épisodes $2\le r\le8$, $\norm{V_j}\ge0{,}00465$ et $\norm{H_j}\ge0{,}00109$ sur $[0,\bar T_r]$ pour tout $j$ ; à l'épisode~1, les quotients de factorisation vérifient $\norm{V_j}/t^{2m+1}\ge 9{,}1\cdot10^{-4}$ et $\norm{H_j}/t^{2m+2}\ge1{,}5\cdot10^{-4}$ sur $[t_0,\bar T_1]$, $t_0=\tfrac1{100}$, les coefficients de $t^k$, $k<2m+1$ (resp.\ $2m+2$) étant exactement nuls et les quotients à $t=0$ minorés par $1{,}3\cdot10^{-3}$ (resp.\ $2{,}2\cdot10^{-4}$) ;
+\item \textbf{(H4)} est une propriété du protocole ($u_0\equiv U\neq0$ constant sur le nœud~0, nul ailleurs) et n'est pas calculée.
+\end{enumerate}
+\end{proposition}
+
+\begin{corollaire}[sous la proposition et le théorème compagnon]\label{cor:nbhd}
+Il existe un voisinage ouvert $\mathcal N$ de $q_0$ sur lequel les huit premiers événements conservent leur mot hybride (déclencheur et recâblage) et où les temps d'impact $T_1,\dots,T_8$ sont de classe $C^2$ en $q$.
+\end{corollaire}
+\noindent\emph{Preuve.} Théorème~1 de la note compagnon, dont (H1)--(H5) sont exactement les hypothèses. $\square$
+
+\medskip
+\noindent\textbf{Ce que cela n'établit pas :} un rayon explicite de $\mathcal N$ ; l'uniformité de $\mathcal N$ quand $R$ croît ; toute propriété globale de modération (« tameness ») de la dynamique ; la preuve du théorème compagnon elle-même, qui reste « non relue par un tiers ».
+
+\section{Lemme de Cauchy autonome}\label{sec:cauchy}
+La pression d'un nœud est $\dot P=\kappa_1\norm H+\kappa_2\norm V-\kappa_3P$ : elle fait intervenir la norme euclidienne d'un polynôme de Taylor, non analytique là où il s'annule. Le lemme suivant donne un reste explicite.
+
+\begin{lemme}[racine d'un polynôme]\label{lem:cauchy}
+Soient $\hat x(s)=\sum_{k<n}a_ks^k$ et $\hat y(s)=\sum_{k<n}b_ks^k$ à coefficients réels, $q=\hat x^2+\hat y^2=\sum_{k\le2n-2}q_ks^k$ avec $q_0>0$, et $a\in\mathbb N$. Soit $r>0$ tel que
+\[ S(r):=\sum_{k\ge1}|q_k|r^k\le q_0/2 .\]
+Soient $c_j$ les coefficients de Taylor à l'origine de $\sqrt q$ et $g_j$ ceux de $s\mapsto s^a\sqrt{q(s)}$ (donc $g_j=c_{j-a}$ pour $j\ge a$, $0$ sinon). Posons $M=\sqrt{3q_0/2}$. Pour $K\ge a$, $0\le s\le h<r$, $x=h/r$ :
+\[ \Bigl|\,s^a\norm{(\hat x,\hat y)(s)}-\sum_{j\le K}g_js^j\Bigr|\;\le\;h^a\,M\,\frac{x^{K-a+1}}{1-x}. \]
+La conclusion reste vraie si, dans $S(r)\le q_0/2$ on remplace $q_0$ par un minorant et $|q_k|$ par des majorants, et si dans $M$ on remplace $q_0$ par un majorant.
+\end{lemme}
+\begin{proof}
+(i) Pour $s\in\mathbb C$, $|s|\le r$ : $|q(s)-q_0|\le S(r)\le q_0/2$, donc $q(s)$ reste dans le disque de centre $q_0$ et de rayon $q_0/2$, contenu dans le demi-plan $\operatorname{Re}>0$ où la racine principale est holomorphe ; $\sqrt q$ est holomorphe sur le disque fermé $|s|\le r$. (ii) Sur ce disque $|q|\le \tfrac32q_0$, donc $|\sqrt q|\le M$. (iii) Estimée de Cauchy : $|c_j|\le M r^{-j}$. (iv) Sur $\mathbb R_+$, $q>0$ et la racine principale est la racine positive, soit $\sqrt q=\norm{(\hat x,\hat y)}$. (v) Pour $s\in[0,h]$ : $|\sqrt{q(s)}-\sum_{j\le K-a}c_js^j|\le\sum_{j>K-a}M(s/r)^j\le Mx^{K-a+1}/(1-x)$. On multiplie par $s^a\le h^a$. Les remplacements par minorants/majorants ne font qu'affaiblir (i)--(ii).
+\end{proof}
+
+\begin{proposition}[passage à la pression]\label{prop:P}
+Sur un pas $[0,h]$, soient $H_{\rm pol},V_{\rm pol}$ les polynômes de Taylor d'ordre $\mathrm{ORD}$ de l'état et $e_H,e_V$ des majorants de $\sup_{[0,h]}\norm{H-H_{\rm pol}}$, $\sup_{[0,h]}\norm{V-V_{\rm pol}}$. Soit $g_K$ la troncature à l'ordre $K$ de $\kappa_1\norm{H_{\rm pol}}+\kappa_2\norm{V_{\rm pol}}$ donnée par le lemme~\ref{lem:cauchy} (restes $R_H,R_V$) et $P_{\rm pol}=\sum_{k\le K+1}P_ks^k$ avec $P_{k+1}=(g_k-\kappa_3P_k)/(k+1)$, $P_0\ni P(0)$. Alors pour $s\in[0,h]$
+\[ |P(s)-P_{\rm pol}(s)|\le s\,\delta,\qquad \delta:=\kappa_1(R_H+e_H)+\kappa_2(R_V+e_V)+\kappa_3|P_{K+1}|h^{K+1}. \]
+\end{proposition}
+\begin{proof}
+Par construction $P_{\rm pol}'=g_K-\kappa_3P_{\rm pol}+\rho$ avec $\rho=\kappa_3P_{K+1}s^{K+1}$. Posons $E=P-P_{\rm pol}$ ; alors $E(0)=0$ (la boule $P(0)$ est portée par $P_0$) et $E'=-\kappa_3E+\eta$ avec $\eta=(g_{\rm vrai}-g_K)-\rho$. La norme euclidienne étant 1-lipschitzienne, $|g_{\rm vrai}-g_{\rm pol}|\le\kappa_1e_H+\kappa_2e_V$ ; le lemme donne $|g_{\rm pol}-g_K|\le\kappa_1R_H+\kappa_2R_V$ ; donc $|\eta(u)|\le\delta$ sur $[0,h]$. Par variation des constantes,
+\[ E(s)=\int_0^se^{-\kappa_3(s-u)}\eta(u)\,du,\qquad |E(s)|\le\frac{\delta}{\kappa_3}\bigl(1-e^{-\kappa_3s}\bigr)\le s\,\delta .\qedhere\]
+\end{proof}
+Pour le départ au repos (épisode~1), $\hat x,\hat y$ sont remplacés par les quotients $\hat V_k,\hat H_k$ de la factorisation et le décalage $a=2m+1$ (resp.\ $2m+2$) intervient dans le lemme ; on le vérifie en testant que les coefficients d'indice $<a$ sont exactement nuls.
+
+\section{Les deux méthodes}\label{sec:methodes}
+Les deux programmes certifient les mêmes événements sur la même trajectoire, en arithmétique de boules (python-flint~0.9, 192 bits).
+
+\paragraph{Méthode 1 --- Taylor--Picard (\texttt{certif\_episodes.py}).} Enclosure a priori de Picard sur chaque pas, reste de Lagrange d'ordre 24 pour l'état, pression par Taylor avec le lemme~\ref{lem:cauchy} et la proposition~\ref{prop:P} (repli par quadrature de Duhamel pour les nœuds de très petite norme loin du seuil), bissection de $T_r$ sur une fenêtre de monotonie, boîte d'état au franchissement prise comme enveloppe sur $[T_{\rm lo},T_{\rm hi}]$.
+
+\paragraph{Méthode 2 --- Gronwall--Cauchy--Kovalevskaya (\texttt{certif\_independant.py}).} Aucun import de la méthode~1. Trajectoire nominale (Taylor, ordre 30, pas $\le\tfrac1{64}$) et rayon de tube $\varepsilon$ propagé par Gronwall avec $L=1+\gamma_0+\zeta=\tfrac{41}{20}$ (constante de Lipschitz globale en norme sup) ; reste de Taylor par le théorème de Cauchy--Kovalevskaya (polydisque complexe, évalué en boules \texttt{acb}) ; pressions par l'intégrateur rigoureux de FLINT (\texttt{acb.integral}), contrôle d'analyticité $\operatorname{Re}q>0$ ; bande $(\kappa_1+\kappa_2)\sqrt2\,\varepsilon_{\rm pas}$ pour l'erreur d'état.
+
+\paragraph{Ce qui est partagé.} Les entrées ($\tau_{\rm ref}$, $U$, constantes), la bibliothèque Arb/FLINT, l'auteur, et la modélisation du saut et du recâblage. La différence réelle porte sur le traitement de l'état, du reste et de la pression.
+
+\section{Résultats}\label{sec:resultats}
+\begin{table}[h]
+\centering\small
+\begin{tabular}{@{}c c l c c c l@{}}
+\toprule
+$r$ & $i_r$ & $\bar T_r$ (12 déc.) & pente $\ge$ & écart pression $\ge$ (M1/M2) & marge $\ge$ & mot \\
+\midrule
+1 & 0 & $1{,}353301412736^{+}$ & 1,357068 & 1,212984 / 1,212621 & 0,004489 & $(0,\{1,2,3\})$\\
+2 & 0 & $0{,}581221987146^{+}$ & 1,461345 & 1,113441 / 1,109277 & 0,056502 & $(0,\{1,4,5\})$\\
+3 & 0 & $0{,}532400358719^{+}$ & 1,459404 & 0,951558 / 0,943899 & 0,014450 & $(0,\{1,2,3\})$\\
+4 & 0 & $0{,}517063751284^{+}$ & 1,440950 & 0,742515 / 0,732277 & 0,015446 & $(0,\{1,4,5\})$\\
+5 & 0 & $0{,}511475147021^{+}$ & 1,426033 & 0,513322 / 0,505675 & 0,002091 & $(0,\{1,2,3\})$\\
+6 & 0 & $0{,}508204784559^{+}$ & 1,423937 & 0,296810 / 0,286410 & 0,005196 & $(0,\{1,4,5\})$\\
+7 & 0 & $0{,}505625265862^{+}$ & 1,424696 & 0,122243 / 0,110513 & 0,001592 & $(0,\{1,2,3\})$\\
+8 & 1 & $0{,}495001915900^{+}$ & 0,226358 & 0,011489 / 0,004323 & 0,014049 & $(1,\{2,5\})$\\
+\bottomrule
+\end{tabular}
+\caption{Événements des huit épisodes. $\bar T_r$ : borne inférieure arrondie à 12 décimales ; l'intervalle certifié est contenu dans $[T,T+10^{-12}]$ (dernière décimale +1). Les colonnes « pente » et « marge » sont identiques (à six décimales) pour les deux méthodes ; l'écart de pression est $\Theta-\max_{j\ne i_r}\sup P_j$ (M1 : méthode~1, M2 : méthode~2). La marge de recâblage est celle de la sélection non triviale : séparation entre les arêtes retirées et conservées (rangs 1--7), entre les arêtes ajoutées et non ajoutées (rang~8). Largeur des intervalles $\bar T_r$ : de $2\cdot10^{-23}$ à $2\cdot10^{-13}$ (M1), de $7\cdot10^{-29}$ à $4\cdot10^{-24}$ (M2).}\label{tab:huit}
+\end{table}
+
+\paragraph{Concordance.} Pour les huit rangs, les intervalles de $\bar T_r$ des deux méthodes se recoupent, de même que les intervalles de cosinus ; les déclencheurs, les mots et le signe des marges sont identiques (script \texttt{comparer\_certificats.py}, comparaison par arithmétique rationnelle exacte, sortie \texttt{sortie\_comparaison\_V1\_V2.txt}). La seconde méthode est plus grossière sur les écarts de pression --- au rang~8, $0{,}004323$ contre $0{,}011489$ --- mais strictement positive : elle conclut la même chose avec moins de précision. On certifie des événements, non des décimales.
+
+\section{Audit du lemme de Cauchy}\label{sec:audit}
+La preuve du §\ref{sec:cauchy} a été relue ligne à ligne contre le code (\texttt{audit\_cauchy\_lemme.md}) : sens des arrondis (minorant de $q_0$ pour le critère, majorants pour $|q_k|$ et $M$), degré complet de $q$, décalage $s^a$, résidu $\kappa_3P_{K+1}h^{K+1}$. Une correction de rédaction a été apportée à la proposition~\ref{prop:P} : l'inégalité différentielle « $|E'|\le-\kappa_3E+\delta$ » n'est pas justifiée pour $E<0$ ; on utilise la variation des constantes. La borne et le code sont inchangés. Trois contrôles numériques :
+\begin{enumerate}[nosep]
+\item 80 polynômes aléatoires et 9 cas adverses (zéros de $q$ en $\pm iz_0$), contre \texttt{mpmath} à 120 chiffres : 0 violation du reste ; coefficients identiques ; hypothèse du lemme vérifiée sur le cercle $|s|=r$ ;
+\item 6203 objets de pression construits par la vraie exécution des huit épisodes, recalculés par \texttt{acb.integral} de FLINT : 0 enclosure disjointe, plus grand écart de milieux $3{,}9\cdot10^{-31}$ ;
+\item la seconde implémentation complète (§\ref{sec:methodes}), qui n'utilise pas le lemme.
+\end{enumerate}
+
+\section{Limites explicites}\label{sec:limites}
+\begin{itemize}[nosep]
+\item \textbf{Épisode~1, (H2) : méthode~1 seule.} Les quotients de factorisation $\hat V_k,\hat H_k$ des nœuds non forcés ne sont certifiés que par la méthode~1. La méthode~2 reproduit au rang~1 l'instant $\bar T_1$, le déclencheur, la pente, l'écart de pression, le recâblage et sa marge, mais ne certifie pas ces minorants (son sous-programme « norme » indique $0$ pour les nœuds $1$--$5$ avant factorisation).
+\item \textbf{Repli de Duhamel.} Les pressions des nœuds~2 et 3 (très petite norme) sont bornées par quadrature de Duhamel dans la méthode~1 ; ce repli n'a pas été audité ligne à ligne. Il ne borne que des pressions loin de $\Theta$ ($<0{,}83$), sauf pour le concurrent critique du rang~8, que la méthode~2 borne indépendamment ($\ge0{,}004323$).
+\item \textbf{Dépendances partagées.} Même bibliothèque, mêmes entrées, même auteur ; aucune relecture par un tiers.
+\item \textbf{Intégrateur de référence.} DOP853 à \texttt{rtol}~$10^{-12}$ décale $\bar T_8$ de $10^{-11}$ (événement lent) ; avec des tolérances serrées il converge vers $0{,}4950019159007$, à l'intérieur de l'intervalle certifié.
+\item \textbf{Aucun rayon de voisinage}, aucune uniformité en $R$, aucune extension au-delà du rang~8.
+\item \textbf{Fidélité du champ.} Le champ vectoriel de la trajectoire certifiée coïncide avec celui du code de référence en double précision à $4{,}4\cdot10^{-16}$ près (\texttt{verif\_champ\_vs\_reference.py}) : c'est un contrôle de cohérence, non une preuve.
+\end{itemize}
+
+\section{Statut}
+\begin{center}
+\begin{tabular}{p{0.52\textwidth}p{0.38\textwidth}}
+\toprule
+Objet & Statut\\
+\midrule
+Théorème de transmission, sous (H1)--(H5) & démontré sous hypothèses ; non relu par un tiers\\
+Lemme de Cauchy, proposition~\ref{prop:P} & démontré ; relu ; testé\\
+(H1)--(H5) en $q_0$, $R=8$ & assisté par ordinateur, reproduit par une seconde méthode (sauf (H2) au rang~1)\\
+Voisinage de $q_0$ (existence) & conséquence du théorème\\
+Taille du voisinage, uniformité en $R$ & ouvert\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Fichiers.} \texttt{certif\_episodes.py}, \texttt{certif\_independant.py}, \texttt{certificat\_episodes.json}, \texttt{certificat\_independant.json}, \texttt{comparer\_certificats.py}, \texttt{audit\_cauchy.py}, \texttt{audit\_cauchy\_adverse.py}, \texttt{audit\_cauchy\_lemme.md}, \texttt{verif\_champ\_vs\_reference.py} et leurs sorties.
+\end{document}

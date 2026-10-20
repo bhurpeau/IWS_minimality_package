@@ -1,0 +1,134 @@
+trajectoire de reference (DOP853, rtol 1e-12 ; ecart attendu jusqu'a ~1e-11 au rang 8 : evenement lent) : r1 T=1.353301413 i=0; r2 T=0.581221987 i=0; r3 T=0.532400359 i=0; r4 T=0.517063751 i=0; r5 T=0.511475147 i=0; r6 T=0.508204785 i=0; r7 T=0.505625266 i=0; r8 T=0.495001916 i=1
+precision 192 bits ; ordre de Taylor 24 ; 32 morceaux de quadrature par pas
+[ep1] etape 0 : ordres d'annulation exacts en t=0 : True
+  noeud 0 (m=0) : ||Vhat|| >= 2.49684427 (<= 2.50001538) ; ||Hhat|| >= 1.24895065 (<= 1.25000385)
+  noeud 1 (m=1) : ||Vhat|| >= 0.11097156 (<= 0.11111145) ; ||Hhat|| >= 0.02774989 (<= 0.02777784)
+  noeud 2 (m=2) : ||Vhat|| >= 0.00133166 (<= 0.00133334) ; ||Hhat|| >= 0.00022198 (<= 0.00022223)
+  noeud 3 (m=2) : ||Vhat|| >= 0.00177554 (<= 0.00177779) ; ||Hhat|| >= 0.00029597 (<= 0.00029630)
+  noeud 4 (m=1) : ||Vhat|| >= 0.06658299 (<= 0.06666684) ; ||Hhat|| >= 0.01664994 (<= 0.01666670)
+  noeud 5 (m=1) : ||Vhat|| >= 0.06658290 (<= 0.06666689) ; ||Hhat|| >= 0.01664992 (<= 0.01666671)
+[ep1] P_j(t0) = n0 [0.43536808, 0.43536809], n1 [0.00000000, 0.00000001], n2 [0.00000000, 0.00000001], n3 [0.00000000, 0.00000001], n4 [0.00000000, 0.00000001], n5 [0.00000000, 0.00000001]
+[ep1] rayon P_0(t0) = 8.26e-48 ; sup_[0,t0] P_j <= n0 0.43752783, n1 0.00000001, n2 0.00000001, n3 0.00000001, n4 0.00000001, n5 0.00000001  (< Theta)
+=== episode 1 : declencheur noeud 0 ; 615 pas ; 142.6 s
+  T_1 in [1.353301412736, 1.353301412737] (largeur 1.81e-23)  ; DOP853 (rtol 1e-12) : 1.353301412736
+  pente P_0'(T_1) >= 1.357068
+  ecart de pression : Theta - max_{j != 0} sup_[0,T+] P_j >= 1.212984 (noeud 1)
+  sup_[0,T+] P_j : n1 <= 0.03702, n2 <= 0.00053, n3 <= 0.00070, n4 <= 0.02265, n5 <= 0.02232
+  (H5) min ||tau_j|| >= n0 0.28675, n1 0.28905, n2 0.25721, n3 0.25502, n4 0.17000, n5 0.28389
+  (H2) min ||V_j|| >= n0 0.024968, n1 0.000000, n2 0.000000, n3 0.000000, n4 0.000000, n5 0.000000
+  (H2) min ||H_j|| >= n0 0.000124, n1 0.000000, n2 0.000000, n3 0.000000, n4 0.000000, n5 0.000000
+  cos(tau_0, tau_1) (voisin) in [0.9878551, 0.9878552]
+  cos(tau_0, tau_4) (voisin) in [-0.8217485, -0.8217484]
+  cos(tau_0, tau_5) (voisin) in [0.9833653, 0.9833654]
+  cos(tau_0, tau_2) (non-voisin) in [0.8677271, 0.8677272]
+  cos(tau_0, tau_3) (non-voisin) in [-0.2352501, -0.2352500]
+  recablage : m=2, retires [4, 5], ajoutes [2, 3] => voisins de 0 : [1, 2, 3] ; marge retrait 0.004489, marge ajout -
+  (H2) quotients ||V_j||/t^(2m+1) >= n0 1.60824146, n1 0.07481684, n2 0.00091740, n3 0.00122291, n4 0.04656801, n5 0.04548528  (sur [t0, T+delta])
+  (H2) quotients ||H_j||/t^(2m+2) >= n0 0.95089504, n1 0.02010786, n2 0.00015685, n3 0.00020912, n4 0.01231699, n5 0.01212666  (sur [t0, T+delta])
+  rayon max de la boite post-impact : 1.610e-23 ; rayons des pressions P_j(T) : n0 0.0e+00, n1 3.7e-15, n2 4.7e-10, n3 6.3e-10, n4 2.7e-15, n5 2.2e-15
+=== episode 2 : declencheur noeud 0 ; 59 pas ; 6.7 s
+  T_2 in [0.581221987146, 0.581221987147] (largeur 5.07e-23)  ; DOP853 (rtol 1e-12) : 0.581221987146
+  pente P_0'(T_2) >= 1.461345
+  ecart de pression : Theta - max_{j != 0} sup_[0,T+] P_j >= 1.113441 (noeud 1)
+  sup_[0,T+] P_j : n1 <= 0.13656, n2 <= 0.04053, n3 <= 0.03338, n4 <= 0.06344, n5 <= 0.06071
+  (H5) min ||tau_j|| >= n0 0.33893, n1 0.37347, n2 0.25784, n3 0.25516, n4 0.14109, n5 0.30188
+  (H2) min ||V_j|| >= n0 1.112704, n1 0.198120, n2 0.004652, n3 0.006203, n4 0.099141, n5 0.084090
+  (H2) min ||H_j|| >= n0 1.819786, n1 0.073703, n2 0.001091, n3 0.001461, n4 0.045153, n5 0.044454
+  cos(tau_0, tau_1) (voisin) in [0.9923870, 0.9923871]
+  cos(tau_0, tau_2) (voisin) in [0.9358848, 0.9358849]
+  cos(tau_0, tau_3) (voisin) in [0.3648864, 0.3648865]
+  cos(tau_0, tau_4) (non-voisin) in [-0.8882954, -0.8882953]
+  cos(tau_0, tau_5) (non-voisin) in [0.9541021, 0.9541022]
+  recablage : m=2, retires [2, 3], ajoutes [4, 5] => voisins de 0 : [1, 4, 5] ; marge retrait 0.056502, marge ajout -
+  rayon max de la boite post-impact : 4.953e-23 ; rayons des pressions P_j(T) : n0 0.0e+00, n1 4.9e-15, n2 2.2e-08, n3 1.6e-08, n4 3.6e-15, n5 3.0e-15
+=== episode 3 : declencheur noeud 0 ; 54 pas ; 5.6 s
+  T_3 in [0.532400358719, 0.532400358720] (largeur 1.53e-22)  ; DOP853 (rtol 1e-12) : 0.532400358719
+  pente P_0'(T_3) >= 1.459404
+  ecart de pression : Theta - max_{j != 0} sup_[0,T+] P_j >= 0.951558 (noeud 1)
+  sup_[0,T+] P_j : n1 <= 0.29845, n2 <= 0.12460, n3 <= 0.10241, n4 <= 0.12744, n5 <= 0.11921
+  (H5) min ||tau_j|| >= n0 0.44631, n1 0.52358, n2 0.41460, n3 0.30395, n4 0.01663, n5 0.30194
+  (H2) min ||V_j|| >= n0 0.687493, n1 0.400855, n2 0.228788, n3 0.192845, n4 0.099933, n5 0.085558
+  (H2) min ||H_j|| >= n0 2.560557, n1 0.248801, n2 0.085268, n3 0.069934, n4 0.109609, n5 0.104194
+  cos(tau_0, tau_1) (voisin) in [0.9957407, 0.9957408]
+  cos(tau_0, tau_4) (voisin) in [0.8569091, 0.8569092]
+  cos(tau_0, tau_5) (voisin) in [0.9812900, 0.9812901]
+  cos(tau_0, tau_2) (non-voisin) in [0.9677058, 0.9677059]
+  cos(tau_0, tau_3) (non-voisin) in [0.5292245, 0.5292246]
+  recablage : m=2, retires [4, 5], ajoutes [2, 3] => voisins de 0 : [1, 2, 3] ; marge retrait 0.014450, marge ajout -
+  rayon max de la boite post-impact : 1.169e-22 ; rayons des pressions P_j(T) : n0 0.0e+00, n1 6.4e-15, n2 2.9e-08, n3 2.0e-08, n4 4.7e-15, n5 3.9e-15
+=== episode 4 : declencheur noeud 0 ; 52 pas ; 5.6 s
+  T_4 in [0.517063751284, 0.517063751285] (largeur 3.95e-22)  ; DOP853 (rtol 1e-12) : 0.517063751284
+  pente P_0'(T_4) >= 1.440950
+  ecart de pression : Theta - max_{j != 0} sup_[0,T+] P_j >= 0.742515 (noeud 1)
+  sup_[0,T+] P_j : n1 <= 0.50749, n2 <= 0.24275, n3 <= 0.20179, n4 <= 0.22121, n5 <= 0.20328
+  (H5) min ||tau_j|| >= n0 0.58718, n1 0.69773, n2 0.42392, n3 0.30810, n4 0.02540, n5 0.40731
+  (H2) min ||V_j|| >= n0 0.387658, n1 0.528203, n2 0.231992, n3 0.194972, n4 0.238172, n5 0.198610
+  (H2) min ||H_j|| >= n0 2.957118, n1 0.500125, n2 0.224245, n3 0.184278, n4 0.209110, n5 0.194307
+  cos(tau_0, tau_1) (voisin) in [0.9975267, 0.9975268]
+  cos(tau_0, tau_2) (voisin) in [0.9820804, 0.9820805]
+  cos(tau_0, tau_3) (voisin) in [0.7967215, 0.7967216]
+  cos(tau_0, tau_4) (non-voisin) in [0.9999936, 0.9999937]
+  cos(tau_0, tau_5) (non-voisin) in [0.9788209, 0.9788210]
+  recablage : m=2, retires [2, 3], ajoutes [4, 5] => voisins de 0 : [1, 4, 5] ; marge retrait 0.015446, marge ajout -
+  rayon max de la boite post-impact : 3.010e-22 ; rayons des pressions P_j(T) : n0 0.0e+00, n1 8.3e-15, n2 3.8e-08, n3 2.6e-08, n4 6.0e-15, n5 5.0e-15
+=== episode 5 : declencheur noeud 0 ; 52 pas ; 5.8 s
+  T_5 in [0.511475147021, 0.511475147022] (largeur 9.45e-22)  ; DOP853 (rtol 1e-12) : 0.511475147022
+  pente P_0'(T_5) >= 1.426033
+  ecart de pression : Theta - max_{j != 0} sup_[0,T+] P_j >= 0.513322 (noeud 1)
+  sup_[0,T+] P_j : n1 <= 0.73668, n2 <= 0.39050, n3 <= 0.32913, n4 <= 0.33921, n5 <= 0.30764
+  (H5) min ||tau_j|| >= n0 0.74827, n1 0.88485, n2 0.61739, n3 0.44452, n4 0.09709, n5 0.43857
+  (H2) min ||V_j|| >= n0 0.207134, n1 0.460741, n2 0.294986, n3 0.268999, n4 0.239513, n5 0.200654
+  (H2) min ||H_j|| >= n0 3.167067, n1 0.783847, n2 0.399582, n3 0.333180, n4 0.341170, n5 0.310863
+  cos(tau_0, tau_1) (voisin) in [0.9984377, 0.9984378]
+  cos(tau_0, tau_4) (voisin) in [0.9963465, 0.9963466]
+  cos(tau_0, tau_5) (voisin) in [0.9914170, 0.9914171]
+  cos(tau_0, tau_2) (non-voisin) in [0.9902813, 0.9902814]
+  cos(tau_0, tau_3) (non-voisin) in [0.8680184, 0.8680185]
+  recablage : m=2, retires [4, 5], ajoutes [2, 3] => voisins de 0 : [1, 2, 3] ; marge retrait 0.002091, marge ajout -
+  rayon max de la boite post-impact : 1.049e-21 ; rayons des pressions P_j(T) : n0 0.0e+00, n1 1.1e-14, n2 4.8e-08, n3 3.4e-08, n4 7.8e-15, n5 6.5e-15
+=== episode 6 : declencheur noeud 0 ; 51 pas ; 4.3 s
+  T_6 in [0.508204784559, 0.508204784560] (largeur 2.26e-21)  ; DOP853 (rtol 1e-12) : 0.508204784560
+  pente P_0'(T_6) >= 1.423937
+  ecart de pression : Theta - max_{j != 0} sup_[0,T+] P_j >= 0.296810 (noeud 1)
+  sup_[0,T+] P_j : n1 <= 0.95319, n2 <= 0.54625, n3 <= 0.46813, n4 <= 0.47804, n5 <= 0.43077
+  (H5) min ||tau_j|| >= n0 0.92000, n1 1.07740, n2 0.67503, n3 0.49739, n4 0.29031, n5 0.59123
+  (H2) min ||V_j|| >= n0 0.107178, n1 0.297687, n2 0.302642, n3 0.274643, n4 0.281929, n5 0.242492
+  (H2) min ||H_j|| >= n0 3.275483, n1 1.048427, n2 0.588447, n3 0.498935, n4 0.495809, n5 0.446420
+  cos(tau_0, tau_1) (voisin) in [0.9990060, 0.9990061]
+  cos(tau_0, tau_2) (voisin) in [0.9938096, 0.9938097]
+  cos(tau_0, tau_3) (voisin) in [0.9332011, 0.9332012]
+  cos(tau_0, tau_4) (non-voisin) in [0.9974985, 0.9974986]
+  cos(tau_0, tau_5) (non-voisin) in [0.9929010, 0.9929011]
+  recablage : m=2, retires [2, 3], ajoutes [4, 5] => voisins de 0 : [1, 4, 5] ; marge retrait 0.005196, marge ajout -
+  rayon max de la boite post-impact : 3.319e-21 ; rayons des pressions P_j(T) : n0 0.0e+00, n1 1.4e-14, n2 6.2e-08, n3 4.4e-08, n4 1.0e-14, n5 8.3e-15
+=== episode 7 : declencheur noeud 0 ; 51 pas ; 3.9 s
+  T_7 in [0.505625265862, 0.505625265863] (largeur 5.44e-21)  ; DOP853 (rtol 1e-12) : 0.505625265862
+  pente P_0'(T_7) >= 1.424696
+  ecart de pression : Theta - max_{j != 0} sup_[0,T+] P_j >= 0.122243 (noeud 1)
+  sup_[0,T+] P_j : n1 <= 1.12776, n2 <= 0.69822, n3 <= 0.60976, n4 <= 0.62208, n5 <= 0.55983
+  (H5) min ||tau_j|| >= n0 1.10106, n1 1.27022, n2 0.87936, n3 0.67821, n4 0.41776, n5 0.67568
+  (H2) min ||V_j|| >= n0 0.061286, n1 0.100894, n2 0.174799, n3 0.196312, n4 0.285409, n5 0.245882
+  (H2) min ||H_j|| >= n0 3.333134, n1 1.247103, n2 0.761386, n3 0.659022, n4 0.659652, n5 0.590983
+  cos(tau_0, tau_1) (voisin) in [0.9993055, 0.9993056]
+  cos(tau_0, tau_4) (voisin) in [0.9977130, 0.9977131]
+  cos(tau_0, tau_5) (voisin) in [0.9965821, 0.9965822]
+  cos(tau_0, tau_2) (non-voisin) in [0.9963591, 0.9963592]
+  cos(tau_0, tau_3) (non-voisin) in [0.9571435, 0.9571436]
+  recablage : m=2, retires [4, 5], ajoutes [2, 3] => voisins de 0 : [1, 2, 3] ; marge retrait 0.001592, marge ajout -
+  rayon max de la boite post-impact : 9.609e-21 ; rayons des pressions P_j(T) : n0 0.0e+00, n1 1.8e-14, n2 8.0e-08, n3 5.7e-08, n4 1.3e-14, n5 1.1e-14
+=== episode 8 : declencheur noeud 1 ; 100 pas ; 16.7 s
+  T_8 in [0.495001915900, 0.495001915901] (largeur 2.03e-13)  ; DOP853 (rtol 1e-12) : 0.495001915911
+  pente P_1'(T_8) >= 0.226358
+  ecart de pression : Theta - max_{j != 1} sup_[0,T+] P_j >= 0.011489 (noeud 0)
+  sup_[0,T+] P_j : n0 <= 1.23852, n2 <= 0.82448, n3 <= 0.73477, n4 <= 0.75725, n5 <= 0.68480
+  (H5) min ||tau_j|| >= n0 1.27887, n1 1.45883, n2 0.97848, n3 0.77866, n4 0.62357, n5 0.85190
+  (H2) min ||V_j|| >= n0 0.037797, n1 0.042097, n2 0.158372, n3 0.191097, n4 0.164205, n5 0.165040
+  (H2) min ||H_j|| >= n0 3.365762, n1 1.350533, n2 0.900185, n3 0.797756, n4 0.809746, n5 0.727034
+  cos(tau_1, tau_0) (voisin) in [0.9995113, 0.9995114]
+  cos(tau_1, tau_4) (voisin) in [0.9996727, 0.9996728]
+  cos(tau_1, tau_2) (non-voisin) in [0.9991677, 0.9991678]
+  cos(tau_1, tau_3) (non-voisin) in [0.9805851, 0.9805852]
+  cos(tau_1, tau_5) (non-voisin) in [0.9946345, 0.9946346]
+  recablage : m=2, retires [0, 4], ajoutes [2, 5] => voisins de 1 : [2, 5] ; marge retrait -, marge ajout 0.014049
+  rayon max de la boite post-impact : 3.002e-14 ; rayons des pressions P_j(T) : n0 2.7e-13, n1 0.0e+00, n2 1.0e-07, n3 7.2e-08, n4 1.2e-13, n5 1.1e-13
+duree totale 191.5 s

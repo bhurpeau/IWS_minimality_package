@@ -1,0 +1,41 @@
+-- (gamma_bar, lambda_bar) = (0, 1), eps = 0.001, perturbations changeant le mot : 0
+r= 1  min||V0||=0.0111  G=max||D_th V||/eps=0.3284  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0124
+r= 2  min||V0||=1.1142  G=max||D_th V||/eps=0.6834  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0780
+r= 3  min||V0||=0.6881  G=max||D_th V||/eps=0.9158  Q=max|grad(V.n)|^2/(eps^2||V||)=0.2538
+r= 4  min||V0||=0.3880  G=max||D_th V||/eps=0.9503  Q=max|grad(V.n)|^2/(eps^2||V||)=0.5872
+r= 5  min||V0||=0.2074  G=max||D_th V||/eps=0.7936  Q=max|grad(V.n)|^2/(eps^2||V||)=0.9821
+r= 6  min||V0||=0.1076  G=max||D_th V||/eps=0.5251  Q=max|grad(V.n)|^2/(eps^2||V||)=0.9959
+r= 7  min||V0||=0.0618  G=max||D_th V||/eps=0.2757  Q=max|grad(V.n)|^2/(eps^2||V||)=0.6103
+r= 8  min||V0||=0.0383  G=max||D_th V||/eps=0.1759  Q=max|grad(V.n)|^2/(eps^2||V||)=0.3989
+r= 9  min||V0||=0.0598  G=max||D_th V||/eps=0.1836  Q=max|grad(V.n)|^2/(eps^2||V||)=0.4381
+r=10  min||V0||=0.0303  G=max||D_th V||/eps=0.2635  Q=max|grad(V.n)|^2/(eps^2||V||)=0.4789
+r=11  min||V0||=0.0347  G=max||D_th V||/eps=0.3262  Q=max|grad(V.n)|^2/(eps^2||V||)=0.8647
+r=12  min||V0||=0.0257  G=max||D_th V||/eps=0.3295  Q=max|grad(V.n)|^2/(eps^2||V||)=1.2661
+r=13  min||V0||=0.0191  G=max||D_th V||/eps=0.3205  Q=max|grad(V.n)|^2/(eps^2||V||)=2.4629
+r=14  min||V0||=0.0071  G=max||D_th V||/eps=0.2829  Q=max|grad(V.n)|^2/(eps^2||V||)=4.9813
+r=15  min||V0||=0.0054  G=max||D_th V||/eps=0.2506  Q=max|grad(V.n)|^2/(eps^2||V||)=1.8609
+r=16  min||V0||=0.0092  G=max||D_th V||/eps=0.2245  Q=max|grad(V.n)|^2/(eps^2||V||)=0.9240
+r=17  min||V0||=0.0199  G=max||D_th V||/eps=0.1933  Q=max|grad(V.n)|^2/(eps^2||V||)=0.5467
+r=18  min||V0||=0.0214  G=max||D_th V||/eps=0.1903  Q=max|grad(V.n)|^2/(eps^2||V||)=0.4017
+r=19  min||V0||=0.0237  G=max||D_th V||/eps=0.1682  Q=max|grad(V.n)|^2/(eps^2||V||)=0.3155
+r=20  min||V0||=0.0241  G=max||D_th V||/eps=0.1696  Q=max|grad(V.n)|^2/(eps^2||V||)=0.3849
+r=21  min||V0||=0.0163  G=max||D_th V||/eps=0.1599  Q=max|grad(V.n)|^2/(eps^2||V||)=0.3252
+r=22  min||V0||=0.0095  G=max||D_th V||/eps=0.1408  Q=max|grad(V.n)|^2/(eps^2||V||)=0.8323
+r=23  min||V0||=0.0047  G=max||D_th V||/eps=0.1356  Q=max|grad(V.n)|^2/(eps^2||V||)=1.5914
+r=24  min||V0||=0.0034  G=max||D_th V||/eps=0.1027  Q=max|grad(V.n)|^2/(eps^2||V||)=0.8590
+r=25  min||V0||=0.0074  G=max||D_th V||/eps=0.0917  Q=max|grad(V.n)|^2/(eps^2||V||)=0.2420
+r=26  min||V0||=0.0117  G=max||D_th V||/eps=0.0711  Q=max|grad(V.n)|^2/(eps^2||V||)=0.1907
+r=27  min||V0||=0.0116  G=max||D_th V||/eps=0.0610  Q=max|grad(V.n)|^2/(eps^2||V||)=0.1209
+r=28  min||V0||=0.0146  G=max||D_th V||/eps=0.0548  Q=max|grad(V.n)|^2/(eps^2||V||)=0.1274
+r=29  min||V0||=0.0110  G=max||D_th V||/eps=0.0541  Q=max|grad(V.n)|^2/(eps^2||V||)=0.1074
+r=30  min||V0||=0.0108  G=max||D_th V||/eps=0.0477  Q=max|grad(V.n)|^2/(eps^2||V||)=0.1159
+r=31  min||V0||=0.0076  G=max||D_th V||/eps=0.0498  Q=max|grad(V.n)|^2/(eps^2||V||)=0.1397
+r=32  min||V0||=0.0043  G=max||D_th V||/eps=0.0422  Q=max|grad(V.n)|^2/(eps^2||V||)=0.1069
+r=33  min||V0||=0.0028  G=max||D_th V||/eps=0.0398  Q=max|grad(V.n)|^2/(eps^2||V||)=0.1938
+r=34  min||V0||=0.0032  G=max||D_th V||/eps=0.0353  Q=max|grad(V.n)|^2/(eps^2||V||)=0.1801
+r=35  min||V0||=0.0023  G=max||D_th V||/eps=0.0310  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0958
+r=36  min||V0||=0.0057  G=max||D_th V||/eps=0.0281  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0829
+r=37  min||V0||=0.0046  G=max||D_th V||/eps=0.0278  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0563
+r=38  min||V0||=0.0053  G=max||D_th V||/eps=0.0242  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0455
+r=39  min||V0||=0.0053  G=max||D_th V||/eps=0.0252  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0538
+r=40  min||V0||=0.0034  G=max||D_th V||/eps=0.0247  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0412

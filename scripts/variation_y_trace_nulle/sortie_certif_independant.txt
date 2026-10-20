@@ -1,0 +1,114 @@
+seconde implementation (tube de Gronwall + Cauchy--Kovalevskaya + integrateur FLINT) ; precision 192 bits ; ordre 30 ; pas max 1/64
+=== [independant] episode 1 : declencheur noeud 0 ; 104 pas ; 8.5 s
+  T_1 in [1.353301412736, 1.353301412737] (largeur 6.59e-29)  ; DOP853 : 1.353301412736
+  pente P_0'(T_1) >= 1.357068
+  ecart de pression : Theta - max_{j != 0} sup P_j >= 1.212621 (noeud 1)
+  (H5) min ||tau_j|| >= n0 0.28675, n1 0.28905, n2 0.25720, n3 0.25500, n4 0.16973, n5 0.28390
+  (H2) min ||V_j|| >= n0 0.019512, n1 0.000000, n2 0.000000, n3 0.000000, n4 0.000000, n5 0.000000
+  (H2) min ||H_j|| >= n0 0.000076, n1 0.000000, n2 0.000000, n3 0.000000, n4 0.000000, n5 0.000000
+  cos(tau_0, tau_1) (voisin) in [0.9878551, 0.9878552]
+  cos(tau_0, tau_4) (voisin) in [-0.8217485, -0.8217484]
+  cos(tau_0, tau_5) (voisin) in [0.9833653, 0.9833654]
+  cos(tau_0, tau_2) (non-voisin) in [0.8677271, 0.8677272]
+  cos(tau_0, tau_3) (non-voisin) in [-0.2352501, -0.2352500]
+  recablage : retires [4, 5], ajoutes [2, 3] => voisins de 0 : [1, 2, 3] ; marge retrait 0.004489, marge ajout -
+  rayon de tube post-impact (norme sup) : 1.559e-28
+=== [independant] episode 2 : declencheur noeud 0 ; 38 pas ; 3.0 s
+  T_2 in [0.581221987146, 0.581221987147] (largeur 3.07e-28)  ; DOP853 : 0.581221987146
+  pente P_0'(T_2) >= 1.461345
+  ecart de pression : Theta - max_{j != 0} sup P_j >= 1.109277 (noeud 1)
+  (H5) min ||tau_j|| >= n0 0.33893, n1 0.37348, n2 0.25784, n3 0.25559, n4 0.13991, n5 0.30188
+  (H2) min ||V_j|| >= n0 1.112727, n1 0.198120, n2 0.004655, n3 0.006206, n4 0.098755, n5 0.083352
+  (H2) min ||H_j|| >= n0 1.819802, n1 0.073711, n2 0.001101, n3 0.001468, n4 0.045154, n5 0.044455
+  cos(tau_0, tau_1) (voisin) in [0.9923870, 0.9923871]
+  cos(tau_0, tau_2) (voisin) in [0.9358848, 0.9358849]
+  cos(tau_0, tau_3) (voisin) in [0.3648864, 0.3648865]
+  cos(tau_0, tau_4) (non-voisin) in [-0.8882954, -0.8882953]
+  cos(tau_0, tau_5) (non-voisin) in [0.9541021, 0.9541022]
+  recablage : retires [2, 3], ajoutes [4, 5] => voisins de 0 : [1, 4, 5] ; marge retrait 0.056502, marge ajout -
+  rayon de tube post-impact (norme sup) : 6.951e-28
+=== [independant] episode 3 : declencheur noeud 0 ; 35 pas ; 3.1 s
+  T_3 in [0.532400358719, 0.532400358720] (largeur 1.19e-27)  ; DOP853 : 0.532400358719
+  pente P_0'(T_3) >= 1.459404
+  ecart de pression : Theta - max_{j != 0} sup P_j >= 0.943899 (noeud 1)
+  (H5) min ||tau_j|| >= n0 0.44632, n1 0.52358, n2 0.41460, n3 0.30397, n4 0.01756, n5 0.30194
+  (H2) min ||V_j|| >= n0 0.687505, n1 0.400861, n2 0.226676, n3 0.191453, n4 0.099933, n5 0.085559
+  (H2) min ||H_j|| >= n0 2.560564, n1 0.248807, n2 0.085270, n3 0.069935, n4 0.109616, n5 0.104201
+  cos(tau_0, tau_1) (voisin) in [0.9957407, 0.9957408]
+  cos(tau_0, tau_4) (voisin) in [0.8569091, 0.8569092]
+  cos(tau_0, tau_5) (voisin) in [0.9812900, 0.9812901]
+  cos(tau_0, tau_2) (non-voisin) in [0.9677058, 0.9677059]
+  cos(tau_0, tau_3) (non-voisin) in [0.5292245, 0.5292246]
+  recablage : retires [4, 5], ajoutes [2, 3] => voisins de 0 : [1, 2, 3] ; marge retrait 0.014450, marge ajout -
+  rayon de tube post-impact (norme sup) : 2.498e-27
+=== [independant] episode 4 : declencheur noeud 0 ; 34 pas ; 2.7 s
+  T_4 in [0.517063751284, 0.517063751285] (largeur 4.15e-27)  ; DOP853 : 0.517063751284
+  pente P_0'(T_4) >= 1.440950
+  ecart de pression : Theta - max_{j != 0} sup P_j >= 0.732277 (noeud 1)
+  (H5) min ||tau_j|| >= n0 0.58718, n1 0.69773, n2 0.42392, n3 0.30810, n4 0.02544, n5 0.40731
+  (H2) min ||V_j|| >= n0 0.387663, n1 0.528212, n2 0.231997, n3 0.194975, n4 0.236865, n5 0.196636
+  (H2) min ||H_j|| >= n0 2.957121, n1 0.500128, n2 0.224255, n3 0.184286, n4 0.209111, n5 0.194309
+  cos(tau_0, tau_1) (voisin) in [0.9975267, 0.9975268]
+  cos(tau_0, tau_2) (voisin) in [0.9820804, 0.9820805]
+  cos(tau_0, tau_3) (voisin) in [0.7967215, 0.7967216]
+  cos(tau_0, tau_4) (non-voisin) in [0.9999936, 0.9999937]
+  cos(tau_0, tau_5) (non-voisin) in [0.9788209, 0.9788210]
+  recablage : retires [2, 3], ajoutes [4, 5] => voisins de 0 : [1, 4, 5] ; marge retrait 0.015446, marge ajout -
+  rayon de tube post-impact (norme sup) : 8.293e-27
+=== [independant] episode 5 : declencheur noeud 0 ; 33 pas ; 2.6 s
+  T_5 in [0.511475147021, 0.511475147022] (largeur 1.37e-26)  ; DOP853 : 0.511475147022
+  pente P_0'(T_5) >= 1.426033
+  ecart de pression : Theta - max_{j != 0} sup P_j >= 0.505675 (noeud 1)
+  (H5) min ||tau_j|| >= n0 0.74827, n1 0.88485, n2 0.61739, n3 0.44453, n4 0.09709, n5 0.43858
+  (H2) min ||V_j|| >= n0 0.207136, n1 0.458940, n2 0.293138, n3 0.267639, n4 0.239517, n5 0.200656
+  (H2) min ||H_j|| >= n0 3.167068, n1 0.783848, n2 0.399587, n3 0.333184, n4 0.341175, n5 0.310869
+  cos(tau_0, tau_1) (voisin) in [0.9984377, 0.9984378]
+  cos(tau_0, tau_4) (voisin) in [0.9963465, 0.9963466]
+  cos(tau_0, tau_5) (voisin) in [0.9914170, 0.9914171]
+  cos(tau_0, tau_2) (non-voisin) in [0.9902813, 0.9902814]
+  cos(tau_0, tau_3) (non-voisin) in [0.8680184, 0.8680185]
+  recablage : retires [4, 5], ajoutes [2, 3] => voisins de 0 : [1, 2, 3] ; marge retrait 0.002091, marge ajout -
+  rayon de tube post-impact (norme sup) : 2.623e-26
+=== [independant] episode 6 : declencheur noeud 0 ; 33 pas ; 2.5 s
+  T_6 in [0.508204784559, 0.508204784560] (largeur 4.29e-26)  ; DOP853 : 0.508204784560
+  pente P_0'(T_6) >= 1.423937
+  ecart de pression : Theta - max_{j != 0} sup P_j >= 0.286410 (noeud 1)
+  (H5) min ||tau_j|| >= n0 0.92000, n1 1.07740, n2 0.67504, n3 0.49739, n4 0.29031, n5 0.59123
+  (H2) min ||V_j|| >= n0 0.107179, n1 0.291349, n2 0.302648, n3 0.274647, n4 0.279209, n5 0.239862
+  (H2) min ||H_j|| >= n0 3.275483, n1 1.048432, n2 0.588451, n3 0.498939, n4 0.495812, n5 0.446423
+  cos(tau_0, tau_1) (voisin) in [0.9990060, 0.9990061]
+  cos(tau_0, tau_2) (voisin) in [0.9938096, 0.9938097]
+  cos(tau_0, tau_3) (voisin) in [0.9332011, 0.9332012]
+  cos(tau_0, tau_4) (non-voisin) in [0.9974985, 0.9974986]
+  cos(tau_0, tau_5) (non-voisin) in [0.9929010, 0.9929011]
+  recablage : retires [2, 3], ajoutes [4, 5] => voisins de 0 : [1, 4, 5] ; marge retrait 0.005196, marge ajout -
+  rayon de tube post-impact (norme sup) : 8.199e-26
+=== [independant] episode 7 : declencheur noeud 0 ; 33 pas ; 2.5 s
+  T_7 in [0.505625265862, 0.505625265863] (largeur 1.33e-25)  ; DOP853 : 0.505625265862
+  pente P_0'(T_7) >= 1.424696
+  ecart de pression : Theta - max_{j != 0} sup P_j >= 0.110513 (noeud 1)
+  (H5) min ||tau_j|| >= n0 1.10106, n1 1.27022, n2 0.87936, n3 0.67821, n4 0.41776, n5 0.67568
+  (H2) min ||V_j|| >= n0 0.061307, n1 0.094764, n2 0.168775, n3 0.191561, n4 0.285414, n5 0.245885
+  (H2) min ||H_j|| >= n0 3.333134, n1 1.247111, n2 0.761394, n3 0.659028, n4 0.659654, n5 0.590985
+  cos(tau_0, tau_1) (voisin) in [0.9993055, 0.9993056]
+  cos(tau_0, tau_4) (voisin) in [0.9977130, 0.9977131]
+  cos(tau_0, tau_5) (voisin) in [0.9965821, 0.9965822]
+  cos(tau_0, tau_2) (non-voisin) in [0.9963591, 0.9963592]
+  cos(tau_0, tau_3) (non-voisin) in [0.9571435, 0.9571436]
+  recablage : retires [4, 5], ajoutes [2, 3] => voisins de 0 : [1, 2, 3] ; marge retrait 0.001592, marge ajout -
+  rayon de tube post-impact (norme sup) : 2.571e-25
+=== [independant] episode 8 : declencheur noeud 1 ; 32 pas ; 2.5 s
+  T_8 in [0.495001915900, 0.495001915901] (largeur 4.32e-24)  ; DOP853 : 0.495001915911
+  pente P_1'(T_8) >= 0.226358
+  ecart de pression : Theta - max_{j != 1} sup P_j >= 0.004323 (noeud 0)
+  (H5) min ||tau_j|| >= n0 1.27887, n1 1.45883, n2 0.97848, n3 0.77866, n4 0.62357, n5 0.85190
+  (H2) min ||V_j|| >= n0 0.037797, n1 0.042304, n2 0.157492, n3 0.190441, n4 0.161099, n5 0.162356
+  (H2) min ||H_j|| >= n0 3.365762, n1 1.349534, n2 0.900185, n3 0.797756, n4 0.809747, n5 0.727034
+  cos(tau_1, tau_0) (voisin) in [0.9995113, 0.9995114]
+  cos(tau_1, tau_4) (voisin) in [0.9996727, 0.9996728]
+  cos(tau_1, tau_2) (non-voisin) in [0.9991677, 0.9991678]
+  cos(tau_1, tau_3) (non-voisin) in [0.9805851, 0.9805852]
+  cos(tau_1, tau_5) (non-voisin) in [0.9946345, 0.9946346]
+  recablage : retires [0, 4], ajoutes [2, 5] => voisins de 1 : [2, 5] ; marge retrait -, marge ajout 0.014049
+  rayon de tube post-impact (norme sup) : 1.356e-24
+duree totale 27.4 s

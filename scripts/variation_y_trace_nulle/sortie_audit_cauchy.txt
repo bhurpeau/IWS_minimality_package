@@ -1,0 +1,25 @@
+##### PARTIE A : tests unitaires (polynomes aleatoires, mpmath 120 chiffres)
+[A] 80 tests, rayons choisis (mult:nb) {'unsound': 14, 64: 24, 48: 4, 12: 10, 16: 8, 32: 9, 8: 5, 24: 6}, violations 0, plus grand rapport reste_vrai/R = 1.848e-05
+[A] duree 231.0 s
+
+##### CAS ADVERSE (zeros de q au bord du disque)
+1/10 1/100 unsound
+1/10 1/50 unsound
+1/10 1/20 unsound
+z0=1/3 h=1/100 mult=16  vrai reste 1.574e-42  <= R 1.031e-30  OK
+z0=1/3 h=1/50 mult=8  vrai reste 1.054e-34  <= R 3.705e-23  OK
+1/3 1/20 unsound
+z0=2 h=1/100 mult=64  vrai reste 9.237e-63  <= R 8.717e-46  OK
+z0=2 h=1/50 mult=64  vrai reste 6.199e-55  <= R 8.717e-46  OK
+z0=2 h=1/20 mult=24  vrai reste 1.376e-44  <= R 3.993e-35  OK
+
+##### PARTIE B : validation croisee des PTaylor reels par acb.integral de FLINT (huit episodes)
+12:[B] episode 1 termine : 3670 PTaylor valides, disjoints 0, plus grand |dmilieu|/(r1+r2) = 9.65e-12, plus grand |dmilieu| = 3.560e-56
+13:[B] episode 2 termine : 3983 PTaylor valides, disjoints 0, plus grand |dmilieu|/(r1+r2) = 5.09e-10, plus grand |dmilieu| = 8.234e-34
+14:[B] episode 3 termine : 4317 PTaylor valides, disjoints 0, plus grand |dmilieu|/(r1+r2) = 8.42e-10, plus grand |dmilieu| = 3.758e-33
+15:[B] episode 4 termine : 4639 PTaylor valides, disjoints 0, plus grand |dmilieu|/(r1+r2) = 9.1e-10, plus grand |dmilieu| = 6.935e-33
+16:[B] episode 5 termine : 4961 PTaylor valides, disjoints 0, plus grand |dmilieu|/(r1+r2) = 9.1e-10, plus grand |dmilieu| = 4.516e-32
+17:[B] episode 6 termine : 5277 PTaylor valides, disjoints 0, plus grand |dmilieu|/(r1+r2) = 9.1e-10, plus grand |dmilieu| = 7.959e-32
+18:[B] episode 7 termine : 5593 PTaylor valides, disjoints 0, plus grand |dmilieu|/(r1+r2) = 9.1e-10, plus grand |dmilieu| = 3.901e-31
+19:[B] episode 8 termine : 6203 PTaylor valides, disjoints 0, plus grand |dmilieu|/(r1+r2) = 9.1e-10, plus grand |dmilieu| = 3.901e-31
+20:[B] duree totale 184.1 s ; cas disjoints : []

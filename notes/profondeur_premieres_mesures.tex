@@ -1,0 +1,76 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm,booktabs,enumitem,geometry}
+\geometry{margin=2.4cm}
+\theoremstyle{remark}
+\newtheorem{remarque}{Remarque}
+\newcommand{\R}{\mathbb R}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\vth}{\vartheta}
+\newcommand{\D}{\mathrm D}
+\sloppy\setlength{\emergencystretch}{3em}
+
+\title{Profondeur : premi\`eres mesures sur le noyau complet}
+\author{Programme de soustraction --- IWS, Tome II (travail de recherche)}
+\date{octobre 2026 --- version V1}
+\begin{document}
+\maketitle
+
+\noindent\textbf{Objet et statut.} On aborde le point laiss\'e de c\^ot\'e dans les notes pr\'ec\'edentes : l'\emph{uniformit\'e en le rang $r$} des impacts de Ka\"{\i}ros. Suivant la remarque de Benoit sur la sensibilit\'e pertinente, on ne mesure pas $1/\norm{V}$ seul mais la hessienne de la norme, $\norm{P^\perp_V\D_\vth V}^2/\norm{V}$. Tout ce qui suit est \textbf{t\'emoin num\'erique} (DOP853, \texttt{rtol}~$10^{-12}$, un seul point de base, un seul protocole) ; rien n'est d\'emontr\'e. Protocole : constantes du manuscrit ($\Theta=\frac54$, $r_P=\frac7{20}$, $r_V=\frac12$), $N=6$, $d=2$, graphe $A_1$ \og kept1 \fg, for\c{c}age sur le n\oe ud~0, d\'epart au repos, trace de r\'ef\'erence \texttt{FB.tau\_ref()}, $(\gamma_1,\lambda)=\varepsilon(\bar\gamma,\bar\lambda)$. Script : \texttt{verif\_profondeur.py}, sorties \texttt{sortie\_profondeur.txt} et \texttt{sortie\_profondeur\_B40.txt}.
+
+\section{Grandeurs mesur\'ees}
+Pour l'\'episode $r$ et le temps local $s$ : $m_r=\min_{s}\norm{V_0(s)}$ (hors $s\le10^{-3}$), $G_r=\max_s\norm{\D_\vth V_0(s)}/\varepsilon$ et, avec $n$ la normale unitaire \`a $V_0$ (en $d=2$, $P^\perp_V\D_\vth V_0=\nabla_\vth(V_0\!\cdot n)\,n$),
+\[
+Q_r=\max_s\frac{\lvert\nabla_\vth (V_0\!\cdot n)\rvert^2}{\varepsilon^2\,\norm{V_0}}.
+\]
+$\D_\vth$ est calcul\'e par diff\'erences finies centr\'ees (pas $10^{-4}$) sur les $12$ coordonn\'ees de $\vth$, \`a temps local fix\'e ; on v\'erifie \`a chaque fois que le mot (lettres comprenant le n\oe ud d\'eclencheur) est inchang\'e (0 changement sur les 24 perturbations, tous cas).
+
+\section{Trajectoire visible ($\varepsilon=0$)}
+\begin{center}\small
+\begin{tabular}{r|cccccccc}
+\toprule
+rang & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8\\
+\midrule
+d\'eclencheur & 0&0&0&0&0&0&0&\textbf{1}\\
+marge $\Theta-P_{(2)}$ & 1,213 & 1,113 & 0,952 & 0,743 & 0,513 & 0,297 & 0,122 & \textbf{0,0115}\\
+$\norm{V_0}$ \`a l'impact & 2,226 & 1,375 & 0,775 & 0,414 & 0,214 & 0,123 & 0,076 & 0,059\\
+\bottomrule
+\end{tabular}
+\end{center}
+(i) \emph{D\'eclencheurs forc\'es.} Les sept premiers impacts sont d\'eclench\'es par le n\oe ud forc\'e~0 ; le huiti\`eme l'est par le n\oe ud~1, avec une marge de pression de $0{,}0115$ seulement. Les \'enonc\'es \`a \og d\'eclencheurs forc\'es \fg{} couvrent donc, dans ce protocole, les rangs $\le7$ ; au-del\`a le d\'eclencheur alterne (n\oe ud~0 sauf rang~8). Cette marge est proche d'un mur : la bascule de ce huiti\`eme d\'eclencheur au rang suivant se produit pour $\gamma_1\approx3{,}1\cdot10^{-3}$ ($\bar\gamma=1$), $\varepsilon\approx7{,}1\cdot10^{-3}$ ($\bar\gamma=\bar\lambda=1$), et n'a pas lieu avant $10^{-2}$ pour $\bar\lambda$ seul. La profondeur~8 du carnet (7 recâblages et le 8\textsuperscript{e} impact avant saut) n'est pas touch\'ee, puisque le d\'eclencheur du 8\textsuperscript{e} impact n'est pas une lettre du mot de profondeur~8 ; mais tout mot plus profond doit tenir compte de ce mur.
+
+(ii) \emph{Non-annulation.} $\norm{V_0}$ \`a l'impact d\'ecro\^{\i}t d'un facteur $1{,}6$ \`a $1{,}9$ par rang jusqu'au rang~7, puis d\'ecro\^{\i}t en moyenne comme $e^{-0{,}115\,T_r}$ (ajustement sur les rangs $15$--$60$ ; $\beta=0{,}12$), de l'ordre de $10^{-2}$ aux rangs $10$--$30$ et $10^{-3}$ aux rangs $40$--$60$. Le minimum int\'erieur de $\norm{V_0}$ atteint $0{,}007$ au rang~14 et environ $10^{-4}$ au rang~48 : la borne inf\'erieure $m_r>0$ n'est pas uniforme en $r$ (aucun z\'ero exact n'a \'et\'e rencontr\'e). Le mot du \'episode reste le m\^eme sous perturbation gaussienne de $\vth$ d'amplitude $\le10^{-3}$ : $12/12$ tirages sans divergence jusqu'au rang~$59$ ; \`a $3\cdot10^{-3}$, $1/12$ ou $2/12$ divergent d\`es le premier saut (taille de la chambre, pas un effet de profondeur).
+
+\section{Sensibilit\'e transverse ($\varepsilon>0$)}
+Valeurs pour $(\bar\gamma,\bar\lambda)=(0,1)$, $\varepsilon=10^{-3}$ (mot inchang\'e, rangs $1$--$40$) :
+\begin{center}\small
+\begin{tabular}{r|rrrrrrrrrrrr}
+\toprule
+$r$ & 2 & 4 & 6 & 8 & 10 & 12 & 14 & 16 & 20 & 23 & 30 & 40\\
+\midrule
+$m_r$ & 1,114 & 0,388 & 0,108 & 0,038 & 0,030 & 0,026 & 0,007 & 0,009 & 0,024 & 0,005 & 0,011 & 0,003\\
+$G_r$ & 0,683 & 0,950 & 0,525 & 0,176 & 0,264 & 0,330 & 0,283 & 0,225 & 0,170 & 0,136 & 0,048 & 0,025\\
+$Q_r$ & 0,078 & 0,587 & 0,996 & 0,399 & 0,479 & 1,266 & \textbf{4,98} & 0,924 & 0,385 & 1,591 & 0,116 & 0,041\\
+\bottomrule
+\end{tabular}
+\end{center}
+Pour $\bar\gamma=1$ seul ($r\le14$) : $G_r$ de $1{,}23$ (rang~1) \`a $0{,}08$ (rang~14), $Q_r\le0{,}24$. Moyennes de $Q_r$ par blocs de dix rangs ($\bar\lambda=1$) : $0{,}48$ ; $1{,}40$ ; $0{,}45$ ; $0{,}10$ ; maximum $4{,}98$ (rang~14, quand $m_r=0{,}007$) ; $G_r$ moyen : $0{,}51$ ; $0{,}25$ ; $0{,}09$ ; $0{,}03$. Ajustements en $T_r$ (rangs $15$--$40$) : $G_r\sim e^{-0{,}20\,T_r}$, $Q_r\sim e^{-0{,}24\,T_r}$.
+
+\emph{R\'eserve sur l'ind\'ependance en $\varepsilon$.} $Q_r$ (normalis\'e par $\varepsilon^2$) co\"{\i}ncide \`a $5\,\%$ pr\`es entre $\varepsilon=10^{-2}$ et $10^{-3}$ jusqu'au rang~7, mais les deux valeurs diff\`erent de $16$ \`a $44\,\%$ aux rangs $8$--$13$ (par exemple rang~13 : $1{,}71$ contre $2{,}46$). Je n'ai pas expliqu\'e cet \'ecart ; les valeurs rapport\'ees sont celles de $10^{-3}$.
+
+\section{Lecture, et ce qui n'est pas \'etabli}
+\paragraph{Ce que montrent les mesures.} Sur ce point de base, il n'y a pas d'amplification g\'eom\'etrique : $\norm{V}$ d\'ecro\^{\i}t comme $e^{-\beta T}$ (le n\oe ud forc\'e s'approche d'un r\'egime quasi stationnaire quand les traces, de relaxation $\beta$, se stabilisent), mais le gain transverse d\'ecro\^{\i}t plus vite, de sorte que $Q_r\approx G_r^2/m_r$ d\'ecro\^{\i}t aussi. Une premi\`ere lecture \og $Q_r\propto1/\norm{V}$ diverge \fg{} fond\'ee sur les rangs $\le14$ \'etait donc fausse : la mont\'ee de $0{,}34$ (rang~8) \`a $5$ (rang~14) est un pic, associ\'e au minimum int\'erieur $m_{14}=0{,}007$, et non une tendance. Les pics de $Q_r$ sont des \'ev\`enements de quasi-annulation (rangs~14 et~23), ce qui reste l'obstacle local \`a une constante uniforme.
+
+\paragraph{Ce qui n'est pas \'etabli.}
+\begin{itemize}[nosep]
+\item Aucune borne $\norm{\D_\vth V_0}\le C\varepsilon e^{-\kappa T_r}$ n'est d\'emontr\'ee ; elle exigerait de contr\^oler la propagation \`a travers les matrices de saltation $S_j$ (le produit des $S_j$ effectivement transmis \`a $V_0$, pas un majorant du produit). L'exposant observ\'e ($0{,}20$) est entre $\beta$ et $2\beta$ ; je ne l'explique pas.
+\item Un seul point de base, un seul protocole ($d=2$, n\oe ud~0 forc\'e). Seule la vitesse du n\oe ud forc\'e est mesur\'ee ; au rang~8, o\`u le n\oe ud~1 d\'eclenche, $\norm{V_1}=0{,}099$ n'est pas analys\'ee.
+\item $\varepsilon$ est petit mais fix\'e : la bascule du d\'eclencheur du rang~8 pour $\gamma_1\approx3\cdot10^{-3}$ montre que $\varepsilon_0(r)$ est born\'e par une marge de pression, donc que l'uniformit\'e en $r$ de $\varepsilon_0$ n'est pas acquise (marge $0{,}0115$ au rang~8, $0{,}12$ au rang~7).
+\item Rien n'est dit de la transmission hybride sur plusieurs Ka\"{\i}ros avec un z\'ero de $V_0$, ni du cas $\Theta=\frac{11}5$ en profondeur.
+\end{itemize}
+
+\paragraph{Suite possible.} (a) Mesurer $\nu_r=$ marge de pression et pente $\mathrm dP/\mathrm dt$ des deux premiers n\oe uds sur les rangs $\ge8$ pour borner $\varepsilon_0(r)$ ; (b) recommencer avec un second point de base (autre $\varphi_4$) et un second protocole pour voir si la d\'ecroissance en $e^{-\beta T}$ et les pics aux quasi-annulations sont g\'en\'eriques ; (c) \'etudier le n\oe ud~1 comme d\'eclencheur non forc\'e (rang~8) ; (d) \'ecrire la borne de propagation par les $S_j$ dans la classe $\lambda=0$ puis $\lambda>0$.
+
+\end{document}

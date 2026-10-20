@@ -1,0 +1,35 @@
+etape 0 : ordre 24, h = 1/100, largeur de l'enclosure a priori (max) = 0.038081909937318414
+ordres d'annulation en t = 0 (coefficients exactement nuls, tous noeuds) : True
+quotients V_k/t^(2m+1), H_k/t^(2m+2) sur [0, t0] : minorants certifies (norme)
+  noeud 0 (m=0) : ||Vhat|| >= 2.49684427 (<= 2.50001538) ; ||Hhat|| >= 1.24895065 (<= 1.25000385)
+  noeud 1 (m=1) : ||Vhat|| >= 0.11097156 (<= 0.11111145) ; ||Hhat|| >= 0.02774989 (<= 0.02777784)
+  noeud 2 (m=2) : ||Vhat|| >= 0.00133166 (<= 0.00133334) ; ||Hhat|| >= 0.00022198 (<= 0.00022223)
+  noeud 3 (m=2) : ||Vhat|| >= 0.00177554 (<= 0.00177779) ; ||Hhat|| >= 0.00029597 (<= 0.00029630)
+  noeud 4 (m=1) : ||Vhat|| >= 0.06658299 (<= 0.06666684) ; ||Hhat|| >= 0.01664994 (<= 0.01666670)
+  noeud 5 (m=1) : ||Vhat|| >= 0.06658290 (<= 0.06666689) ; ||Hhat|| >= 0.01664992 (<= 0.01666671)
+P_0(t0) in [0.43536789, 0.43536821]
+P_0 sur [0,t0] : sup <= P_0(0) + t0 sup g_0 <= 0.43760076  (< Theta = 1.25) ; sup g_0 <= 0.01007507
+67 slabs, duree de calcul 7.5 s
+T_1 in [1.353284878, 1.353314176]  (largeur 2.93e-05) ; DOP853 : 1.353301412736424
+P_0'(T_1) >= 1.357043   (numerique : 1.357069)
+fenetre de croissance de P_0 : slabs 64 a 64 (P_0' > 0 certifie), P_0 < Theta au debut
+pressions des autres noeuds : P_j <= sup g_j / kappa_3 :
+   noeud 1 : <= 0.277997  (< Theta = 1.25)
+   noeud 2 : <= 0.006188  (< Theta = 1.25)
+   noeud 3 : <= 0.008248  (< Theta = 1.25)
+   noeud 4 : <= 0.172706  (< Theta = 1.25)
+   noeud 5 : <= 0.168902  (< Theta = 1.25)
+(H5) min_j ||tau_j(t)|| >= : n0 >= 0.28669, n1 >= 0.28893, n2 >= 0.25669, n3 >= 0.25430, n4 >= 0.16458, n5 >= 0.28372
+quotients ||V_k||/t^(2m+1) et ||H_k||/t^(2m+2) apres t0 (minorants, slabs) :
+   noeud 0 : V >= 1.586704823 ; H >= 0.945162499
+   noeud 1 : V >= 0.073692437 ; H >= 0.016031028
+   noeud 2 : V >= 0.000651282 ; H >= 0.000091066
+   noeud 3 : V >= 0.000868376 ; H >= 0.000121421
+   noeud 4 : V >= 0.044235545 ; H >= 0.009621380
+   noeud 5 : V >= 0.044203756 ; H >= 0.009616939
+   cos(tau_0, tau_1)(T_1) in [0.98782589, 0.98788442]
+   cos(tau_0, tau_4)(T_1) in [-0.82178881, -0.82170769]
+   cos(tau_0, tau_5)(T_1) in [0.98334365, 0.98338700]
+(H1) marge c_1 - c_4 >= 1.809533 ; c_1 - c_5 >= 0.004438  (numerique : 1.8096 ; 0.004490)
+=> voisins de 0 conserves : {1} ; retires : {4,5} ; ajoutes : {2,3}  (mot (0,{1,2,3}), conforme a WORD_REF)
+duree totale 7.5 s ; precision 256 bits ; ordre de Taylor 24

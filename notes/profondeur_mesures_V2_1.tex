@@ -1,0 +1,143 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm,booktabs,enumitem,geometry}
+\geometry{margin=2.4cm}
+\theoremstyle{remark}
+\newtheorem{remarque}{Remarque}
+\newcommand{\R}{\mathbb R}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\vth}{\vartheta}
+\newcommand{\D}{\mathrm D}
+\sloppy\setlength{\emergencystretch}{3em}
+
+\title{Profondeur : mesures sur le noyau complet et propagation variationnelle}
+\author{Programme de soustraction --- IWS, Tome II (travail de recherche)}
+\date{octobre 2026 --- version V2.1}
+\begin{document}
+\maketitle
+
+\noindent\textbf{Objet et statut.} Suite de la V1, apr\`es relecture de Benoit. Tout est \textbf{t\'emoin num\'erique} (DOP853, \texttt{rtol}~$10^{-12}$, un seul point de base, un seul protocole) ; rien n'est d\'emontr\'e. Protocole : constantes du manuscrit ($\Theta=\frac54$, $r_P=\frac7{20}$, $r_V=\frac12$), $N=6$, $d=2$, graphe $A_1$ \og kept1 \fg, for\c{c}age sur le n\oe ud~0, d\'epart au repos, trace \texttt{FB.tau\_ref()}, $(\gamma_1,\lambda)=\varepsilon(\bar\gamma,\bar\lambda)$. Scripts : \texttt{verif\_profondeur\_V2.py}, \texttt{verif\_profondeur\_propagation.py}, \texttt{verif\_profondeur\_derive\_visible.py}, \texttt{verif\_profondeur\_bascule\_rang8.py}, \texttt{verif\_profondeur\_saut\_rang8.py} (sorties \texttt{sortie\_profondeur\_V2\_*.txt}, \texttt{sortie\_propagation\_*.txt}, \texttt{sortie\_profondeur\_derive\_visible.txt}).
+
+\paragraph{Corrections par rapport \`a la V1.}
+(a) $Q_r\le G_r^2/m_r$, et non $Q_r\approx G_r^2/m_r$ : le rapport mesur\'e vaut $0{,}2$ \`a $0{,}6$ (section~\ref{sec:Q}). (b) L'\'ecart entre $\varepsilon=10^{-2}$ et $10^{-3}$ a deux causes distinctes, \'etablies s\'epar\'ement (section~\ref{sec:eps}). (c) La persistance du mot est maintenant mesur\'ee jusqu'au rang~$59$ (le texte de la V1 la citait avant que la sortie ne la porte). (d) La d\'ecroissance de $m_r$ sur $60$ rangs est une indication, non un r\'esultat asymptotique. (e) $m_r$ est obtenu par minimisation born\'ee autour du minimum de grille ; l'\'ecart $0{,}0034$ (partie~A) contre $0{,}0111$ (partie~B) au rang~1 venait de ce que $V_0(0)=0$ par construction : $m_1$, $G_1^2/m_1$ et leur rapport ne sont pas d\'efinis et sont affich\'es \og n/a \fg. \textbf{V2.1 :} (f) la plage du rapport $Q_r/(G_r^2/m_r)$ est donn\'ee en entier (section~\ref{sec:Q}) ; (g) le \og rayon de chambre \fg{} de la V2 \'etait la distance lin\'earis\'ee au mur d'un rang pris isol\'ement, non celle du mot complet : corrig\'e (section~\ref{sec:murs}) ; (h) aux sorties \`a $\varepsilon=0$, $K_r$ et $G_r^{\rm ch}$ (divis\'es par $\varepsilon$) sont \og n/a \fg{} ; (i) la colonne en $\varepsilon$ de la cha\^{\i}ne est \'ecrite explicitement (section~\ref{sec:prop}) ; (j) nouvelle section : d\'ecomposition du saut du rang~8 et n\oe ud~1 (section~\ref{sec:saut8}).
+
+\section{Grandeurs}
+Pour l'\'episode $r$ et le temps local $s$ : $m_r=\min_s\norm{V_0(s)}$ ($r\ge2$), $G_r=\max_s\norm{\D_\vth V_0(s)}/\varepsilon$ (norme de Frobenius du bloc $2\times12$, y compris la part tangentielle), $\mathrm{perp}(s)=\lvert\nabla_\vth(V_0\!\cdot n)\rvert/\varepsilon$ avec $n\perp V_0$ unitaire (en $d=2$, $P^\perp_V\D_\vth V_0=\nabla_\vth(V_0\!\cdot n)\,n$), et
+\[
+Q_r=\max_s\frac{\mathrm{perp}(s)^2}{\norm{V_0(s)}}\ \le\ \frac{G_r^2}{m_r}.
+\]
+On relève $s_{\min V}$, $s_{\max Q}$ et $\mathrm{perp}$ en chacun de ces deux points. $\D_\vth$ : diff\'erences finies centr\'ees (pas $10^{-4}$) sur les $12$ coordonn\'ees de $\vth$, \`a temps \emph{local} fixe (depuis le saut). Un changement de mot est test\'e sur chacune des $24$ perturbations (lettres comprenant le n\oe ud d\'eclencheur) : $0$ changement dans tous les cas.
+
+\section{Trajectoire visible ($\varepsilon=0$)}
+\begin{center}\small
+\begin{tabular}{r|cccccccc}
+\toprule
+rang & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8\\
+\midrule
+d\'eclencheur & 0&0&0&0&0&0&0&\textbf{1}\\
+marge $\nu_r=\Theta-P_{(2)}$ & 1,213 & 1,113 & 0,952 & 0,743 & 0,513 & 0,297 & 0,122 & \textbf{0,0115}\\
+$\norm{V_0}$ \`a l'impact & 2,226 & 1,375 & 0,775 & 0,414 & 0,214 & 0,123 & 0,076 & 0,059\\
+\bottomrule
+\end{tabular}
+\end{center}
+Les sept premiers impacts sont d\'eclench\'es par le n\oe ud forc\'e~0, le huiti\`eme par le n\oe ud~1 (marge $0{,}0115$). Les \'enonc\'es \`a d\'eclencheurs forc\'es couvrent donc les rangs $\le7$ dans ce protocole. La profondeur~8 du carnet n'est pas touch\'ee : le d\'eclencheur du 8\textsuperscript{e} impact n'est pas une lettre du mot de profondeur~8.
+
+$\norm{V_0}$ \`a l'impact est divis\'e par $1{,}6$ \`a $1{,}9$ par rang jusqu'au rang~7, puis d\'ecro\^{\i}t en moyenne comme $e^{-0{,}115\,T_r}$ (ajustement rangs $15$--$60$ ; $\beta=0{,}12$) : de l'ordre de $10^{-2}$ aux rangs $10$--$30$, de $10^{-3}$ aux rangs $40$--$60$, avec un minimum int\'erieur de l'ordre de $10^{-4}$ au rang~48. \emph{Cela n'\'etablit ni $m_r\to0$ ni l'impossibilit\'e d'une minoration uniforme en $r$ : ce sont des minima d\'ecroissants sur $60$ rangs finis.} Aucun z\'ero exact n'a \'et\'e rencontr\'e. Mot stable sous perturbation gaussienne de $\vth$ ($12$ tirages, \texttt{sortie\_profondeur\_V2\_C.txt}) : amplitudes $10^{-4}$ et $10^{-3}$ : $12/12$ sans divergence jusqu'au rang~$59$ ; amplitude $3\cdot10^{-3}$ : $1/12$ diverge au premier saut.
+
+\section{Sensibilit\'e transverse}\label{sec:Q}
+Valeurs pour $(\bar\gamma,\bar\lambda)=(0,1)$, $\varepsilon=10^{-3}$, rangs $1$--$40$ (mot inchang\'e) ; la grille $N_s=1200$ redonne les m\^emes valeurs que $N_s=300$ aux rangs $\le14$.
+\begin{center}\small
+\begin{tabular}{r|rrrrrrrrrr}
+\toprule
+$r$ & 2 & 4 & 6 & 8 & 10 & 12 & 14 & 20 & 23 & 40\\
+\midrule
+$m_r$ & 1,113 & 0,388 & 0,108 & 0,038 & 0,030 & 0,026 & 0,007 & 0,024 & 0,005 & 0,003\\
+$s_{\min V}$ & 0 & 0 & 0 & 0 & 0 & 0 & 0,28 & 0 & 0 & 0\\
+$G_r$ & 0,683 & 0,950 & 0,525 & 0,176 & 0,264 & 0,330 & 0,283 & 0,170 & 0,136 & 0,025\\
+$s_{\max Q}$ & 0,57 & 0,51 & 0,50 & 0,48 & 0,49 & 0,48 & 0,32 & 0,50 & 0,50 & 0,50\\
+$Q_r$ & 0,078 & 0,587 & 0,996 & 0,399 & 0,479 & 1,266 & \textbf{4,98} & 0,385 & 1,591 & 0,041\\
+$Q_r/(G_r^2/m_r)$ & 0,19 & 0,25 & 0,39 & 0,49 & 0,21 & 0,30 & 0,44 & 0,32 & 0,41 & 0,23\\
+\bottomrule
+\end{tabular}
+\end{center}
+Le minimum de $\norm{V_0}$ est presque toujours atteint \`a $s=0$ (juste apr\`es le reset $r_V$), alors que le maximum de $Q$ est atteint en fin d'\'episode ($s\approx0{,}48$ pour $T_d\approx0{,}49$), l\`a o\`u $\norm{V_0}$ est plus grande : les deux extrema ne coïncident pas, d'o\`u un rapport $Q_r/(G_r^2/m_r)$ de $0{,}2$ \`a $0{,}6$ pour les valeurs courantes ; \'etendue observ\'ee pour $\bar\lambda=1$, $\varepsilon=10^{-3}$, rangs $2$--$40$ : de $0{,}159$ (rang~15) \`a $0{,}777$ (rang~9) ; rang~14, minimum int\'erieur : $0{,}44$. Le pic du rang~14 est donc une quasi-annulation \emph{int\'erieure} de $V_0$ ($m_{14}=0{,}007$ \`a $s=0{,}28$) qui coïncide avec une sensibilit\'e encore forte ($\mathrm{perp}=0{,}185$ en $s_{\min V}$, $0{,}190$ en $s_{\max Q}$). Pour $\bar\gamma=1$ seul : $Q_r\le0{,}24$ ($r\le14$). Moyennes de $Q_r$ par blocs de dix rangs ($\bar\lambda=1$) : $0{,}48$ ; $1{,}40$ ; $0{,}45$ ; $0{,}10$ ; ajustements (rangs $15$--$40$) : $G_r\sim e^{-0{,}20\,T_r}$, $Q_r\sim e^{-0{,}24\,T_r}$.
+
+\section{Deux $\varepsilon$ : deux explications distinctes}\label{sec:eps}
+\paragraph{$\bar\gamma=1$ : branches diff\'erentes.} Les mots \`a $\varepsilon=10^{-2}$ et $10^{-3}$ sont identiques sur les $7$ premi\`eres lettres et diff\`erent \`a la $8$\textsuperscript{e} : $(0,\{1,4,5\})$ contre $(1,\{2,5\})$. Le facteur $2$ observ\'e sur $m_9$ ($0{,}0298$ contre $0{,}0591$) est le reset $r_V=\frac12$ : l'une des deux exp\'eriences a r\'einitialis\'e $V_0$ au 8\textsuperscript{e} impact, l'autre non. Les comparaisons de $Q_r/\varepsilon^2$ entre ces deux $\varepsilon$ au-del\`a du rang~8 ne portent donc pas sur la m\^eme branche. Le compteur \og $0$ changement de mot \fg{} contr\^ole la stabilit\'e autour de chaque $\varepsilon$, pas cette identit\'e (maintenant test\'ee explicitement).
+
+\paragraph{$\bar\lambda=1$ : m\^eme branche, d\'erive de la vitesse visible.} Les mots sont identiques sur les $13$ lettres. L'\'ecart de $16$ \`a $44\,\%$ de $Q_r$ (rangs $8$--$13$) vient surtout de $\norm{V_0}$ elle-m\^eme : $Q=\mathrm{perp}^2/\norm{V_0}$, $\mathrm{perp}$ varie de $3$ \`a $7\,\%$ entre les deux $\varepsilon$ alors que $\norm{V_0}$ (au point du maximum) varie de $11$ \`a $27\,\%$. La vitesse visible d\'erive lin\'eairement en $\varepsilon$ : $(\norm{V_0}_\varepsilon-\norm{V_0}_0)/\varepsilon\approx+0{,}46$ \`a $+0{,}76$ aux rangs $5$--$13$ (\`a $s=0{,}48\,T_d$), identique \`a $2\,\%$ pr\`es entre $\varepsilon=10^{-3}$ et $10^{-2}$ (\texttt{sortie\_profondeur\_derive\_visible.txt}), c'est-\`a-dire que l'\'ecart n'est pas une correction non lin\'eaire : c'est un terme du premier ordre qui devient sensible parce que $\norm{V_0}\sim0{,}02$--$0{,}06$ est petite ($\varepsilon\cdot0{,}49/0{,}02\approx25\,\%$ pour $\varepsilon=10^{-2}$ au rang~13). Le d\'eplacement de l'instant du maximum de $Q$ n'intervient pas aux rangs $7$--$13$ ($s_{\max Q}$ varie de moins de $0{,}015$ entre les deux $\varepsilon$) ; il intervient au rang~14, o\`u le minimum int\'erieur de $V_0$ bouge ($s_{\max Q}=0{,}48$ contre $0{,}32$). Aux rangs $15$--$40$ la pente change de signe et $|{\rm pente}|\le0{,}43$.
+
+\section{Propagation variationnelle \`a travers les sauts}\label{sec:prop}
+Sur la branche r\'eguli\`ere on calcule, \`a chaque rang, le jacobien du flot \`a temps fixe $\Phi_r$ ($42\times42$, plus la colonne en $\varepsilon$) par diff\'erences finies centr\'ees (pas $10^{-6}$) et les saltations $S_{\rm loc}=DR\,(I-f^-n^\top/n^\top f^-)$ (horloge locale, celle des $G_r$) et $S_{\rm glob}=DR+(f^+-DR\,f^-)n^\top/n^\top f^-$ (temps global fixe, forme de Benoit), avec $n=e_{P_{i_j}}$, $DR$ le reset, $f^\mp$ les champs avant/apr\`es saut. $S_{\rm loc}$ est le jacobien de la carte d'impact \`a horloge locale ; il diff\`ere de la saltation usuelle \`a temps global fixe de $f^+n^\top/n^\top f^-$. Avec $\phi_r$ le flot de l'\'episode $r$ \`a temps fixe $T_r$, $\Phi_r=D_y\phi_r$ ($42\times42$ ; la colonne en $\varepsilon$ n'en fait pas partie) et $e_\varepsilon$ le vecteur de base de $\varepsilon$ (dynamique nulle), la d\'eriv\'ee par rapport \`a $(\vth,\varepsilon)$ s'\'ecrit
+\[ Z_r^-=\Phi_rZ_{r-1}^++(\partial_\varepsilon\phi_r)\,e_\varepsilon^\top,\qquad Z_r^+=S_{{\rm loc},r}Z_r^-,\qquad Z_0^+=\partial y_0/\partial(\vth,\varepsilon), \]
+ce qui revient au jacobien augment\'e $43\times43$ utilis\'e par le code ; $\nu'(0)$ ci-dessous lit la colonne $\varepsilon$ de $Z_r^-$. Le bloc $\vth$ de $Z_r^+$ redonne $G_r$ :
+\begin{center}\small
+\begin{tabular}{r|rrrrrrr|r}
+\toprule
+$r$ & $n^\top f^-$ & $\lVert\Phi_r\rVert$ & $\lVert S_{\rm loc}\rVert$ & $\lVert S_{\rm glob}\rVert$ & $\prod\lVert S_{\rm loc}\Phi\rVert$ & $K_r$ & $G^{\rm cha\hat\imath ne}_r/G^{\rm direct}_r$\\
+\midrule
+1 & 1,357 & 1,80 & 1,99 & 1,65 & $3{,}6$ & 0,15 & 1,0000\\
+4 & 1,441 & 1,21 & 1,41 & 1,53 & $2{,}2\cdot10^1$ & 0,42 & 1,0000\\
+7 & 1,426 & 1,19 & 1,35 & 1,42 & $9{,}6\cdot10^1$ & 0,64 & 1,0000\\
+\textbf{8} & \textbf{0,227} & 1,15 & \textbf{8,10} & 3,47 & $9{,}0\cdot10^2$ & 0,84 & 1,0000\\
+9 & 1,432 & 1,00 & 1,39 & 1,39 & $1{,}3\cdot10^3$ & 1,05 & 1,0000\\
+10 & 1,449 & 1,16 & 1,28 & 1,36 & $1{,}9\cdot10^3$ & 0,97 & 1,0000\\
+12 & 1,457 & 1,13 & 1,20 & 1,39 & $3{,}6\cdot10^3$ & 0,52 & 1,0000\\
+14 & 1,451 & 1,13 & 1,18 & 1,45 & $6{,}4\cdot10^3$ & 0,59 & 1,0000\\
+\bottomrule
+\end{tabular}
+\end{center}
+Ici $K_r=\norm{\Pi_V z_{r,\vth}}_2/\varepsilon$ (bloc $12\times12$ des six vitesses, \'etat post-saut, horloge locale), $\varepsilon=10^{-3}$, $(\bar\gamma,\bar\lambda)=(0,1)$ ; la cha\^{\i}ne et le direct co\"{\i}ncident \`a $10^{-4}$ pr\`es sur les $14$ rangs. Lectures : (i) le produit des normes $\prod\lVert S\Phi\rVert$ cro\^{\i}t de $3{,}6$ \`a $6{,}4\cdot10^3$ en $14$ rangs, alors que l'amplification effectivement transmise reste $K_r\le1{,}05$ : le majorant surestime de quatre ordres, comme remarqu\'e. (ii) La seule saltation notable est celle du rang~8 : $n^\top f^-=\dot P_1=0{,}227$ (contre $1{,}45$ ailleurs), soit $\lVert S_{\rm loc}\rVert=8{,}1$ ; $K_r$ passe de $0{,}64$ \`a $0{,}84$ puis $1{,}05$ (rangs $7$--$9$), puis redescend \`a $0{,}5$--$0{,}6$. (iii) $S_{\rm loc}$ et $S_{\rm glob}$ diff\`erent par le terme $f^+n^\top/n^\top f^-$, qui est un d\'ecalage temporel de l'horloge de l'\'episode ; les $G_r$ \'etant \`a horloge locale, c'est $S_{\rm loc}$ qui les gouverne. Je n'ai pas ici d\'ecompos\'e l'amplification par composante (tangentielle ou transverse) de $V_0$.
+
+\section{Murs de d\'eclenchement et de recâblage}\label{sec:murs}
+Pour $i$ qui d\'eclenche et $j$ son concurrent, $\nu(\varepsilon)=\Theta-P_j(T_i(\varepsilon),\varepsilon)$ et $\nu'(0)=-\partial_\varepsilon P_j+\frac{\dot P_j}{\dot P_i}\partial_\varepsilon P_i$ \`a l'instant de r\'ef\'erence ; la d\'eriv\'ee totale le long de la branche est lue sur la cha\^{\i}ne, $\nu'=-e_{P_j}^\top(I-f^-n^\top/n^\top f^-)\,Z_r^-[\,:,\varepsilon]$. Seuil de bascule au premier ordre : $\varepsilon_c=\nu(0)/\lvert\nu'(0)\rvert$ si $\nu'<0$.
+
+\paragraph{V\'erification au rang~8 ($\nu(0)=0{,}0115$).}
+\begin{center}\small
+\begin{tabular}{lccc}
+\toprule
+direction $(\bar\gamma,\bar\lambda)$ & $\nu'(0)$ & $\varepsilon_c$ pr\'edit & $\varepsilon_c$ mesur\'e (bissection hybride)\\
+\midrule
+$(1,0)$ & $-3{,}7505$ & $3{,}06\cdot10^{-3}$ & $3{,}07\cdot10^{-3}$\\
+$(1,1)$ & $-1{,}6233$ & $7{,}08\cdot10^{-3}$ & $7{,}11\cdot10^{-3}$\\
+$(0,1)$ & $+2{,}1272$ & pas de bascule & pas de bascule avant $10^{-2}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+\paragraph{Profil en profondeur ($\varepsilon=0$, rangs $1$--$40$, premier ordre).} Pour $\bar\gamma=1$ seul le rang~8 a un seuil $<1$ ($3\cdot10^{-3}$) ; les autres rangs ont $\nu'>0$ (marge croissante) ou $\varepsilon_c\ge1{,}1$. Pour $\bar\lambda=1$ : $\min\varepsilon_c=0{,}52$ (rangs $1$--$7$), $0{,}11$ (rang~13, rangs $9$--$20$), $0{,}21$ (rangs $21$--$30$), $0{,}16$ (rangs $31$--$40$). Pour le recâblage, la marge est l'\'ecart de cosinus qui d\'ecide du retrait/ajout des voisins ; elle atteint $2\cdot10^{-4}$ en profondeur mais sa d\'eriv\'ee en $\varepsilon$ est petite : $\varepsilon_c^{\rm rec}\ge0{,}08$ partout (rang~40 : $0{,}084$ pour $\bar\gamma$), $\ge0{,}33$ au rang~8. Pour $\vth$, on note $\rho_j^{\rm lin}$ la distance lin\'earis\'ee au mur de recâblage du rang~$j$ (marge divis\'ee par la norme du gradient en $\vth$, norme euclidienne dans $\R^{12}$, mur le plus proche \`a ce rang) : $4{,}3\cdot10^{-3}$ au rang~1, $\ge1\cdot10^{-2}$ aux rangs $\ge2$, de l'ordre de $0{,}1$ \`a $0{,}2$ pour $j\ge10$ (minimum $5{,}6\cdot10^{-2}$ au rang~30). Ce n'est pas le rayon de la chambre du mot complet : pour pr\'eserver les $r$ premi\`eres d\'ecisions, toutes les marges pr\'ec\'edentes doivent rester positives, d'o\`u au mieux $\rho_{\le r}^{\rm lin}=\min_{j\le r}\rho_j^{\rm lin}=4{,}3\cdot10^{-3}$ pour tout $r\le40$, fix\'e par le premier saut (coh\'erent avec la divergence observ\'ee \`a $3\cdot10^{-3}$) ; et, sans contr\^ole des termes d'ordre sup\'erieur, ces rayons lin\'earis\'es ne sont pas des rayons garantis de chambres ouvertes. On peut seulement dire que la distance lin\'earis\'ee aux murs de recâblage propres aux \'episodes tardifs est g\'en\'eralement plus grande que celle du premier saut. Seul le rang~8 est confront\'e \`a une mesure hybride directe.
+
+\section{Le saut du rang~8 et le n\oe ud~1}\label{sec:saut8}
+\paragraph{D\'ecomposition.} Au rang $r$, soit $w=\Phi_rZ_{r-1}^+[\,:,\vth]$ la d\'eriv\'ee de l'\'etat avant saut \`a temps local fixe, $dT=-n^\top w/(n^\top f^-)$ celle de l'instant d'impact, et la d\'eriv\'ee post-saut \`a horloge locale $DR\,(w+f^-dT)=A+B$, o\`u $A=DR\,w$ (part \og temps fixe \fg) et $B=DR\,f^-dT$ (part \og d\'ecalage de l'impact \fg). Valeurs pour $\bar\lambda=1$, $\varepsilon=10^{-3}$ (bloc $2\times12$ de $V_k$, norme de Frobenius divis\'ee par $\varepsilon$ ; \og transv. \fg{} : composante normale \`a $V_k$, $\lvert\nabla_\vth(n_k\!\cdot V_k)\rvert/\varepsilon$) :
+\begin{center}\small
+\begin{tabular}{rcc|rrr|rrr|rrr}
+\toprule
+rang & d\'ecl. & $\lVert dT\rVert/\varepsilon$ & n\oe ud & $\lVert V_k^-\rVert$ & $\lVert\dot V_k^-\rVert$ & $A$ & $B$ & $A{+}B$ & transv. $A$ & $B$ & $A{+}B$\\
+\midrule
+7 & 0 & 0,21 & 0 & 0,076 & 0,034 & 0,134 & 0,004 & 0,132 & 0,107 & 0,002 & 0,106\\
+8 & 1 & \textbf{1,87} & 0 & 0,060 & 0,037 & 0,178 & 0,070 & 0,182 & 0,156 & 0,018 & 0,161\\
+8 & 1 & \textbf{1,87} & \textbf{1} & 0,098 & 0,352 & 0,209 & 0,330 & 0,344 & 0,125 & 0,149 & 0,191\\
+9 & 0 & \textbf{1,94} & 0 & 0,060 & 0,056 & 0,092 & 0,054 & 0,101 & 0,081 & 0,002 & 0,082\\
+10 & 0 & 0,16 & 0 & 0,069 & 0,061 & 0,134 & 0,005 & 0,137 & 0,092 & 0,000 & 0,092\\
+\bottomrule
+\end{tabular}
+\end{center}
+La sensibilit\'e de l'instant d'impact \`a $\vth$ est multipli\'ee par $\approx9$ au rang~8 ($0{,}21\to1{,}87$), et reste du m\^eme ordre au rang~9 : l'impact du rang~9 est presque simultan\'e (le n\oe ud~0 est \`a $P_0=1{,}2364$ juste apr\`es le saut, $T_d=0{,}008$) et h\'erite de la sensibilit\'e de celui du rang~8 ($\lVert\nabla_\vth P_0\rVert/\varepsilon=2{,}77$ au rang~9 contre $0{,}2$--$0{,}4$ aux autres rangs). Mais cette amplification du temps passe peu dans $V$ : le terme $B$ est le produit de $\dot V_k$ par $dT$, et $\dot V_0$ reste petit ($0{,}04$--$0{,}06$) alors que $\dot V_1=0{,}35$. Pour le n\oe ud~1, $B$ (0,33) est plus grand que $A$ (0,21) mais le total post-saut (0,34, composante normale 0,19) reste du m\^eme ordre que celui du n\oe ud~0 aux rangs~4--5 ($0{,}48$ ; composante normale $0{,}25$ et $0{,}23$). Pour le n\oe ud~0 au rang~8, la composante normale passe de $0{,}107$ \`a $0{,}161$ : un facteur $1{,}5$. $A$ et $B$ s'annulent partiellement (n\oe ud~1 : $0{,}21+0{,}33$ en somme des normes contre $0{,}34$ pour la norme de la somme).
+
+\paragraph{N\oe ud~1 : hypoth\`eses \'el\'ementaires de la transmission (rangs $1$--$8$).} Au d\'epart (n\oe ud non forc\'e, au repos), $\lVert V_1\rVert\simeq0{,}111\,t^3$ et $\lVert H_1\rVert\simeq0{,}0278\,t^4$ (pentes locales $3{,}00$ et $4{,}00$ de $t=10^{-3}$ \`a $10^{-1}$, quotients constants \`a $1\,\%$) : la factorisation du d\'epart est d'ordre $t^3,t^4$, non $s,s^2$ comme pour le n\oe ud forc\'e ; $\min_t\lVert V_1\rVert/\min(t,1)^3=0{,}091$ et $\min_t\lVert H_1\rVert/\min(t,1)^4=0{,}024$ sur l'\'episode~1. Sur les \'episodes $2$--$8$ : $\min\lVert V_1\rVert=0{,}198;\,0{,}401;\,0{,}528;\,0{,}468;\,0{,}307;\,0{,}111;\,0{,}043$ et $\min\lVert H_1\rVert=0{,}074;\,0{,}249;\,0{,}500;\,0{,}784;\,1{,}048;\,1{,}247;\,1{,}351$. Au rang~8, $P_1$ est croissante sur la fin de l'\'episode, avec $\dot P_1=0{,}2265>0$ : franchissement simple (mais lent, d'o\`u $\lVert S_{\rm loc}\rVert=8{,}1$). Ainsi, num\'eriquement, le n\oe ud~1 ne s'annule pas et son franchissement est simple ; la r\'eponse de $P_1$ aux traces est $\lVert\nabla_\vth P_1(T_8)\rVert/\varepsilon=0{,}42$, du m\^eme ordre que celle des n\oe uds forc\'es aux autres rangs. Cela ne montre pas que le th\'eor\`eme de transmission s'applique : les ordres de factorisation diff\`erent, et aucune hypoth\`ese de r\'egularit\'e n'est v\'erifi\'ee au-del\`a de ces mesures.
+
+\section{Bilan}
+\paragraph{Deux questions \`a ne pas confondre.} La \emph{stabilit\'e du mot} (rester dans la m\^eme chambre hybride quand $\varepsilon$ ou $\vth$ varient) et la \emph{stabilit\'e des d\'eriv\'ees} (pas d'amplification ind\'efinie des sensibilit\'es \`a l'int\'erieur d'une chambre) ne se d\'eduisent pas l'une de l'autre. Le mur du rang~8 et le rayon $\rho_{\le r}^{\rm lin}$ concernent la premi\`ere ; $Q_r$, $K_r$ et les saltations concernent la seconde.
+
+\paragraph{Ce que les mesures montrent.} Sur ce point de base : pas d'amplification de la r\'eponse cach\'ee\,$\to$\,visible malgr\'e les saltations ($K_r\le1{,}05$ sur $14$ rangs, produit des normes $\sim10^4$) ; $G_r$ et $Q_r$ d\'ecroissent apr\`es le rang~14 ; les obstacles observ\'es sont locaux : (1) le mur de d\'eclenchement du rang~8, pr\'edit \`a $0{,}5\,\%$ par la formule du premier ordre ; (2) les quasi-annulations int\'erieures de $V_0$ (rangs 14, 23), qui produisent les pics de $Q_r$ ; (3) pour la comparaison entre deux $\varepsilon$, soit un changement de branche ($\bar\gamma$), soit la d\'erive du premier ordre de la vitesse visible ($\bar\lambda$).
+
+\paragraph{Ce qui n'est pas \'etabli.} Aucune borne $\norm{\D_\vth V_0}\le C\varepsilon e^{-\kappa T_r}$ ; aucune minoration ou majoration de $m_r$ en $r$ ; pas de second point de base ni de second protocole ; pas de suite de murs d\'emontr\'ee (ni se rapprochant de $\varepsilon=0$, ni \'ecart\'ee) ; la r\'eponse de $V_1$ aux traces n'est pas trait\'ee ; les seuils $\varepsilon_c$ en profondeur sont lin\'earis\'es.
+
+\paragraph{Hypoth\`ese candidate (non d\'emontr\'ee).} La question n'est peut-\^etre pas de minorer $\lVert V_0\rVert$ uniform\'ement, mais de contr\^oler $\lVert P^\perp_{V_0}\D_\vth V_0\rVert^2/(\varepsilon^2\lVert V_0\rVert)$ sans cette minoration, par une estimation coupl\'ee de la forme
+\[ \lVert P^\perp_{V_0}\D_\vth V_0\rVert\le C\,\varepsilon\,\lVert V_0\rVert^{1/2} \]
+sur les portions r\'eguli\`eres. Les mesures n'en sont qu'un t\'emoin : $\sup_{r\le40}Q_r=4{,}98$ pour $\bar\lambda=1$ (soit $C\approx2{,}2$ ; $Q_r\le0{,}24$ pour $\bar\gamma=1$, $r\le14$), en un seul point de base, au maximum sur une grille de temps local.
+
+\paragraph{Suite possible.} (a) Prolonger la mesure directe des murs (bissection hybride) aux rangs $12$--$14$ pour $\bar\lambda$ et aux rangs o\`u $\varepsilon_c^{\rm lin}<0{,}3$ ; (b) d\'ecomposer l'amplification de $S_{\rm loc}$ au rang~8 en parties tangentielle et transverse \`a $V_0$ et $V_1$ ; (c) second point de base ($\varphi_4$ diff\'erent) et second protocole ; (d) \'etendre la r\'eponse aux traces au n\oe ud~1.
+
+\end{document}

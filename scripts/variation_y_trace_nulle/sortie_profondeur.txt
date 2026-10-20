@@ -1,0 +1,106 @@
+== Partie A : trajectoire visible (eps = 0), rang | declencheur | marge Theta-P_2e | ||V_0|| debut / fin / min interieur | ||V_decl|| fin
+  1  node 0  marge 1.2130  |V0| 0.0000 / 2.2255 / 0.0034 (s=0.001)  |V_decl| 2.2255
+  2  node 0  marge 1.1134  |V0| 1.1127 / 1.3750 / 1.1132 (s=0.001)  |V_decl| 1.3750
+  3  node 0  marge 0.9516  |V0| 0.6875 / 0.7753 / 0.6877 (s=0.001)  |V_decl| 0.7753
+  4  node 0  marge 0.7425  |V0| 0.3877 / 0.4143 / 0.3877 (s=0.001)  |V_decl| 0.4143
+  5  node 0  marge 0.5133  |V0| 0.2071 / 0.2144 / 0.2072 (s=0.001)  |V_decl| 0.2144
+  6  node 0  marge 0.2968  |V0| 0.1072 / 0.1226 / 0.1072 (s=0.001)  |V_decl| 0.1226
+  7  node 0  marge 0.1222  |V0| 0.0613 / 0.0756 / 0.0613 (s=0.001)  |V_decl| 0.0756
+  8  node 1  marge 0.0115  |V0| 0.0378 / 0.0590 / 0.0378 (s=0.000)  |V_decl| 0.0990
+  9  node 0  marge 0.4236  |V0| 0.0590 / 0.0595 / 0.0590 (s=0.000)  |V_decl| 0.0595
+ 10  node 0  marge 0.3225  |V0| 0.0297 / 0.0684 / 0.0298 (s=0.000)  |V_decl| 0.0684
+ 11  node 0  marge 0.2494  |V0| 0.0342 / 0.0505 / 0.0342 (s=0.000)  |V_decl| 0.0505
+ 12  node 0  marge 0.1764  |V0| 0.0252 / 0.0374 / 0.0253 (s=0.000)  |V_decl| 0.0374
+ 13  node 0  marge 0.1272  |V0| 0.0187 / 0.0202 / 0.0187 (s=0.000)  |V_decl| 0.0202
+ 14  node 0  marge 0.1338  |V0| 0.0101 / 0.0112 / 0.0070 (s=0.267)  |V_decl| 0.0112
+ 15  node 0  marge 0.1560  |V0| 0.0056 / 0.0188 / 0.0056 (s=0.000)  |V_decl| 0.0188
+ 16  node 0  marge 0.2005  |V0| 0.0094 / 0.0402 / 0.0094 (s=0.000)  |V_decl| 0.0402
+ 17  node 0  marge 0.2608  |V0| 0.0201 / 0.0431 / 0.0201 (s=0.000)  |V_decl| 0.0431
+ 18  node 0  marge 0.3420  |V0| 0.0216 / 0.0477 / 0.0216 (s=0.000)  |V_decl| 0.0477
+ 19  node 0  marge 0.4253  |V0| 0.0238 / 0.0484 / 0.0239 (s=0.001)  |V_decl| 0.0484
+ 20  node 0  marge 0.5075  |V0| 0.0242 / 0.0326 / 0.0242 (s=0.001)  |V_decl| 0.0326
+ 21  node 0  marge 0.5080  |V0| 0.0163 / 0.0309 / 0.0163 (s=0.001)  |V_decl| 0.0309
+ 22  node 0  marge 0.4844  |V0| 0.0155 / 0.0093 / 0.0093 (s=0.512)  |V_decl| 0.0093
+ 23  node 0  marge 0.4629  |V0| 0.0047 / 0.0069 / 0.0047 (s=0.001)  |V_decl| 0.0069
+ 24  node 0  marge 0.4513  |V0| 0.0035 / 0.0149 / 0.0035 (s=0.001)  |V_decl| 0.0149
+ 25  node 0  marge 0.4394  |V0| 0.0074 / 0.0236 / 0.0075 (s=0.001)  |V_decl| 0.0236
+ 26  node 0  marge 0.4133  |V0| 0.0118 / 0.0232 / 0.0118 (s=0.001)  |V_decl| 0.0232
+ 27  node 0  marge 0.3876  |V0| 0.0116 / 0.0293 / 0.0116 (s=0.001)  |V_decl| 0.0293
+ 28  node 0  marge 0.3637  |V0| 0.0146 / 0.0218 / 0.0146 (s=0.001)  |V_decl| 0.0218
+ 29  node 0  marge 0.3503  |V0| 0.0109 / 0.0214 / 0.0109 (s=0.001)  |V_decl| 0.0214
+ 30  node 0  marge 0.3434  |V0| 0.0107 / 0.0151 / 0.0107 (s=0.001)  |V_decl| 0.0151
+ 31  node 0  marge 0.3516  |V0| 0.0075 / 0.0083 / 0.0076 (s=0.001)  |V_decl| 0.0083
+ 32  node 0  marge 0.3670  |V0| 0.0041 / 0.0069 / 0.0041 (s=0.001)  |V_decl| 0.0069
+ 33  node 0  marge 0.3843  |V0| 0.0035 / 0.0065 / 0.0028 (s=0.143)  |V_decl| 0.0065
+ 34  node 0  marge 0.3890  |V0| 0.0033 / 0.0048 / 0.0033 (s=0.001)  |V_decl| 0.0048
+ 35  node 0  marge 0.4002  |V0| 0.0024 / 0.0114 / 0.0024 (s=0.001)  |V_decl| 0.0114
+ 36  node 0  marge 0.4250  |V0| 0.0057 / 0.0092 / 0.0057 (s=0.001)  |V_decl| 0.0092
+ 37  node 0  marge 0.4355  |V0| 0.0046 / 0.0106 / 0.0046 (s=0.001)  |V_decl| 0.0106
+ 38  node 0  marge 0.4510  |V0| 0.0053 / 0.0105 / 0.0053 (s=0.001)  |V_decl| 0.0105
+ 39  node 0  marge 0.4647  |V0| 0.0053 / 0.0067 / 0.0053 (s=0.001)  |V_decl| 0.0067
+ 40  node 0  marge 0.4602  |V0| 0.0034 / 0.0077 / 0.0034 (s=0.001)  |V_decl| 0.0077
+== Partie B
+-- (gamma_bar, lambda_bar) = (1, 0), eps = 0.01, perturbations changeant le mot : 0
+r= 1  min||V0||=0.0111  G=max||D_th V||/eps=1.2260  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0000
+r= 2  min||V0||=1.1123  G=max||D_th V||/eps=0.9008  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0000
+r= 3  min||V0||=0.6862  G=max||D_th V||/eps=0.4752  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0000
+r= 4  min||V0||=0.3864  G=max||D_th V||/eps=0.2356  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0000
+r= 5  min||V0||=0.2064  G=max||D_th V||/eps=0.1173  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0014
+r= 6  min||V0||=0.1069  G=max||D_th V||/eps=0.2118  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0266
+r= 7  min||V0||=0.0614  G=max||D_th V||/eps=0.2268  Q=max|grad(V.n)|^2/(eps^2||V||)=0.1305
+r= 8  min||V0||=0.0380  G=max||D_th V||/eps=0.1942  Q=max|grad(V.n)|^2/(eps^2||V||)=0.2058
+r= 9  min||V0||=0.0298  G=max||D_th V||/eps=0.1004  Q=max|grad(V.n)|^2/(eps^2||V||)=0.1087
+r=10  min||V0||=0.0305  G=max||D_th V||/eps=0.1639  Q=max|grad(V.n)|^2/(eps^2||V||)=0.1489
+r=11  min||V0||=0.0271  G=max||D_th V||/eps=0.0987  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0748
+r=12  min||V0||=0.0276  G=max||D_th V||/eps=0.0688  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0390
+r=13  min||V0||=0.0186  G=max||D_th V||/eps=0.0743  Q=max|grad(V.n)|^2/(eps^2||V||)=0.1302
+r=14  min||V0||=0.0091  G=max||D_th V||/eps=0.0435  Q=max|grad(V.n)|^2/(eps^2||V||)=0.1874
+-- (gamma_bar, lambda_bar) = (1, 0), eps = 0.001, perturbations changeant le mot : 0
+r= 1  min||V0||=0.0111  G=max||D_th V||/eps=1.2283  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0000
+r= 2  min||V0||=1.1140  G=max||D_th V||/eps=0.9034  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0000
+r= 3  min||V0||=0.6879  G=max||D_th V||/eps=0.4775  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0000
+r= 4  min||V0||=0.3877  G=max||D_th V||/eps=0.2367  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0000
+r= 5  min||V0||=0.2071  G=max||D_th V||/eps=0.1171  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0014
+r= 6  min||V0||=0.1072  G=max||D_th V||/eps=0.2128  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0272
+r= 7  min||V0||=0.0614  G=max||D_th V||/eps=0.2285  Q=max|grad(V.n)|^2/(eps^2||V||)=0.1358
+r= 8  min||V0||=0.0379  G=max||D_th V||/eps=0.1956  Q=max|grad(V.n)|^2/(eps^2||V||)=0.2145
+r= 9  min||V0||=0.0591  G=max||D_th V||/eps=0.2078  Q=max|grad(V.n)|^2/(eps^2||V||)=0.2346
+r=10  min||V0||=0.0299  G=max||D_th V||/eps=0.1475  Q=max|grad(V.n)|^2/(eps^2||V||)=0.1198
+r=11  min||V0||=0.0343  G=max||D_th V||/eps=0.1021  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0694
+r=12  min||V0||=0.0253  G=max||D_th V||/eps=0.0809  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0494
+r=13  min||V0||=0.0188  G=max||D_th V||/eps=0.0501  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0548
+r=14  min||V0||=0.0070  G=max||D_th V||/eps=0.0772  Q=max|grad(V.n)|^2/(eps^2||V||)=0.4823
+-- (gamma_bar, lambda_bar) = (0, 1), eps = 0.01, perturbations changeant le mot : 0
+r= 1  min||V0||=0.0111  G=max||D_th V||/eps=0.3280  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0123
+r= 2  min||V0||=1.1144  G=max||D_th V||/eps=0.6820  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0777
+r= 3  min||V0||=0.6888  G=max||D_th V||/eps=0.9130  Q=max|grad(V.n)|^2/(eps^2||V||)=0.2517
+r= 4  min||V0||=0.3894  G=max||D_th V||/eps=0.9463  Q=max|grad(V.n)|^2/(eps^2||V||)=0.5778
+r= 5  min||V0||=0.2097  G=max||D_th V||/eps=0.7898  Q=max|grad(V.n)|^2/(eps^2||V||)=0.9508
+r= 6  min||V0||=0.1107  G=max||D_th V||/eps=0.5235  Q=max|grad(V.n)|^2/(eps^2||V||)=0.9464
+r= 7  min||V0||=0.0654  G=max||D_th V||/eps=0.2755  Q=max|grad(V.n)|^2/(eps^2||V||)=0.5802
+r= 8  min||V0||=0.0421  G=max||D_th V||/eps=0.1705  Q=max|grad(V.n)|^2/(eps^2||V||)=0.3364
+r= 9  min||V0||=0.0666  G=max||D_th V||/eps=0.1818  Q=max|grad(V.n)|^2/(eps^2||V||)=0.3685
+r=10  min||V0||=0.0342  G=max||D_th V||/eps=0.2560  Q=max|grad(V.n)|^2/(eps^2||V||)=0.3766
+r=11  min||V0||=0.0383  G=max||D_th V||/eps=0.3182  Q=max|grad(V.n)|^2/(eps^2||V||)=0.6602
+r=12  min||V0||=0.0291  G=max||D_th V||/eps=0.3230  Q=max|grad(V.n)|^2/(eps^2||V||)=0.9677
+r=13  min||V0||=0.0222  G=max||D_th V||/eps=0.3159  Q=max|grad(V.n)|^2/(eps^2||V||)=1.7081
+r=14  min||V0||=0.0080  G=max||D_th V||/eps=0.2802  Q=max|grad(V.n)|^2/(eps^2||V||)=5.5791
+-- (gamma_bar, lambda_bar) = (0, 1), eps = 0.001, perturbations changeant le mot : 0
+r= 1  min||V0||=0.0111  G=max||D_th V||/eps=0.3284  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0124
+r= 2  min||V0||=1.1142  G=max||D_th V||/eps=0.6834  Q=max|grad(V.n)|^2/(eps^2||V||)=0.0780
+r= 3  min||V0||=0.6881  G=max||D_th V||/eps=0.9158  Q=max|grad(V.n)|^2/(eps^2||V||)=0.2538
+r= 4  min||V0||=0.3880  G=max||D_th V||/eps=0.9503  Q=max|grad(V.n)|^2/(eps^2||V||)=0.5872
+r= 5  min||V0||=0.2074  G=max||D_th V||/eps=0.7936  Q=max|grad(V.n)|^2/(eps^2||V||)=0.9821
+r= 6  min||V0||=0.1076  G=max||D_th V||/eps=0.5251  Q=max|grad(V.n)|^2/(eps^2||V||)=0.9959
+r= 7  min||V0||=0.0618  G=max||D_th V||/eps=0.2757  Q=max|grad(V.n)|^2/(eps^2||V||)=0.6103
+r= 8  min||V0||=0.0383  G=max||D_th V||/eps=0.1759  Q=max|grad(V.n)|^2/(eps^2||V||)=0.3989
+r= 9  min||V0||=0.0598  G=max||D_th V||/eps=0.1836  Q=max|grad(V.n)|^2/(eps^2||V||)=0.4381
+r=10  min||V0||=0.0303  G=max||D_th V||/eps=0.2635  Q=max|grad(V.n)|^2/(eps^2||V||)=0.4789
+r=11  min||V0||=0.0347  G=max||D_th V||/eps=0.3262  Q=max|grad(V.n)|^2/(eps^2||V||)=0.8647
+r=12  min||V0||=0.0257  G=max||D_th V||/eps=0.3295  Q=max|grad(V.n)|^2/(eps^2||V||)=1.2661
+r=13  min||V0||=0.0191  G=max||D_th V||/eps=0.3205  Q=max|grad(V.n)|^2/(eps^2||V||)=2.4629
+r=14  min||V0||=0.0071  G=max||D_th V||/eps=0.2829  Q=max|grad(V.n)|^2/(eps^2||V||)=4.9813
+== Partie C : rang de divergence du mot (eps = 0), 12 tirages gaussiens, KC-1 = 29 signifie jamais
+amplitude 0.0001 : [29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29]
+amplitude 0.001 : [29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29]
+amplitude 0.003 : [0, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29]
